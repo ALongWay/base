@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  base
+
+  Created by 李松 on 16/9/1.
+  Copyright © 2016年 alongway. All rights reserved.
+*/
+
+"hello world" = "你好，世界!";

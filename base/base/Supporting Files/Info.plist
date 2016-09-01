@@ -18,10 +18,117 @@
 	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>Icon@3x</string>
+			<key>CFBundleURLName</key>
+			<string>com.alongway.base</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>baseapp</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>wechat</string>
+		<string>weixin</string>
+		<string>sinaweibohd</string>
+		<string>sinaweibo</string>
+		<string>sinaweibosso</string>
+		<string>weibosdk</string>
+		<string>weibosdk2.5</string>
+		<string>mqqapi</string>
+		<string>mqq</string>
+		<string>mqqOpensdkSSoLogin</string>
+		<string>mqqconnect</string>
+		<string>mqqopensdkdataline</string>
+		<string>mqqopensdkgrouptribeshare</string>
+		<string>mqqopensdkfriend</string>
+		<string>mqqopensdkapi</string>
+		<string>mqqopensdkapiV2</string>
+		<string>mqqopensdkapiV3</string>
+		<string>mqzoneopensdk</string>
+		<string>wtloginmqq</string>
+		<string>wtloginmqq2</string>
+		<string>mqqwpa</string>
+		<string>mqzone</string>
+		<string>mqzonev2</string>
+		<string>mqzoneshare</string>
+		<string>wtloginqzone</string>
+		<string>mqzonewx</string>
+		<string>mqzoneopensdkapiV2</string>
+		<string>mqzoneopensdkapi19</string>
+		<string>mqzoneopensdkapi</string>
+		<string>mqqbrowser</string>
+		<string>mttbrowser</string>
+		<string>renrenios</string>
+		<string>renrenapi</string>
+		<string>renren</string>
+		<string>renreniphone</string>
+		<string>laiwangsso</string>
+		<string>yixin</string>
+		<string>yixinopenapi</string>
+		<string>instagram</string>
+		<string>whatsapp</string>
+		<string>line</string>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+		<string>baidumap</string>
+		<string>iosamap</string>
+		<string>comgooglemaps</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>请求访问您的位置信息</string>
+	<key>UIAppFonts</key>
+	<array/>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>3dTouchBtnOne</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>按钮1</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.alongway.base.one</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>3dTouchBtnTwo</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>按钮2</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.alongway.base.two</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>3dTouchBtnThree</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>按钮3</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.alongway.base.three</string>
+		</dict>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -39,120 +146,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLIconFile</key>
-            <string>Icon@3x</string>
-            <key>CFBundleURLName</key>
-            <string>com.alongway.base</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>baseapp</string>
-            </array>
-        </dict>
-    </array>
-    
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>wechat</string>
-        <string>weixin</string>
-        <string>sinaweibohd</string>
-        <string>sinaweibo</string>
-        <string>sinaweibosso</string>
-        <string>weibosdk</string>
-        <string>weibosdk2.5</string>
-        <string>mqqapi</string>
-        <string>mqq</string>
-        <string>mqqOpensdkSSoLogin</string>
-        <string>mqqconnect</string>
-        <string>mqqopensdkdataline</string>
-        <string>mqqopensdkgrouptribeshare</string>
-        <string>mqqopensdkfriend</string>
-        <string>mqqopensdkapi</string>
-        <string>mqqopensdkapiV2</string>
-        <string>mqqopensdkapiV3</string>
-        <string>mqzoneopensdk</string>
-        <string>wtloginmqq</string>
-        <string>wtloginmqq2</string>
-        <string>mqqwpa</string>
-        <string>mqzone</string>
-        <string>mqzonev2</string>
-        <string>mqzoneshare</string>
-        <string>wtloginqzone</string>
-        <string>mqzonewx</string>
-        <string>mqzoneopensdkapiV2</string>
-        <string>mqzoneopensdkapi19</string>
-        <string>mqzoneopensdkapi</string>
-        <string>mqqbrowser</string>
-        <string>mttbrowser</string>
-        <string>renrenios</string>
-        <string>renrenapi</string>
-        <string>renren</string>
-        <string>renreniphone</string>
-        <string>laiwangsso</string>
-        <string>yixin</string>
-        <string>yixinopenapi</string>
-        <string>instagram</string>
-        <string>whatsapp</string>
-        <string>line</string>
-        <string>fbapi</string>
-        <string>fb-messenger-api</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
-        <string>baidumap</string>
-        <string>iosamap</string>
-        <string>comgooglemaps</string>
-    </array>
-    
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-    
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>请求访问您的位置信息</string>
-    
-    <key>UIAppFonts</key>
-    <array/>
-    
-    <key>UIApplicationShortcutItems</key>
-    <array>
-        <dict>
-            <key>UIApplicationShortcutItemIconFile</key>
-            <string>3dTouchBtnOne</string>
-            <key>UIApplicationShortcutItemTitle</key>
-            <string>按钮1</string>
-            <key>UIApplicationShortcutItemType</key>
-            <string>com.alongway.base.one</string>
-        </dict>
-        <dict>
-            <key>UIApplicationShortcutItemIconFile</key>
-            <string>3dTouchBtnTwo</string>
-            <key>UIApplicationShortcutItemTitle</key>
-            <string>按钮2</string>
-            <key>UIApplicationShortcutItemType</key>
-            <string>com.alongway.base.two</string>
-        </dict>
-        <dict>
-            <key>UIApplicationShortcutItemIconFile</key>
-            <string>3dTouchBtnThree</string>
-            <key>UIApplicationShortcutItemTitle</key>
-            <string>按钮3</string>
-            <key>UIApplicationShortcutItemType</key>
-            <string>com.alongway.base.three</string>
-        </dict>
-    </array>
-    
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-        <string>remote-notification</string>
-    </array>
-
 </dict>
 </plist>
