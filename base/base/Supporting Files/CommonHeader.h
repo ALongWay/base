@@ -40,24 +40,27 @@
 #define LocalizedString(String)         NSLocalizedString(String,String)
 
 #pragma mark -- 获取设备宽度和高度
+//会随着应用内部横屏和竖屏变化
 #define DeviceSize                      [UIScreen mainScreen].bounds.size
 #define DeviceWidth                     DeviceSize.width
 #define DeviceHeight                    DeviceSize.height
 
 #pragma mark -- 判断是否iPhone4,4s,5,6,plus,iPad
-#define DeviceCurrentModeSize           [[UIScreen mainScreen] currentMode].size
-#define DevicePortraitModeSize          (DeviceWidth < DeviceHeight ? DeviceCurrentModeSize : CGSizeMake(DeviceCurrentModeSize.height, DeviceCurrentModeSize.width))
+//不会随着应用内部横屏和竖屏变化
+#define DeviceCurrentModeSize           [UIScreen mainScreen].currentMode.size
+#define DevicePortraitModeSize          (DeviceCurrentModeSize.width < DeviceCurrentModeSize.height ? DeviceCurrentModeSize : CGSizeMake(DeviceCurrentModeSize.height, DeviceCurrentModeSize.width))
 #define DeviceIsNotRetina               CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(320, 480))
 #define DeviceIsiPhone4s                CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(640, 960))
 #define DeviceIsiPhone5                 CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(640, 1136))
 //6s与6同尺寸
 #define DeviceIsiPhone6                 CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(750, 1334))
 //6s Plus 与 6Plus同尺寸(部分机型实际上只有6s的bounds.size)
-#define DeviceIsiPhone6plus         (CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(1125, 2001)) || CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(1242, 2208)))
-
+#define DeviceIsiPhone6plus             (CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(1125, 2001)) || CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(1242, 2208)))
+//在模拟器上调试，可能会遇到非Retina分辨率的情况
 #define DeviceIsiPad                    (CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(768, 1024)) || CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(1536, 2048)) || CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(1024, 1366)) || CGSizeEqualToSize(DevicePortraitModeSize, CGSizeMake(2048, 2732)))
 
-#pragma mark -- 取设备操作系统信息
+#pragma mark -- 判断设备操作系统整数版本号
+//当前系统版本号取得仍为浮点型
 #define DeviceIOSVersion                [[[UIDevice currentDevice] systemVersion] floatValue]
 #define DeviceIOSVersionIs(x)           (DeviceIOSVersion >= x && DeviceIOSVersion < x+1 ? YES : NO)
 #define DeviceIOSVersionAbove(x)        (DeviceIOSVersion >= x ? YES : NO)

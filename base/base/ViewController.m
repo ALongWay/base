@@ -34,4 +34,11 @@
     [self.view addSubview:label];
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    LOG(@"[UIScreen mainScreen].bounds\n%@", NSStringFromCGRect([UIScreen mainScreen].bounds));
+    LOG(@"[[UIScreen mainScreen] currentMode].size\n%@", NSStringFromCGSize([[UIScreen mainScreen] currentMode].size));
+    LOG(@"[UIScreen mainScreen].applicationFrame\n%@", NSStringFromCGRect([UIScreen mainScreen].applicationFrame));
+}
+
 @end
