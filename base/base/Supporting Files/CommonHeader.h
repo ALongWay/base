@@ -96,7 +96,7 @@
 #define LOADIMAGE(name)                 [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name ofType:nil]]
 #define LOADIMAGEWITHTYPE(name,type)    [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:name ofType:type]]
 
-#pragma mark -- 设置16进制RGB颜色(格式：RRGGBB)
+#pragma mark -- 设置16进制RGB颜色(使用格式：0xRRGGBB)
 #define COLORWITHRRGGBBA(RRGGBB, A)     [UIColor colorWithRed:((float)((RRGGBB & 0xFF0000) >> 16))/255.0 green:((float)((RRGGBB & 0xFF00) >> 8))/255.0 blue:((float)(RRGGBB & 0xFF))/255.0 alpha:A]
 #define COLORWITHRRGGBB(RRGGBB)         COLORWITHRRGGBBA(RRGGBB, 1.0)
 

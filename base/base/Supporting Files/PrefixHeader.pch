@@ -16,5 +16,6 @@
 #import "StringsHeader.h"
 #import "ImagesHeader.h"
 #import "URLsHeader.h"
+#import "Utilities.h"
 
 #endif /* PrefixHeader_pch */
