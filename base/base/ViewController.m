@@ -19,9 +19,22 @@
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ResizeSideBase6(60), ResizeSideBase6(60))];
-    imageView.center = self.view.center;
-    [imageView setImage:LOADIMAGE(AppIcon)];
+    self.navigationItem.title = @"测试界面";
+    
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    button.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
+    [button setTitle:@"截屏" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(testSnapshot) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+    
+    UIImage *icon = LOADIMAGE(AppIcon);
+
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(button.frame) + 20, ResizeSideBase6(60), ResizeSideBase6(60))];
+    imageView.center = CGPointMake(self.view.center.x, imageView.center.y);
+    [imageView setImage:icon];
     [imageView.layer setMasksToBounds:YES];
     [imageView.layer setCornerRadius:10];
     [self.view addSubview:imageView];
@@ -78,6 +91,30 @@
     LOG(@"decryptedAESMsg:%@", decryptedAESMsg);
     LOG(@"desMsg:%@", desMsg);
     LOG(@"decryptedDESMsg:%@", decryptedDESMsg);
+}
+
+- (void)testSnapshot
+{
+    UIImage *icon = LOADIMAGE(AppIcon);
+    
+    UIImage *testImg;
+    testImg = [ImageHelper getImageWithOriginalImage:icon scale:2];
+    LOG(@"%@", testImg);
+
+    testImg = [ImageHelper getImageWithOriginalImage:icon scaleMaxSize:CGSizeMake(100, 90)];
+    LOG(@"%@", testImg);
+
+    testImg = [ImageHelper getImageWithOriginalImage:icon fillSize:CGSizeMake(100, 90)];
+    LOG(@"%@", testImg);
+
+    testImg = [ImageHelper getImageWithOriginalImage:icon cutFrame:CGRectMake(10, 10, 50, 50)];
+    LOG(@"%@", testImg);
+
+    testImg = [ImageHelper getSnapshotWithView:self.view];
+    LOG(@"%@", testImg);
+
+    testImg = [ImageHelper getFullScreenSnapShot];
+    LOG(@"%@", testImg);
 }
 
 @end

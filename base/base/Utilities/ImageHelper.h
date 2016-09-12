@@ -10,4 +10,18 @@
 
 @interface ImageHelper : NSObject
 
++ (UIImage *)getImageWithOriginalImage:(UIImage *)originalImage scale:(CGFloat)scale;
+
++ (UIImage *)getImageWithOriginalImage:(UIImage *)originalImage scaleMaxSize:(CGSize)scaleMaxSize;
+
++ (CGSize)getImageSizeWithOriginalImage:(UIImage *)originalImage scaleMaxSize:(CGSize)scaleMaxSize;
+
++ (UIImage *)getImageWithOriginalImage:(UIImage *)originalImage fillSize:(CGSize)fillSize;
+
++ (UIImage *)getImageWithOriginalImage:(UIImage *)originalImage cutFrame:(CGRect)cutFrame;
+
++ (UIImage *)getSnapshotWithView:(UIView *)view;
+
++ (UIImage *)getFullScreenSnapShot;
+
 @end
