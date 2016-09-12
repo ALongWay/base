@@ -26,12 +26,29 @@
     [imageView.layer setCornerRadius:10];
     [self.view addSubview:imageView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame) + 20, DeviceWidth, 20)];
-    [label setText:LocalizedString(HelloWorld)];
-    [label setTextColor:COLORWITHRRGGBB(0xFF0000)];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setFont:FONTFZZYFixed(15)];
+    NSString *content = @"从这篇记录开始，记录的都算是干货了，都是一些编程日常的积累。\n我建议先将基础的工具加入项目，后续的开发效率会呈指数增长。如果在专注功能开发过程中，才发现缺少大量常用的工具，不仅会打断思路，还会拖慢开发节奏。\n当然，在每个项目开始的时候，不可能将全部工具都准备充分，只能依据个人的经验来评估需要提前准备的工具。\n一个好的工匠，必须要有一个好的工具箱，并且还要不断优化它。";
+    UIFont *font = FONTAppliedBase6(15);
+    UIColor *color = COLORWITHRRGGBB(0xFF0000);
+    CGFloat lineHeight = 25;
+    
+    CGSize contentSize = [StringHelper getStringSizeWith:content font:font lineHeight:lineHeight maxWidth:DeviceWidth];
+    NSAttributedString *attrStr = [StringHelper getAttributedStringWithString:content font:font color:color lineHeight:lineHeight maxWidth:DeviceWidth];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame) + 20, DeviceWidth, contentSize.height)];
+    [label setBackgroundColor:[UIColor blackColor]];
+    [label setAttributedText:attrStr];
+    [label setNumberOfLines:0];
+//    [label setTextAlignment:NSTextAlignmentCenter];
     [self.view addSubview:label];
+    
+    NSDateComponents *components = [StringHelper getDateComponentsWithDateString:@"2016-09-12 12:56:10"];
+    LOG(@"%@", components);
+    
+    components = [StringHelper getDateComponentsWithDateString:@"2016-09-11 12:56:10"];
+    LOG(@"%@", components);
+
+    components = [StringHelper getDateComponentsWithDateString:@"2016-09-10 12:56:10"];
+    LOG(@"%@", components);
     
     //加密解密测试
     NSString *message = @"测试各种加密解密方法abc123+=/";
