@@ -100,21 +100,31 @@
     UIImage *testImg;
     testImg = [ImageHelper getImageWithOriginalImage:icon scale:2];
     LOG(@"%@", testImg);
-
     testImg = [ImageHelper getImageWithOriginalImage:icon scaleMaxSize:CGSizeMake(100, 90)];
     LOG(@"%@", testImg);
-
     testImg = [ImageHelper getImageWithOriginalImage:icon fillSize:CGSizeMake(100, 90)];
     LOG(@"%@", testImg);
-
     testImg = [ImageHelper getImageWithOriginalImage:icon cutFrame:CGRectMake(10, 10, 50, 50)];
     LOG(@"%@", testImg);
-
+    testImg = [ImageHelper getImageWithColor:COLOR(255, 120, 100)];
+    LOG(@"%@", testImg);
     testImg = [ImageHelper getSnapshotWithView:self.view];
     LOG(@"%@", testImg);
-
-    testImg = [ImageHelper getFullScreenSnapShot];
+    testImg = [ImageHelper getFullScreenSnapshot];
     LOG(@"%@", testImg);
+    testImg = [ImageHelper getBlurEffectImageWithOriginalImage:testImg style:ImageHelperBlurEffectStyleDark];
+    LOG(@"%@", testImg);
+    
+    UIView *coverView = [ImageHelper getBlurEffectViewWithOriginalView:[UIApplication sharedApplication].keyWindow style:ImageHelperBlurEffectStyleDark];
+    [coverView setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeCoverView:)];
+    [coverView addGestureRecognizer:tapGest];
+}
+
+- (void)removeCoverView:(UITapGestureRecognizer *)tapGest
+{
+    UIView *coverView = tapGest.view;
+    [coverView removeFromSuperview];
 }
 
 @end
