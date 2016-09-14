@@ -12,6 +12,7 @@
 		673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461851D7FADB900066BEF /* EncryptionHelper.m */; };
 		673461971D7FC7D700066BEF /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461951D7FC7D700066BEF /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6734619A1D7FCCD300066BEF /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461991D7FCCD300066BEF /* NSData+CommonCrypto.m */; };
+		676C04651D895A7F003EB057 /* UIButton+Initialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C04641D895A7F003EB057 /* UIButton+Initialization.m */; };
 		679116311D7675C500432E46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 679116301D7675C500432E46 /* AppDelegate.m */; };
 		679116341D7675C500432E46 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 679116331D7675C500432E46 /* ViewController.m */; };
 		679116371D7675C600432E46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 679116351D7675C600432E46 /* Main.storyboard */; };
@@ -39,6 +40,9 @@
 		673461981D7FCCD300066BEF /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CommonCrypto.h"; sourceTree = "<group>"; };
 		673461991D7FCCD300066BEF /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
 		6734619B1D800B4300066BEF /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		676C04611D89576D003EB057 /* Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
+		676C04631D895A7F003EB057 /* UIButton+Initialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Initialization.h"; sourceTree = "<group>"; };
+		676C04641D895A7F003EB057 /* UIButton+Initialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Initialization.m"; sourceTree = "<group>"; };
 		679116291D7675C500432E46 /* base.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = base.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6791162F1D7675C500432E46 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		679116301D7675C500432E46 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -94,12 +98,15 @@
 		6734618F1D7FC7D700066BEF /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				676C04611D89576D003EB057 /* Categories.h */,
 				67C00BDE1D87D876009BA769 /* UIImage+ImageEffects.h */,
 				67C00BDF1D87D876009BA769 /* UIImage+ImageEffects.m */,
 				673461981D7FCCD300066BEF /* NSData+CommonCrypto.h */,
 				673461991D7FCCD300066BEF /* NSData+CommonCrypto.m */,
 				67C00BE11D880272009BA769 /* UIView+ModifyFrame.h */,
 				67C00BE21D880272009BA769 /* UIView+ModifyFrame.m */,
+				676C04631D895A7F003EB057 /* UIButton+Initialization.h */,
+				676C04641D895A7F003EB057 /* UIButton+Initialization.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -293,6 +300,7 @@
 				673461801D7FACDA00066BEF /* StringHelper.m in Sources */,
 				679116341D7675C500432E46 /* ViewController.m in Sources */,
 				6791164E1D76CEEF00432E46 /* main.m in Sources */,
+				676C04651D895A7F003EB057 /* UIButton+Initialization.m in Sources */,
 				679116311D7675C500432E46 /* AppDelegate.m in Sources */,
 				67C00BE01D87D876009BA769 /* UIImage+ImageEffects.m in Sources */,
 				673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */,

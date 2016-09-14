@@ -20,6 +20,7 @@
 #import "ImagesHeader.h"
 #import "URLsHeader.h"
 #import "Utilities.h"
+#import "Categories.h"
 
 #endif
 
