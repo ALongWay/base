@@ -17,7 +17,7 @@
  *
  *  @return 按钮
  */
-+(UIButton*)createNavigationBarRedTextButtonWithText:(NSString*)text;
++ (UIButton *)createNavigationBarRedTextButtonWithText:(NSString *)text;
 
 /**
  *  生成导航栏上灰色的文字按钮
@@ -26,7 +26,7 @@
  *
  *  @return 按钮
  */
-+(UIButton*)createNavigationBarGrayTextButtonWithText:(NSString*)text;
++ (UIButton *)createNavigationBarGrayTextButtonWithText:(NSString *)text;
 
 /**
  *  生成导航栏上图片按钮
@@ -35,7 +35,7 @@
  *
  *  @return 按钮
  */
-+(UIButton*)createNavigationBarImageButtonWithImage:(UIImage*)image;
++ (UIButton *)createNavigationBarImageButtonWithImage:(UIImage *)image;
 
 /**
  *  设置常用按钮，半径5，背景nor/disabled（255，120，100）背景highlight（235，109，88）
@@ -45,7 +45,7 @@
  *
  *  @return return value description
  */
--(void)setCommonButtonWithText:(NSString *)text;
+- (void)setCommonButtonWithText:(NSString *)text;
 
 /**
  *  设置按钮各种状态的显示图片
@@ -53,7 +53,7 @@
  *  @param normalImg    常规图片
  *  @param highlightImg 高亮图片
  */
--(void)setButtonImageWithNormalImage:(UIImage *)normalImg highlightImage:(UIImage *)highlightImg;
+- (void)setButtonImageWithNormalImage:(UIImage *)normalImg highlightImage:(UIImage *)highlightImg;
 
 /**
  *  设置按钮各种状态的背景图片
@@ -61,7 +61,7 @@
  *  @param normalBgImg    normalBgImg
  *  @param highlightBgImg highlightBgImg
  */
--(void)setButtonBgImageWithNormalBgImage:(UIImage *)normalBgImg highlightBgImage:(UIImage *)highlightBgImg;
+- (void)setButtonBgImageWithNormalBgImage:(UIImage *)normalBgImg highlightBgImage:(UIImage *)highlightBgImg;
 
 /**
  *  设置某状态的按钮标题文字
@@ -71,7 +71,7 @@
  *  @param font  font description
  *  @param state state description
  */
--(void)setButtonTitleWithText:(NSString*)text textColor:(UIColor*)color font:(UIFont*)font forState:(UIControlState)state;
+- (void)setButtonTitleWithText:(NSString*)text textColor:(UIColor*)color font:(UIFont *)font forState:(UIControlState)state;
 
 /**
  *  设置按钮的各种状态的标题文字
@@ -81,7 +81,7 @@
  *  @param normalColor    normalColor description
  *  @param highlightColor highlightColor description
  */
--(void)setButtonTitleWithText:(NSString*)text font:(UIFont*)font normalColor:(UIColor*)normalColor andHighlightColor:(UIColor*)highlightColor;
+- (void)setButtonTitleWithText:(NSString *)text font:(UIFont *)font normalColor:(UIColor *)normalColor andHighlightColor:(UIColor *)highlightColor;
 
 /**
  *  设置按钮的边框和圆角
@@ -90,6 +90,6 @@
  *  @param width  边框宽度
  *  @param radius 圆角半径
  */
--(void)setButtonBorderColor:(UIColor*)color borderWidth:(CGFloat)width cornerRadius:(CGFloat)radius;
+- (void)setButtonBorderColor:(UIColor *)color borderWidth:(CGFloat)width cornerRadius:(CGFloat)radius;
 
 @end
