@@ -12,7 +12,21 @@
 #pragma mark - ImageHelperMergeImage
 @implementation ImageHelperMergeImage
 
--(void)setImage:(UIImage *)image
++ (ImageHelperMergeImage *)getImageHelperMergeImageWithImage:(UIImage *)image
+{
+    return [self getImageHelperMergeImageWithImage:image mergeRect:CGRectMake(0, 0, image.size.width, image.size.height)];
+}
+
++ (ImageHelperMergeImage *)getImageHelperMergeImageWithImage:(UIImage *)image mergeRect:(CGRect)mergeRect
+{
+    ImageHelperMergeImage *model = [[ImageHelperMergeImage alloc] init];
+    model.image = image;
+    model.mergeRect = mergeRect;
+    
+    return model;
+}
+
+- (void)setImage:(UIImage *)image
 {
     _image = image;
     _mergeRect = CGRectMake(0, 0, image.size.width, image.size.height);
@@ -37,7 +51,7 @@
     firstMergeRect.origin = CGPointZero;
     firstMergeImage.mergeRect = firstMergeRect;
     
-    UIGraphicsBeginImageContext(firstMergeImage.mergeRect.size);
+    UIGraphicsBeginImageContextWithOptions(firstMergeImage.mergeRect.size, NO, 0.0);
     
     for (ImageHelperMergeImage *mergeImage in imageArray) {
         [mergeImage.image drawInRect:mergeImage.mergeRect];
@@ -114,7 +128,7 @@
 {
     CGSize newSize = CGSizeMake(originalImage.size.width * scale, originalImage.size.height * scale);
     
-    UIGraphicsBeginImageContext(newSize);
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
     [originalImage drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -148,7 +162,7 @@
 
 + (UIImage *)getImageWithOriginalImage:(UIImage *)originalImage fillSize:(CGSize)fillSize
 {
-    UIGraphicsBeginImageContext(fillSize);
+    UIGraphicsBeginImageContextWithOptions(fillSize, NO, 0.0);
     [originalImage drawInRect:CGRectMake(0, 0, fillSize.width, fillSize.height)];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -158,12 +172,9 @@
 
 + (UIImage *)getImageWithOriginalImage:(UIImage *)originalImage cutFrame:(CGRect)cutFrame
 {
-    CGSize newSize = cutFrame.size;
-    
-    UIGraphicsBeginImageContext(newSize);
-    [originalImage drawInRect:CGRectMake(-cutFrame.origin.x, -cutFrame.origin.y, cutFrame.size.width, cutFrame.size.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    CGImageRef cgimageRef = CGImageCreateWithImageInRect(originalImage.CGImage, cutFrame);
+    UIImage *newImage = [UIImage imageWithCGImage:cgimageRef];
+    CGImageRelease(cgimageRef);
     
     return newImage;
 }
@@ -172,7 +183,7 @@
 {
     CGRect rect = CGRectMake(0, 0, 1, 1);
     
-    UIGraphicsBeginImageContext(rect.size);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [color CGColor]);
     CGContextFillRect(context, rect);

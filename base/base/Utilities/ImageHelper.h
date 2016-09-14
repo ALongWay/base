@@ -27,6 +27,25 @@ typedef NS_ENUM(NSInteger, ImageHelperBlurEffectStyle) {
  */
 @property (nonatomic, assign)   CGRect      mergeRect;
 
+/**
+ *  生成图像的合并对象，合并的rect默认使用CGRectMake(0, 0, image.size.width, image.size.height)
+ *
+ *  @param image 图像
+ *
+ *  @return 合并对象
+ */
++ (ImageHelperMergeImage *)getImageHelperMergeImageWithImage:(UIImage *)image;
+
+/**
+ *  根据合并的rect，来生成图像的合并对象
+ *
+ *  @param image     图像
+ *  @param mergeRect 合并的rect
+ *
+ *  @return 合并对象
+ */
++ (ImageHelperMergeImage *)getImageHelperMergeImageWithImage:(UIImage *)image mergeRect:(CGRect)mergeRect;
+
 @end
 
 #pragma mark - ImageHelper
