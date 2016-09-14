@@ -9,7 +9,45 @@
 #import "ImageHelper.h"
 #import "UIImage+ImageEffects.h"
 
+#pragma mark - ImageHelperMergeImage
+@implementation ImageHelperMergeImage
+
+-(void)setImage:(UIImage *)image
+{
+    _image = image;
+    _mergeRect = CGRectMake(0, 0, image.size.width, image.size.height);
+}
+
+@end
+
+#pragma mark - ImageHelper
 @implementation ImageHelper
+
++ (UIImage *)getImageMergedWithOriginalImageArray:(NSArray<ImageHelperMergeImage *> *)imageArray
+{
+    if (!imageArray
+        || imageArray.count == 0) {
+        return nil;
+    }
+    
+    ImageHelperMergeImage *firstMergeImage = [imageArray firstObject];
+    
+    //将第一张图作为背景放置
+    CGRect firstMergeRect = firstMergeImage.mergeRect;
+    firstMergeRect.origin = CGPointZero;
+    firstMergeImage.mergeRect = firstMergeRect;
+    
+    UIGraphicsBeginImageContext(firstMergeImage.mergeRect.size);
+    
+    for (ImageHelperMergeImage *mergeImage in imageArray) {
+        [mergeImage.image drawInRect:mergeImage.mergeRect];
+    }
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
 
 + (UIView *)getBlurEffectViewWithOriginalView:(UIView *)originalView style:(ImageHelperBlurEffectStyle)style
 {

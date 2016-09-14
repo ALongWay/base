@@ -14,7 +14,32 @@ typedef NS_ENUM(NSInteger, ImageHelperBlurEffectStyle) {
     ImageHelperBlurEffectStyleDark
 };
 
+#pragma mark - ImageHelperMergeImage
+@interface ImageHelperMergeImage : NSObject
+
+/**
+ *  合并的图像
+ */
+@property (nonatomic, strong)   UIImage     *image;
+
+/**
+ *  合并的位置，设置image后默认使用CGRectMake(0, 0, image.size.width, image.size.height)
+ */
+@property (nonatomic, assign)   CGRect      mergeRect;
+
+@end
+
+#pragma mark - ImageHelper
 @interface ImageHelper : NSObject
+
+/**
+ *  依据图像数组，依次合并为新图像
+ *
+ *  @param imageArray 图像数组
+ *
+ *  @return 新的图像
+ */
++ (UIImage *)getImageMergedWithOriginalImageArray:(NSArray<ImageHelperMergeImage *> *)imageArray;
 
 /**
  *  根据原始view和毛玻璃样式，获取模糊视图，并自动作为原view的subview（如果不需要作为子视图，自行调用removeFromSuperview）
