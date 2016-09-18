@@ -15,12 +15,15 @@
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 
+#import "AppHeader.h"
 #import "CommonHeader.h"
 #import "StringsHeader.h"
 #import "ImagesHeader.h"
 #import "URLsHeader.h"
+
 #import "Utilities.h"
 #import "Categories.h"
+#import "Libraries.h"
 
 #endif
 

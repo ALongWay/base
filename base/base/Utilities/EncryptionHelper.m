@@ -7,8 +7,8 @@
 //
 
 #import "EncryptionHelper.h"
-#import "GTMBase64.h"
-#import "NSData+CommonCrypto.h"
+#import <CommonCrypto/CommonCryptor.h>
+#import <CommonCrypto/CommonHMAC.h>
 
 @implementation EncryptionHelper
 

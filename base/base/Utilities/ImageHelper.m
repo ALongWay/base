@@ -7,7 +7,6 @@
 //
 
 #import "ImageHelper.h"
-#import "UIImage+ImageEffects.h"
 
 #pragma mark - ImageHelperMergeImage
 @implementation ImageHelperMergeImage

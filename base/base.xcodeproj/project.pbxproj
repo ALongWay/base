@@ -13,8 +13,8 @@
 		673461971D7FC7D700066BEF /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461951D7FC7D700066BEF /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6734619A1D7FCCD300066BEF /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461991D7FCCD300066BEF /* NSData+CommonCrypto.m */; };
 		676C04651D895A7F003EB057 /* UIButton+Initialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C04641D895A7F003EB057 /* UIButton+Initialization.m */; };
+		676C04701D8E3648003EB057 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C046E1D8E3648003EB057 /* ViewController.m */; };
 		679116311D7675C500432E46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 679116301D7675C500432E46 /* AppDelegate.m */; };
-		679116341D7675C500432E46 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 679116331D7675C500432E46 /* ViewController.m */; };
 		679116371D7675C600432E46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 679116351D7675C600432E46 /* Main.storyboard */; };
 		679116391D7675C600432E46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 679116381D7675C600432E46 /* Assets.xcassets */; };
 		6791163C1D7675C600432E46 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6791163A1D7675C600432E46 /* LaunchScreen.storyboard */; };
@@ -43,11 +43,13 @@
 		676C04611D89576D003EB057 /* Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
 		676C04631D895A7F003EB057 /* UIButton+Initialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Initialization.h"; sourceTree = "<group>"; };
 		676C04641D895A7F003EB057 /* UIButton+Initialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Initialization.m"; sourceTree = "<group>"; };
+		676C04691D8E25A7003EB057 /* AppHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppHeader.h; sourceTree = "<group>"; };
+		676C046A1D8E2C16003EB057 /* Libraries.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Libraries.h; sourceTree = "<group>"; };
+		676C046E1D8E3648003EB057 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		676C046F1D8E3648003EB057 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		679116291D7675C500432E46 /* base.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = base.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6791162F1D7675C500432E46 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		679116301D7675C500432E46 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		679116321D7675C500432E46 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		679116331D7675C500432E46 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		679116361D7675C600432E46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		679116381D7675C600432E46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6791163B1D7675C600432E46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 		673461901D7FC7D700066BEF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				676C046A1D8E2C16003EB057 /* Libraries.h */,
 				673461911D7FC7D700066BEF /* MyLib */,
 				673461921D7FC7D700066BEF /* ThirdPartyLib */,
 			);
@@ -145,6 +148,29 @@
 			path = GTMBase64;
 			sourceTree = "<group>";
 		};
+		676C046B1D8E3440003EB057 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				676C046F1D8E3648003EB057 /* ViewController.h */,
+				676C046E1D8E3648003EB057 /* ViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		676C046C1D8E3440003EB057 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		676C046D1D8E3440003EB057 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		679116201D7675C500432E46 = {
 			isa = PBXGroup;
 			children = (
@@ -164,18 +190,19 @@
 		6791162B1D7675C500432E46 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				6791162F1D7675C500432E46 /* AppDelegate.h */,
+				679116301D7675C500432E46 /* AppDelegate.m */,
+				676C046B1D8E3440003EB057 /* Controllers */,
+				676C046D1D8E3440003EB057 /* Views */,
+				676C046C1D8E3440003EB057 /* Models */,
 				673461901D7FC7D700066BEF /* Libraries */,
 				6734618F1D7FC7D700066BEF /* Categories */,
 				6734617D1D7FABDD00066BEF /* Utilities */,
-				6791162F1D7675C500432E46 /* AppDelegate.h */,
-				679116301D7675C500432E46 /* AppDelegate.m */,
-				679116321D7675C500432E46 /* ViewController.h */,
-				679116331D7675C500432E46 /* ViewController.m */,
+				67BF707D1D7D7C07009E253A /* Resources */,
+				6791164A1D76CEEF00432E46 /* Supporting Files */,
 				679116351D7675C600432E46 /* Main.storyboard */,
 				679116381D7675C600432E46 /* Assets.xcassets */,
 				6791163A1D7675C600432E46 /* LaunchScreen.storyboard */,
-				67BF707D1D7D7C07009E253A /* Resources */,
-				6791164A1D76CEEF00432E46 /* Supporting Files */,
 			);
 			path = base;
 			sourceTree = "<group>";
@@ -186,6 +213,7 @@
 				6791164B1D76CEEF00432E46 /* Info.plist */,
 				6791164C1D76CEEF00432E46 /* main.m */,
 				6791164F1D76D27700432E46 /* PrefixHeader.pch */,
+				676C04691D8E25A7003EB057 /* AppHeader.h */,
 				67BF70761D7D048C009E253A /* CommonHeader.h */,
 				67BF707A1D7D7123009E253A /* StringsHeader.h */,
 				67BF707B1D7D712E009E253A /* ImagesHeader.h */,
@@ -298,10 +326,10 @@
 			files = (
 				6734619A1D7FCCD300066BEF /* NSData+CommonCrypto.m in Sources */,
 				673461801D7FACDA00066BEF /* StringHelper.m in Sources */,
-				679116341D7675C500432E46 /* ViewController.m in Sources */,
 				6791164E1D76CEEF00432E46 /* main.m in Sources */,
 				676C04651D895A7F003EB057 /* UIButton+Initialization.m in Sources */,
 				679116311D7675C500432E46 /* AppDelegate.m in Sources */,
+				676C04701D8E3648003EB057 /* ViewController.m in Sources */,
 				67C00BE01D87D876009BA769 /* UIImage+ImageEffects.m in Sources */,
 				673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */,
 				673461831D7FAD0A00066BEF /* ImageHelper.m in Sources */,
