@@ -12,5 +12,7 @@
 #import "StringHelper.h"
 #import "ImageHelper.h"
 #import "EncryptionHelper.h"
+#import "CacheHelper.h"
+#import "LevelDBHelper.h"
 
 #endif /* Utilities_h */

@@ -14,5 +14,6 @@
 
 #pragma mark - ThirdPartyLib
 #import "GTMBase64.h"
+#import "LevelDB.h"
 
 #endif /* Libraries_h */
