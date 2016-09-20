@@ -21,6 +21,14 @@
 		676C07A11D8E8B2C003EB057 /* libleveldb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 676C079C1D8E8B2C003EB057 /* libleveldb.a */; };
 		676C07A21D8E8B2C003EB057 /* libmemenv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 676C079D1D8E8B2C003EB057 /* libmemenv.a */; };
 		676C07B51D8E8EAB003EB057 /* LevelDBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C07B41D8E8EAB003EB057 /* LevelDBHelper.m */; };
+		676C08DF1D8FC740003EB057 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C08DE1D8FC740003EB057 /* BaseViewController.m */; };
+		676C08E21D8FC75D003EB057 /* BaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C08E11D8FC75D003EB057 /* BaseView.m */; };
+		676C08E91D910ADF003EB057 /* noNaviBarBackBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 676C08E31D910ADF003EB057 /* noNaviBarBackBtn.png */; };
+		676C08EA1D910ADF003EB057 /* noNaviBarBackBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 676C08E41D910ADF003EB057 /* noNaviBarBackBtn@2x.png */; };
+		676C08EB1D910ADF003EB057 /* noNaviBarBackBtn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 676C08E51D910ADF003EB057 /* noNaviBarBackBtn@3x.png */; };
+		676C08EC1D910ADF003EB057 /* naviBarBackBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 676C08E61D910ADF003EB057 /* naviBarBackBtn.png */; };
+		676C08ED1D910ADF003EB057 /* naviBarBackBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 676C08E71D910ADF003EB057 /* naviBarBackBtn@2x.png */; };
+		676C08EE1D910ADF003EB057 /* naviBarBackBtn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 676C08E81D910ADF003EB057 /* naviBarBackBtn@3x.png */; };
 		679116311D7675C500432E46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 679116301D7675C500432E46 /* AppDelegate.m */; };
 		679116371D7675C600432E46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 679116351D7675C600432E46 /* Main.storyboard */; };
 		679116391D7675C600432E46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 679116381D7675C600432E46 /* Assets.xcassets */; };
@@ -81,6 +89,16 @@
 		676C07B21D8E8BC6003EB057 /* write_batch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = write_batch.h; sourceTree = "<group>"; };
 		676C07B31D8E8EAB003EB057 /* LevelDBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelDBHelper.h; sourceTree = "<group>"; };
 		676C07B41D8E8EAB003EB057 /* LevelDBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelDBHelper.m; sourceTree = "<group>"; };
+		676C08DD1D8FC740003EB057 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		676C08DE1D8FC740003EB057 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		676C08E01D8FC75D003EB057 /* BaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseView.h; sourceTree = "<group>"; };
+		676C08E11D8FC75D003EB057 /* BaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseView.m; sourceTree = "<group>"; };
+		676C08E31D910ADF003EB057 /* noNaviBarBackBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noNaviBarBackBtn.png; sourceTree = "<group>"; };
+		676C08E41D910ADF003EB057 /* noNaviBarBackBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noNaviBarBackBtn@2x.png"; sourceTree = "<group>"; };
+		676C08E51D910ADF003EB057 /* noNaviBarBackBtn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noNaviBarBackBtn@3x.png"; sourceTree = "<group>"; };
+		676C08E61D910ADF003EB057 /* naviBarBackBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = naviBarBackBtn.png; sourceTree = "<group>"; };
+		676C08E71D910ADF003EB057 /* naviBarBackBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "naviBarBackBtn@2x.png"; sourceTree = "<group>"; };
+		676C08E81D910ADF003EB057 /* naviBarBackBtn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "naviBarBackBtn@3x.png"; sourceTree = "<group>"; };
 		679116291D7675C500432E46 /* base.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = base.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6791162F1D7675C500432E46 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		679116301D7675C500432E46 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -258,6 +276,17 @@
 			path = leveldb;
 			sourceTree = "<group>";
 		};
+		676C08DC1D8FC713003EB057 /* BaseClass */ = {
+			isa = PBXGroup;
+			children = (
+				676C08DD1D8FC740003EB057 /* BaseViewController.h */,
+				676C08DE1D8FC740003EB057 /* BaseViewController.m */,
+				676C08E01D8FC75D003EB057 /* BaseView.h */,
+				676C08E11D8FC75D003EB057 /* BaseView.m */,
+			);
+			path = BaseClass;
+			sourceTree = "<group>";
+		};
 		679116201D7675C500432E46 = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +308,7 @@
 			children = (
 				6791162F1D7675C500432E46 /* AppDelegate.h */,
 				679116301D7675C500432E46 /* AppDelegate.m */,
+				676C08DC1D8FC713003EB057 /* BaseClass */,
 				676C046B1D8E3440003EB057 /* Controllers */,
 				676C046D1D8E3440003EB057 /* Views */,
 				676C046C1D8E3440003EB057 /* Models */,
@@ -331,6 +361,12 @@
 		67BF707F1D7D7C07009E253A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				676C08E31D910ADF003EB057 /* noNaviBarBackBtn.png */,
+				676C08E41D910ADF003EB057 /* noNaviBarBackBtn@2x.png */,
+				676C08E51D910ADF003EB057 /* noNaviBarBackBtn@3x.png */,
+				676C08E61D910ADF003EB057 /* naviBarBackBtn.png */,
+				676C08E71D910ADF003EB057 /* naviBarBackBtn@2x.png */,
+				676C08E81D910ADF003EB057 /* naviBarBackBtn@3x.png */,
 				67BF70801D7D7C55009E253A /* Icon@3x.png */,
 			);
 			path = Images;
@@ -396,11 +432,17 @@
 			files = (
 				67BF70721D783001009E253A /* Localizable.strings in Resources */,
 				6791163C1D7675C600432E46 /* LaunchScreen.storyboard in Resources */,
+				676C08ED1D910ADF003EB057 /* naviBarBackBtn@2x.png in Resources */,
 				67BF70831D7D8047009E253A /* fzzy.ttf in Resources */,
 				679116391D7675C600432E46 /* Assets.xcassets in Resources */,
+				676C08E91D910ADF003EB057 /* noNaviBarBackBtn.png in Resources */,
 				679116371D7675C600432E46 /* Main.storyboard in Resources */,
+				676C08EB1D910ADF003EB057 /* noNaviBarBackBtn@3x.png in Resources */,
+				676C08EE1D910ADF003EB057 /* naviBarBackBtn@3x.png in Resources */,
 				67BF70811D7D7C55009E253A /* Icon@3x.png in Resources */,
 				67BF705E1D781E35009E253A /* InfoPlist.strings in Resources */,
+				676C08EA1D910ADF003EB057 /* noNaviBarBackBtn@2x.png in Resources */,
+				676C08EC1D910ADF003EB057 /* naviBarBackBtn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,9 +460,11 @@
 				679116311D7675C500432E46 /* AppDelegate.m in Sources */,
 				676C04701D8E3648003EB057 /* ViewController.m in Sources */,
 				67C00BE01D87D876009BA769 /* UIImage+ImageEffects.m in Sources */,
+				676C08DF1D8FC740003EB057 /* BaseViewController.m in Sources */,
 				673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */,
 				676C07B51D8E8EAB003EB057 /* LevelDBHelper.m in Sources */,
 				676C04731D8E3F34003EB057 /* CacheHelper.m in Sources */,
+				676C08E21D8FC75D003EB057 /* BaseView.m in Sources */,
 				676C079F1D8E8B2C003EB057 /* LDBWriteBatch.mm in Sources */,
 				673461831D7FAD0A00066BEF /* ImageHelper.m in Sources */,
 				676C079E1D8E8B2C003EB057 /* LDBSnapshot.mm in Sources */,

@@ -11,6 +11,8 @@
 
 //该头文件用于存放图片宏定义
 
-#define AppIcon         @"Icon@3x.png"
+#define NoNaviBarBackBtnImage    @"noNaviBarBackBtn.png"
+#define NaviBarBackBtnImage      @"naviBarBackBtn.png"
+#define AppIcon                  @"Icon@3x.png"
 
 #endif /* ImagesHeader_h */

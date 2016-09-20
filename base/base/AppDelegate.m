@@ -25,9 +25,14 @@
     
     _rootVC = [[ViewController alloc] init];
 
+#define ShowNaviBar
+#ifdef ShowNaviBar
     UINavigationController *naviC = [[UINavigationController alloc] initWithRootViewController:_rootVC];
-    
     _window.rootViewController = naviC;
+#else
+    _window.rootViewController = _rootVC;
+#endif
+
     
     [_window makeKeyAndVisible];
     

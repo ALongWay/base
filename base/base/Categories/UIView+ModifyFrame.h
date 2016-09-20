@@ -10,16 +10,20 @@
 
 @interface UIView (ModifyFrame)
 
-@property (nonatomic , assign) CGFloat x;
+@property (nonatomic, assign) CGFloat originX;
 
-@property (nonatomic , assign) CGFloat y;
+@property (nonatomic, assign) CGFloat originY;
 
-@property (nonatomic , assign) CGFloat height;
+@property (nonatomic, assign) CGFloat width;
 
-@property (nonatomic , assign) CGFloat width;
+@property (nonatomic, assign) CGFloat height;
 
-@property (nonatomic , assign) CGSize  size;
+@property (nonatomic, assign) CGSize  size;
 
-@property (nonatomic , assign) CGPoint origin;
+@property (nonatomic, assign) CGPoint origin;
+
+@property (nonatomic, assign, readonly) CGFloat maxX;
+
+@property (nonatomic, assign, readonly) CGFloat maxY;
 
 @end

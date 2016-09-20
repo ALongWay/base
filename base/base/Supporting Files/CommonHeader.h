@@ -119,7 +119,8 @@
 #define LOG_METHOD                      ;
 #endif
 
-#pragma mark -- 弱引用宏定义
-#define WS(weakSelf)                    __weak typeof(self) weakSelf = self;
+#pragma mark -- 弱/强引用宏定义
+#define WeakSelf(weakSelf)              __weak typeof(self) weakSelf = self;
+#define StrongSelf(strongSelf)          __strong typeof(self) strongSelf = self;
 
 #endif /* CommonHeader_h */

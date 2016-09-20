@@ -16,17 +16,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     self.navigationItem.title = @"测试界面";
+
+    if (self.navigationController.viewControllers.count > 2) {
+        self.willHideNavigationBar = YES;
+    }
     
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
+    UIView *statusBarBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, StatusBarHeight)];
+    [statusBarBgView setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:statusBarBgView];
+    
+    UIView *naviBarBgView = [[UIView alloc] initWithFrame:CGRectMake(0, statusBarBgView.maxY, DeviceWidth, NaviBarHeight)];
+    [naviBarBgView setBackgroundColor:[UIColor blackColor]];
+    [self.view addSubview:naviBarBgView];
+
+    UIView *contentBgView = [[UIView alloc] initWithFrame:CGRectMake(0, naviBarBgView.maxY, DeviceWidth, NaviBarHeight)];
+    [contentBgView setBackgroundColor:[UIColor blueColor]];
+    [self.view addSubview:contentBgView];
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
-    button.center = CGPointMake(self.view.center.x, self.view.center.y - 100);
-    [button setTitle:@"截屏" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [button setCommonButtonWithText:@"截屏"];
+    button.center = CGPointMake(self.view.center.x, self.view.center.y - 150);
     [button addTarget:self action:@selector(testSnapshot) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
@@ -91,6 +102,18 @@
     LOG(@"decryptedAESMsg:%@", decryptedAESMsg);
     LOG(@"desMsg:%@", desMsg);
     LOG(@"decryptedDESMsg:%@", decryptedDESMsg);
+    
+    UIButton *nextUI = [UIButton createNavigationBarGrayTextButtonWithText:@"Next"];
+    [nextUI addTarget:self action:@selector(nextUI) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:nextUI];
+    
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+- (void)nextUI
+{
+    ViewController *newVC = [[ViewController alloc] init];
+    [self.navigationController pushViewController:newVC animated:YES];
 }
 
 - (void)testSnapshot
