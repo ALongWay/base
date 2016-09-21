@@ -13,5 +13,6 @@
 #import "NSData+CommonCrypto.h"
 #import "UIView+ModifyFrame.h"
 #import "UIButton+Initialization.h"
+#import "UINavigationController+PopGesture.h"
 
 #endif /* Categories_h */

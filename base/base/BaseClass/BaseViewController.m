@@ -25,6 +25,7 @@
 
     self.pageName = NSStringFromClass([self class]);
     self.willHideStatusBar = NO;
+    self.statusBarStyle = UIStatusBarStyleDefault;
     self.willHideNavigationBar = NO;
     
     //存在导航栏
@@ -36,7 +37,7 @@
         
         //设置导航栏
         [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-        [self.navigationController.navigationBar setTranslucent:NO];
+        [self.navigationController.navigationBar setTranslucent:YES];
         [self.navigationController.navigationBar setBackgroundImage:[ImageHelper getImageWithColor:NaviBarColor] forBarMetrics:UIBarMetricsDefault];
         [self.navigationController.navigationBar setShadowImage:[ImageHelper getImageWithColor:NaviBarShadowColor]];
         [self.navigationController.navigationBar setTitleTextAttributes:NaviBarTitleAttributes];
@@ -133,13 +134,22 @@
 {
     _isTappedBack = YES;
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)releaseVariables
 {
     //释放变量和资源
+    LOG(@"%@ releaseVariables", self.pageName);
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)dealloc
+{
+    LOG(@"%@ dealloc", self.pageName);
+    
+    [self releaseVariables];
 }
 
 @end
