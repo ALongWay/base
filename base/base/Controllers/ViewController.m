@@ -78,6 +78,8 @@
     NSString *message = @"测试各种加密解密方法abc123+=/";
     NSString *key = @"xyz123这是key";
     
+    LOG(@"message地址：%p", message);
+    
     NSString *base64Msg = [EncryptionHelper base64EncodeWithString:message];
     NSString *decodeMsg= [EncryptionHelper decodeBase64WithString:base64Msg];
     
