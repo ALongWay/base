@@ -72,7 +72,7 @@
 {
     [super viewDidDisappear:animated];
     
-    if (_isTappedBack) {
+    if (_isTappedBack || self.base_isBeingPoped) {
         [self releaseVariables];
     }
 }
