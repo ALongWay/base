@@ -135,10 +135,13 @@
 
 + (void)printAllCurrentSupportedFonts;
 
++ (void)printAllPrivateVariablesAndMethodsWithClassName:(NSString *)classname;
+
 + (NSString *)getDeviceVersion;
 
 + (NSString *)getAppShortVersion;
 
 + (NSString *)getAppBundleVersion;
+
 
 @end

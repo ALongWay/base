@@ -153,6 +153,13 @@ typedef NS_ENUM(NSInteger, ImageHelperBlurEffectStyle) {
  *
  *  @return 全屏截图
  */
-+ (UIImage *)getFullScreenSnapshot;
++ (UIImage *)getFullScreenSnapshotWithoutStatusBar;
+
+/**
+ *  全屏截图，包括状态栏
+ *
+ *  @return 全屏截图
+ */
++ (UIImage *)getFullScreenSnapshotWithStatusBar;
 
 @end

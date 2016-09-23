@@ -8,6 +8,7 @@
 
 #import "StringHelper.h"
 #import "sys/utsname.h"
+#import <objc/runtime.h>
 
 const static NSLineBreakMode commonLineBreakMode = NSLineBreakByCharWrapping;
 const static NSTextAlignment commonTextAlignment = NSTextAlignmentLeft;
@@ -379,6 +380,34 @@ static NSString *commonDateFormat = @"yyyy-MM-dd HH:mm:ss";
         for (NSString *fontName in [UIFont fontNamesForFamilyName:familyName]) {
             LOG(@"fontName : %@", fontName);
         }
+    }
+}
+
++ (void)printAllPrivateVariablesAndMethodsWithClassName:(NSString *)classname
+{
+    LOG(@"printAllPrivateVariablesAndMethodsWithClassName: %@", classname);
+    
+    unsigned int count;
+    
+    Ivar *vars = class_copyIvarList(NSClassFromString(classname), &count);
+    
+    for (int i = 0; i < count; i++) {
+        Ivar currentIvar = vars[i];
+        NSString *varName = [NSString stringWithUTF8String:ivar_getName(currentIvar)];
+        NSString *varType = [NSString stringWithUTF8String:ivar_getTypeEncoding(currentIvar)];
+        
+        LOG(@"var name: %@; var type: %@", varName, varType);
+    }
+    
+    Method *methods = class_copyMethodList(NSClassFromString(classname), &count);
+    
+    for (int i = 0; i < count; i++) {
+        Method currentMethod = methods[i];
+        SEL sel = method_getName(currentMethod);
+        NSString *methedName = [NSString stringWithUTF8String:sel_getName(sel)];
+        NSString *methedType = [NSString stringWithUTF8String:method_getTypeEncoding(currentMethod)];
+        
+        LOG(@"methed name: %@; methed type: %@", methedName, methedType);
     }
 }
 

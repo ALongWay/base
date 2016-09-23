@@ -135,7 +135,9 @@
     LOG(@"%@", testImg);
     testImg = [ImageHelper getSnapshotWithView:self.view];
     LOG(@"%@", testImg);
-    testImg = [ImageHelper getFullScreenSnapshot];
+    testImg = [ImageHelper getFullScreenSnapshotWithoutStatusBar];
+    LOG(@"%@", testImg);
+    testImg = [ImageHelper getFullScreenSnapshotWithStatusBar];
     LOG(@"%@", testImg);
     testImg = [ImageHelper getBlurEffectImageWithOriginalImage:testImg style:ImageHelperBlurEffectStyleDark];
     LOG(@"%@", testImg);
