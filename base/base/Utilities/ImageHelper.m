@@ -202,6 +202,22 @@
     return newImage;
 }
 
++ (UIImage *)getStatusBarSnapshot
+{
+//    [StringHelper printAllPrivateVariablesAndMethodsWithClassName:@"UIApplication"];
+
+    UIApplication *app = [UIApplication sharedApplication];
+    //私有变量得到状态栏
+    UIView *statusBar = [app valueForKeyPath:@"statusBar"];
+
+    UIGraphicsBeginImageContextWithOptions(statusBar.bounds.size, NO, 0.0);
+    [statusBar.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 + (UIImage *)getFullScreenSnapshotWithoutStatusBar
 {
     return [self getSnapshotWithView:[UIApplication sharedApplication].keyWindow];
@@ -209,13 +225,7 @@
 
 + (UIImage *)getFullScreenSnapshotWithStatusBar
 {
-//    [StringHelper printAllPrivateVariablesAndMethodsWithClassName:@"UIApplication"];
-    
-    UIApplication *app = [UIApplication sharedApplication];
-    //私有变量得到状态栏
-    UIView *statusBar = [app valueForKeyPath:@"statusBar"];
-    
-    UIImage *statusBarImage = [self getSnapshotWithView:statusBar];
+    UIImage *statusBarImage = [self getStatusBarSnapshot];
     UIImage *bgImage = [self getFullScreenSnapshotWithoutStatusBar];
     
     ImageHelperMergeImage *mergeImage1 = [ImageHelperMergeImage getImageHelperMergeImageWithImage:bgImage];

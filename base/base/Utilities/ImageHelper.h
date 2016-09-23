@@ -149,6 +149,13 @@ typedef NS_ENUM(NSInteger, ImageHelperBlurEffectStyle) {
 + (UIImage *)getSnapshotWithView:(UIView *)view;
 
 /**
+ *  获取状态栏的单独截图
+ *
+ *  @return 状态栏截图
+ */
++ (UIImage *)getStatusBarSnapshot;
+
+/**
  *  全屏截图，但不包括状态栏
  *
  *  @return 全屏截图

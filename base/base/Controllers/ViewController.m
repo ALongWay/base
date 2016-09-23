@@ -142,6 +142,8 @@
     testImg = [ImageHelper getBlurEffectImageWithOriginalImage:testImg style:ImageHelperBlurEffectStyleDark];
     LOG(@"%@", testImg);
     
+    LOG(@"%p", testImg);
+    
     UIView *coverView = [ImageHelper getBlurEffectViewWithOriginalView:[UIApplication sharedApplication].keyWindow style:ImageHelperBlurEffectStyleDark];
     [coverView setUserInteractionEnabled:YES];
     UITapGestureRecognizer *tapGest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(removeCoverView:)];
