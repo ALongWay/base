@@ -11,8 +11,8 @@
 
 //该头文件用于存放图片宏定义
 
-#define NoNaviBarBackBtnImage    @"noNaviBarBackBtn.png"
-#define NaviBarBackBtnImage      @"naviBarBackBtn.png"
-#define AppIcon                  @"Icon@3x.png"
+static NSString * const kImageNoNaviBarBackBtn = @"noNaviBarBackBtn.png";
+static NSString * const kImageNaviBarBackBtn = @"naviBarBackBtn.png";
+static NSString * const kImageAppIcon = @"Icon@3x.png";
 
 #endif /* ImagesHeader_h */

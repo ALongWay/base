@@ -44,7 +44,7 @@
         
         //返回按钮
         if (self.navigationController.viewControllers.count > 1) {
-            _backBtn = [UIButton createNavigationBarImageButtonWithImage:LOADIMAGE(NaviBarBackBtnImage)];
+            _backBtn = [UIButton createNavigationBarImageButtonWithImage:LOADIMAGE(kImageNaviBarBackBtn)];
             [_backBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
             UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:_backBtn];
             
@@ -89,7 +89,7 @@
 {
     if (!_backBtnWhenHideNaviBar) {
         _backBtnWhenHideNaviBar = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
-        [_backBtnWhenHideNaviBar setImage:LOADIMAGE(NoNaviBarBackBtnImage) forState:UIControlStateNormal];
+        [_backBtnWhenHideNaviBar setImage:LOADIMAGE(kImageNoNaviBarBackBtn) forState:UIControlStateNormal];
         [_backBtnWhenHideNaviBar addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
         _backBtnWhenHideNaviBar.center = CGPointMake(15 + _backBtnWhenHideNaviBar.frame.size.width / 2.0, StatusBarHeight + NaviBarHeight / 2.0);
     }

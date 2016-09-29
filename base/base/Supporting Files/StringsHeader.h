@@ -11,6 +11,6 @@
 
 //该头文件用于存放字符串宏定义
 
-#define HelloWorld          @"hello world"
+static NSString * const kStringHelloWorld = @"hello world";
 
 #endif /* StringsHeader_h */

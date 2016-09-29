@@ -41,7 +41,7 @@
     [button addTarget:self action:@selector(testSnapshot) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
-    UIImage *icon = LOADIMAGE(AppIcon);
+    UIImage *icon = LOADIMAGE(kImageAppIcon);
 
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(button.frame) + 20, ResizeSideBase6(60), ResizeSideBase6(60))];
     imageView.center = CGPointMake(self.view.center.x, imageView.center.y);
@@ -120,7 +120,7 @@
 
 - (void)testSnapshot
 {
-    UIImage *icon = LOADIMAGE(AppIcon);
+    UIImage *icon = LOADIMAGE(kImageAppIcon);
     
     UIImage *testImg;
     testImg = [ImageHelper getImageWithOriginalImage:icon scale:2];
