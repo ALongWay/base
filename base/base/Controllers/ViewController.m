@@ -120,8 +120,169 @@
 
 - (void)testSnapshot
 {
-    UIImage *icon = LOADIMAGE(kImageAppIcon);
+    //测试GCD
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_queue_t customSerialQueue = dispatch_queue_create("customserialqueue", DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t customConcurrentQueue  = dispatch_queue_create("customconcurrentqueue", DISPATCH_QUEUE_CONCURRENT);
     
+//    LOG(@"测试GCD dispatch_async");
+//    
+//    dispatch_async(mainQueue, ^{
+//        LOG(@"dispatch_async No.1 mainQueue : %@", [NSThread currentThread]);
+//    });
+//    
+//    dispatch_async(globalQueue, ^{
+//        LOG(@"dispatch_async No.2 globalQueue : %@", [NSThread currentThread]);
+//    });
+//    
+//    dispatch_async(customSerialQueue, ^{
+//        LOG(@"dispatch_async No.3 customSerialQueue : %@", [NSThread currentThread]);
+//    });
+//    
+//    dispatch_async(customConcurrentQueue, ^{
+//        LOG(@"dispatch_async No.4 customConcurrentQueue : %@", [NSThread currentThread]);
+//    });
+    
+//    LOG(@"测试GCD dispatch_sync");
+//
+////    dispatch_sync(mainQueue, ^{
+////        LOG(@"dispatch_sync No.1 mainQueue : %@", [NSThread currentThread]);
+////    });
+//    
+//    dispatch_sync(globalQueue, ^{
+//        LOG(@"dispatch_sync No.2 globalQueue : %@", [NSThread currentThread]);
+//    });
+//    
+//    dispatch_sync(customSerialQueue, ^{
+//        LOG(@"dispatch_sync No.3 customSerialQueue : %@", [NSThread currentThread]);
+//    });
+//    
+//    dispatch_sync(customConcurrentQueue, ^{
+//        LOG(@"dispatch_sync No.4 customConcurrentQueue : %@", [NSThread currentThread]);
+//    });
+    
+    LOG(@"测试GCD dispatch_async混合dispatch_sync");
+    LOG(@"mainThread : %@", [NSThread mainThread]);
+
+    dispatch_async(customSerialQueue, ^{
+        LOG(@"level 1 dispatch_async No.1 customSerialQueue : %@", [NSThread currentThread]);
+        
+        dispatch_async(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_async No.1 customSerialQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_async(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_async No.2 customSerialQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_async(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_async No.3 customSerialQueue : %@", [NSThread currentThread]);
+        });
+        
+        //==============================
+        dispatch_async(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_async No.4 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_async(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_async No.5 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_async(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_async No.6 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+        
+        //==============================
+        dispatch_sync(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_sync No.7 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_sync(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_sync No.8 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_sync(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_sync No.9 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+    });
+
+    dispatch_async(customConcurrentQueue, ^{
+        LOG(@"level 1 dispatch_async No.2 customConcurrentQueue : %@", [NSThread currentThread]);
+        
+        dispatch_sync(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_sync No.10 customSerialQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_sync(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_sync No.11 customSerialQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_sync(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_sync No.12 customSerialQueue : %@", [NSThread currentThread]);
+        });
+        
+        //==============================
+        dispatch_async(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_async No.13 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_async(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_async No.14 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_async(customConcurrentQueue, ^{
+            LOG(@"level 2 dispatch_async No.15 customConcurrentQueue : %@", [NSThread currentThread]);
+        });
+        
+        //==============================
+        dispatch_async(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_async No.16 customSerialQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_async(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_async No.17 customSerialQueue : %@", [NSThread currentThread]);
+        });
+        
+        dispatch_async(customSerialQueue, ^{
+            LOG(@"level 2 dispatch_async No.18 customSerialQueue : %@", [NSThread currentThread]);
+        });
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        LOG(@"dispatch_after 5 秒后执行");
+    });
+    
+    dispatch_apply(10, globalQueue, ^(size_t index) {
+        LOG(@"dispatch_apply : %zu", index);
+    });
+    
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_async(group, globalQueue, ^{
+        LOG(@"dispatch_group_async : 1");
+    });
+    
+    dispatch_group_async(group, globalQueue, ^{
+        LOG(@"dispatch_group_async : 2");
+    });
+    
+    dispatch_group_async(group, globalQueue, ^{
+        LOG(@"dispatch_group_async : 3");
+    });
+    
+    dispatch_group_async(group, globalQueue, ^{
+        LOG(@"dispatch_group_async : 4");
+    });
+    
+    dispatch_group_notify(group, globalQueue, ^{
+        LOG(@"dispatch_group_async : completion");
+    });
+    
+    return;
+    
+    UIImage *icon = LOADIMAGE(kImageAppIcon);
+
     UIImage *testImg;
     testImg = [ImageHelper getImageWithOriginalImage:icon scale:2];
     LOG(@"%@", testImg);

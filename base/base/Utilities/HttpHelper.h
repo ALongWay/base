@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *  @param method     method description
  *  @param apiRoute   接口路由名称
  *  @param parameters parameters description
- *  @param progress   progress description
+ *  @param progress   You are responsible for dispatching to the main queue for UI updates
  *  @param success    success description
  *  @param failure    failure description
  *
@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *  @param method     method description
  *  @param URLString  完整url字符串
  *  @param parameters parameters description
- *  @param progress   progress description
+ *  @param progress   You are responsible for dispatching to the main queue for UI updates
  *  @param success    success description
  *  @param failure    failure description
  *
@@ -84,14 +84,14 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *  上传单个图像
  *
  *  @param image          image description
- *  @param uploadProgress uploadProgress description
+ *  @param progress       You are responsible for dispatching to the main queue for UI updates
  *  @param success        success description
  *  @param failure        failure description
  *
  *  @return return value description
  */
 + (NSURLSessionDataTask *)uploadImage:(UIImage *)image
-                              progress:(void (^)(NSProgress *uploadProgress))uploadProgress
+                              progress:(void (^)(NSProgress *progress))progress
                                success:(void (^)(NSURLSessionDataTask *task, NSString *imageUrlString))success
                                failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
 
@@ -99,7 +99,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *  上传多个图像
  *
  *  @param images   图像数组
- *  @param progress 进度
+ *  @param progress You are responsible for dispatching to the main queue for UI updates
  *  @param success  success description
  *  @param failure  failure description
  */

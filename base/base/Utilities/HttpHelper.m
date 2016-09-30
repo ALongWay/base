@@ -114,7 +114,7 @@ static HttpHelper *instance;
 }
 
 + (NSURLSessionDataTask *)uploadImage:(UIImage *)image
-                             progress:(void (^)(NSProgress *uploadProgress))uploadProgress
+                             progress:(void (^)(NSProgress *progress))progress
                               success:(void (^)(NSURLSessionDataTask *task, NSString *imageUrlString))success
                               failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
@@ -134,7 +134,7 @@ static HttpHelper *instance;
         NSString *fileName = [NSString stringWithFormat:@"%@_%ldx%ld", dateString, (long)image.size.width, (long)image.size.height];
         
         [formData appendPartWithFileData:data name:@"data" fileName:fileName mimeType:@"image/jpeg"];
-    } progress:uploadProgress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    } progress:progress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         //获取访问图片的地址
         NSString *imageUrlString = [StringHelper getSafeDecodeStringFromJsonValue:[responseObject objectForKey:@"url"]];//示例键值
         success(task, imageUrlString);
@@ -170,33 +170,64 @@ static HttpHelper *instance;
             
             success(successArray,failureArray);
         };
-        
+                
         //采用了并发上传
+//        for (int i = 0; i < uploadImagesArray.count; i++) {
+//            [self uploadImage:[uploadImagesArray objectAtIndex:i] progress:^(NSProgress *uploadProgress) {
+//                //可以增加计算整体的上传百分比逻辑
+//                //To do
+//            } success:^(NSURLSessionDataTask *task, NSString *imageUrlString) {
+//                completedCount++;
+//
+//                progress(completedCount, uploadImagesArray.count);
+//                
+//                //保存返回的url
+//                [successArray replaceObjectAtIndex:i withObject:imageUrlString];
+//                
+//                if (completedCount == uploadImagesArray.count) {
+//                    completionBlock();
+//                }
+//            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//                completedCount++;
+//
+//                [failureArray addObject:[uploadImagesArray objectAtIndex:i]];
+//                
+//                if (completedCount == uploadImagesArray.count) {
+//                    completionBlock();
+//                }
+//            }];
+//        }
+        
+        //=======================================
+        //使用GCD
+        dispatch_group_t uploadGroup = dispatch_group_create();
+        dispatch_queue_t uploadQueue = dispatch_queue_create("uploadimagesqueue", DISPATCH_QUEUE_CONCURRENT);
+        
+        WeakSelf(weakSelf);
+        
         for (int i = 0; i < uploadImagesArray.count; i++) {
-            [self uploadImage:[uploadImagesArray objectAtIndex:i] progress:^(NSProgress *uploadProgress) {
-                //可以增加计算整体的上传百分比逻辑
-                //To do
-            } success:^(NSURLSessionDataTask *task, NSString *imageUrlString) {
-                completedCount++;
-
-                progress(completedCount, uploadImagesArray.count);
-                
-                //保存返回的url
-                [successArray replaceObjectAtIndex:i withObject:imageUrlString];
-                
-                if (completedCount == uploadImagesArray.count) {
-                    completionBlock();
-                }
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                completedCount++;
-
-                [failureArray addObject:[uploadImagesArray objectAtIndex:i]];
-                
-                if (completedCount == uploadImagesArray.count) {
-                    completionBlock();
-                }
-            }];
+            dispatch_group_async(uploadGroup, uploadQueue, ^{
+                [weakSelf uploadImage:[uploadImagesArray objectAtIndex:i] progress:^(NSProgress *uploadProgress) {
+                    //可以增加计算整体的上传百分比逻辑
+                    //To do
+                } success:^(NSURLSessionDataTask *task, NSString *imageUrlString) {
+                    completedCount++;
+                    
+                    progress(completedCount, uploadImagesArray.count);
+                    
+                    //保存返回的url
+                    [successArray replaceObjectAtIndex:i withObject:imageUrlString];
+                } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                    completedCount++;
+                    
+                    [failureArray addObject:[uploadImagesArray objectAtIndex:i]];
+                }];
+            });
         }
+        
+        dispatch_group_notify(uploadGroup, uploadQueue, ^{
+            completionBlock();
+        });
     }else{
         failure(nil, nil);
     }
