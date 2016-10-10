@@ -11,13 +11,11 @@
 #define kMaxUploadImageSize         (2 * 1024 * 1024) //2M
 
 //http头部中的User-Agent值
-static NSString * const userAgent = @"useragent";//示例值
+static NSString * const kUserAgent = @"useragent";//示例值
 
 static HttpHelper *instance;
 
 @interface HttpHelper ()
-
-@property (nonatomic, strong, readwrite) AFHTTPSessionManager *currentHttpSessionManager;
 
 @end
 
@@ -43,10 +41,8 @@ static HttpHelper *instance;
     AFHTTPSessionManager  *manager = [AFHTTPSessionManager manager];
     //增加自定义配置
 //    manager.securityPolicy.allowInvalidCertificates = YES;
-    [manager.requestSerializer setValue:userAgent forHTTPHeaderField:@"User-Agent"];
+    [manager.requestSerializer setValue:kUserAgent forHTTPHeaderField:@"User-Agent"];
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    [HttpHelper sharedManager].currentHttpSessionManager = manager;
     
     return manager;
 }
@@ -59,17 +55,17 @@ static HttpHelper *instance;
     return urlString;
 }
 
-+ (NSURLSessionDataTask *)requestWithMethod:(HttpHelperMethod)method
++ (AFHTTPSessionManager *)requestWithMethod:(HttpHelperMethod)method
                                    apiRoute:(NSString *)apiRoute
                                  parameters:(id)parameters
-                                   progress:(void (^)(NSProgress *))progress
-                                    success:(void (^)(NSURLSessionDataTask *, id))success
-                                    failure:(void (^)(NSURLSessionDataTask *, NSError *))failure
+                                   progress:(void (^)(NSProgress *progress))progress
+                                    success:(void (^)(NSURLSessionDataTask *task, id responseObject))success
+                                    failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
 {
     return [self requestWithMethod:method urlString:[self getCompletedUrlStringWithApiRoute:apiRoute] parameters:parameters progress:progress success:success failure:failure];
 }
 
-+ (NSURLSessionDataTask *)requestWithMethod:(HttpHelperMethod)method
++ (AFHTTPSessionManager *)requestWithMethod:(HttpHelperMethod)method
                                   urlString:(NSString *)URLString
                                  parameters:(id)parameters
                                    progress:(void (^)(NSProgress *progress))progress
@@ -79,75 +75,115 @@ static HttpHelper *instance;
     //对参数做统一处理
     //To do
     
+    AFHTTPSessionManager *manager = [self getCustomHttpSessionManager];
+    
     NSURLSessionDataTask *task;
     
     switch (method) {
         case Get: {
-            task = [[self getCustomHttpSessionManager] GET:URLString parameters:parameters progress:progress success:success failure:failure];
+            task = [manager GET:URLString parameters:parameters progress:progress success:success failure:failure];
             break;
         }
         case Post: {
-            task = [[self getCustomHttpSessionManager] POST:URLString parameters:parameters progress:progress success:success failure:failure];
+            task = [manager POST:URLString parameters:parameters progress:progress success:success failure:failure];
             break;
         }
         case Put: {
-            task = [[self getCustomHttpSessionManager] PUT:URLString parameters:parameters success:success failure:success];
+            task = [manager PUT:URLString parameters:parameters success:success failure:success];
             break;
         }
         case Delete: {
-            task = [[self getCustomHttpSessionManager] DELETE:URLString parameters:parameters success:success failure:failure];
+            task = [manager DELETE:URLString parameters:parameters success:success failure:failure];
             break;
         }
         case Patch: {
-            task = [[self getCustomHttpSessionManager] PATCH:URLString parameters:parameters success:success failure:failure];
+            task = [manager PATCH:URLString parameters:parameters success:success failure:failure];
             break;
         }
         case Head: {
-            task = [[self getCustomHttpSessionManager] HEAD:URLString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task) {
+            task = [manager HEAD:URLString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task) {
                 success(task, nil);
             } failure:failure];
             break;
         }
     }
 
-    return task;
+    return manager;
 }
 
-+ (NSURLSessionDataTask *)uploadImage:(UIImage *)image
+#pragma mark -- 上传图片
+NSString * const kUploadImageDataFieldName = @"data";
+NSString * const kUploadImageMimeType = @"image/jpeg";
+
++ (NSString *)getUploadImageFilename:(UIImage *)image
+{
+    NSString *dateString = [StringHelper getCurrentDateStringWithFormat:@"yyyyMMddHHmmssS"];
+    NSString *fileName = [NSString stringWithFormat:@"%@_%ldx%ld", dateString, (long)image.size.width, (long)image.size.height];
+
+    return fileName;
+}
+
++ (NSDictionary *)getUploadImageParameters
+{
+    //对参数做统一处理
+    //To do
+
+    return nil;
+}
+
++ (NSData *)getUploadImageDataWithUploadImage:(UIImage *)image
+{
+    NSData *data = UIImageJPEGRepresentation(image, 1);
+    
+    if (data.length > kMaxUploadImageSize) {
+        data = UIImageJPEGRepresentation(image, 0.7);//减小图像数据体积
+    }
+
+    return data;
+}
+
+/**
+ *  获取访问图片的地址
+ *
+ *  @param dic dic description
+ *
+ *  @return return value description
+ */
++ (NSString *)getUploadedImageUrlStringWithDictionary:(NSDictionary *)dic
+{
+    NSString *imageUrlString = [StringHelper getSafeDecodeStringFromJsonValue:[dic objectForKey:@"url"]];//示例键值
+
+    return imageUrlString;
+}
+
++ (AFHTTPSessionManager *)uploadImage:(UIImage *)image
                              progress:(void (^)(NSProgress *progress))progress
                               success:(void (^)(NSURLSessionDataTask *task, NSString *imageUrlString))success
                               failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
-    //增加参数
-    //To do
+    AFHTTPSessionManager *manager = [self getCustomHttpSessionManager];
     
-    NSString *uploadImageUrlString = kURLUploadImage;
-    
-    NSURLSessionDataTask *manager = [[self getCustomHttpSessionManager] POST:uploadImageUrlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        NSData *data = UIImageJPEGRepresentation(image, 1);
+    __weak typeof(self) weakSelf = self;
+    [manager POST:kURLUploadImage parameters:[self getUploadImageParameters] constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        NSData *data = [weakSelf getUploadImageDataWithUploadImage:image];
+        NSString *fileName = [weakSelf getUploadImageFilename:image];
         
-        if (data.length > kMaxUploadImageSize) {
-            data = UIImageJPEGRepresentation(image, 0.7);//减小图像数据体积
-        }
-        
-        NSString *dateString = [StringHelper getCurrentDateStringWithFormat:@"yyyyMMddHHmmssS"];
-        NSString *fileName = [NSString stringWithFormat:@"%@_%ldx%ld", dateString, (long)image.size.width, (long)image.size.height];
-        
-        [formData appendPartWithFileData:data name:@"data" fileName:fileName mimeType:@"image/jpeg"];
+        [formData appendPartWithFileData:data name:kUploadImageDataFieldName fileName:fileName mimeType:kUploadImageMimeType];
     } progress:progress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //获取访问图片的地址
-        NSString *imageUrlString = [StringHelper getSafeDecodeStringFromJsonValue:[responseObject objectForKey:@"url"]];//示例键值
+        NSString *imageUrlString = [weakSelf getUploadedImageUrlStringWithDictionary:responseObject];
         success(task, imageUrlString);
     } failure:failure];
     
     return manager;
 }
 
-+ (void)uploadImages:(NSArray<UIImage*> *)images
++ (AFHTTPSessionManager *)uploadImages:(NSArray<UIImage*> *)images
                               progress:(void (^)(NSInteger uploadedCount, NSInteger totalCount))progress
-                                success:(void (^)(NSArray<NSString*> *uploadedImageUrls, NSArray<UIImage*> *failureImages))success
-                               failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
-{    
+                               success:(void (^)(NSArray<NSString*> *uploadedImageUrls, NSArray<UIImage*> *failureImages))success
+                               failure:(void (^)(void))failure
+{
+    __block AFHTTPSessionManager *manager = [self getCustomHttpSessionManager];
+    
     NSArray* uploadImagesArray = [NSArray arrayWithArray:images];
     
     if (uploadImagesArray.count > 0) {
@@ -172,65 +208,46 @@ static HttpHelper *instance;
         };
                 
         //采用了并发上传
-//        for (int i = 0; i < uploadImagesArray.count; i++) {
-//            [self uploadImage:[uploadImagesArray objectAtIndex:i] progress:^(NSProgress *uploadProgress) {
-//                //可以增加计算整体的上传百分比逻辑
-//                //To do
-//            } success:^(NSURLSessionDataTask *task, NSString *imageUrlString) {
-//                completedCount++;
-//
-//                progress(completedCount, uploadImagesArray.count);
-//                
-//                //保存返回的url
-//                [successArray replaceObjectAtIndex:i withObject:imageUrlString];
-//                
-//                if (completedCount == uploadImagesArray.count) {
-//                    completionBlock();
-//                }
-//            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//                completedCount++;
-//
-//                [failureArray addObject:[uploadImagesArray objectAtIndex:i]];
-//                
-//                if (completedCount == uploadImagesArray.count) {
-//                    completionBlock();
-//                }
-//            }];
-//        }
-        
-        //=======================================
-        //使用GCD
-        dispatch_group_t uploadGroup = dispatch_group_create();
-        dispatch_queue_t uploadQueue = dispatch_queue_create("uploadimagesqueue", DISPATCH_QUEUE_CONCURRENT);
-        
-        WeakSelf(weakSelf);
+        __weak typeof(self) weakSelf = self;
         
         for (int i = 0; i < uploadImagesArray.count; i++) {
-            dispatch_group_async(uploadGroup, uploadQueue, ^{
-                [weakSelf uploadImage:[uploadImagesArray objectAtIndex:i] progress:^(NSProgress *uploadProgress) {
-                    //可以增加计算整体的上传百分比逻辑
-                    //To do
-                } success:^(NSURLSessionDataTask *task, NSString *imageUrlString) {
-                    completedCount++;
-                    
-                    progress(completedCount, uploadImagesArray.count);
-                    
-                    //保存返回的url
-                    [successArray replaceObjectAtIndex:i withObject:imageUrlString];
-                } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                    completedCount++;
-                    
-                    [failureArray addObject:[uploadImagesArray objectAtIndex:i]];
-                }];
-            });
+            UIImage *image = [uploadImagesArray objectAtIndex:i];
+            
+            [manager POST:kURLUploadImage parameters:[self getUploadImageParameters] constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+                NSData *data = [weakSelf getUploadImageDataWithUploadImage:image];
+                NSString *fileName = [weakSelf getUploadImageFilename:image];
+                
+                [formData appendPartWithFileData:data name:kUploadImageDataFieldName fileName:fileName mimeType:kUploadImageMimeType];
+            } progress:^(NSProgress * _Nonnull uploadProgress) {
+                //可以增加计算整体的上传百分比逻辑
+                //To do
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                completedCount++;
+                
+                progress(completedCount, uploadImagesArray.count);
+                
+                //保存返回的url
+                NSString *imageUrlString = [weakSelf getUploadedImageUrlStringWithDictionary:responseObject];
+                [successArray replaceObjectAtIndex:i withObject:imageUrlString];
+                
+                if (completedCount == uploadImagesArray.count) {
+                    completionBlock();
+                }
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                completedCount++;
+                
+                [failureArray addObject:[uploadImagesArray objectAtIndex:i]];
+                
+                if (completedCount == uploadImagesArray.count) {
+                    completionBlock();
+                }
+            }];
         }
-        
-        dispatch_group_notify(uploadGroup, uploadQueue, ^{
-            completionBlock();
-        });
     }else{
-        failure(nil, nil);
+        failure();
     }
+    
+    return manager;
 }
 
 @end

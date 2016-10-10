@@ -51,6 +51,13 @@
     [db close];
 }
 
++ (void)removeObject:(id)object forKey:(NSString *)key withName:(NSString *)name
+{
+    LevelDB *db = [self getLevelDBWithName:name];
+    [db removeObjectForKey:key];
+    [db close];
+}
+
 + (void)clearAllLevelDBFileCache
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

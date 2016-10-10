@@ -20,14 +20,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
 @interface HttpHelper : NSObject
 
 /**
- *  当前保留的manager
- */
-@property (nonatomic, strong, readonly) AFHTTPSessionManager *currentHttpSessionManager;
-
-+ (HttpHelper *)sharedManager;
-
-/**
- *  网络请求自动调用该方法，每次调用，创建新的自定义的httpSessionManager，刷新currentHttpSessionManager
+ *  网络请求自动调用该方法，每次调用，创建新的自定义的httpSessionManager
  *  该方法也可用于自行调用AFHTTPSessionManager的方法
  *
  *  @return return value description
@@ -55,7 +48,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *
  *  @return return value description
  */
-+ (NSURLSessionDataTask *)requestWithMethod:(HttpHelperMethod)method
++ (AFHTTPSessionManager *)requestWithMethod:(HttpHelperMethod)method
                                   apiRoute:(NSString *)apiRoute
                                  parameters:(id)parameters
                                    progress:(void (^)(NSProgress *progress))progress
@@ -73,7 +66,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *
  *  @return return value description
  */
-+ (NSURLSessionDataTask *)requestWithMethod:(HttpHelperMethod)method
++ (AFHTTPSessionManager *)requestWithMethod:(HttpHelperMethod)method
                                   urlString:(NSString *)URLString
                                  parameters:(id)parameters
                                    progress:(void (^)(NSProgress *progress))progress
@@ -90,7 +83,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *
  *  @return return value description
  */
-+ (NSURLSessionDataTask *)uploadImage:(UIImage *)image
++ (AFHTTPSessionManager *)uploadImage:(UIImage *)image
                               progress:(void (^)(NSProgress *progress))progress
                                success:(void (^)(NSURLSessionDataTask *task, NSString *imageUrlString))success
                                failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
@@ -103,9 +96,9 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *  @param success  success description
  *  @param failure  failure description
  */
-+ (void)uploadImages:(NSArray<UIImage*> *)images
++ (AFHTTPSessionManager *)uploadImages:(NSArray<UIImage*> *)images
                               progress:(void (^)(NSInteger uploadedCount, NSInteger totalCount))progress
                                 success:(void (^)(NSArray<NSString*> *uploadedImageUrls, NSArray<UIImage*> *failureImages))success
-                               failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
+                               failure:(void (^)(void))failure;
 
 @end

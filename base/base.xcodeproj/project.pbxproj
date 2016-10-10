@@ -57,6 +57,12 @@
 		67BF70831D7D8047009E253A /* fzzy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70821D7D8047009E253A /* fzzy.ttf */; };
 		67C00BE01D87D876009BA769 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C00BDF1D87D876009BA769 /* UIImage+ImageEffects.m */; };
 		67C00BE31D880272009BA769 /* UIView+ModifyFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C00BE21D880272009BA769 /* UIView+ModifyFrame.m */; };
+		67E0527C1DAA1A2200AAA3EA /* UIRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E0527B1DAA1A2200AAA3EA /* UIRouter.m */; };
+		67EFC8681DAB3B46004F198A /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = 67EFC8671DAB3B46004F198A /* ReadMe */; };
+		67EFC86A1DAB3C76004F198A /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = 67EFC8691DAB3C76004F198A /* ReadMe */; };
+		67EFC86C1DAB3D05004F198A /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = 67EFC86B1DAB3D05004F198A /* ReadMe */; };
+		67EFC8701DAB3F80004F198A /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = 67EFC86F1DAB3F80004F198A /* ReadMe */; };
+		67EFC8731DAB40A0004F198A /* BaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFC8721DAB40A0004F198A /* BaseModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +182,15 @@
 		67C00BDF1D87D876009BA769 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		67C00BE11D880272009BA769 /* UIView+ModifyFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ModifyFrame.h"; sourceTree = "<group>"; };
 		67C00BE21D880272009BA769 /* UIView+ModifyFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ModifyFrame.m"; sourceTree = "<group>"; };
+		67E0527A1DAA1A2200AAA3EA /* UIRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRouter.h; sourceTree = "<group>"; };
+		67E0527B1DAA1A2200AAA3EA /* UIRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIRouter.m; sourceTree = "<group>"; };
+		67EFC8661DAB39E9004F198A /* AllViewControllerHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AllViewControllerHeaders.h; sourceTree = "<group>"; };
+		67EFC8671DAB3B46004F198A /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
+		67EFC8691DAB3C76004F198A /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
+		67EFC86B1DAB3D05004F198A /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
+		67EFC86F1DAB3F80004F198A /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
+		67EFC8711DAB40A0004F198A /* BaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseModel.h; sourceTree = "<group>"; };
+		67EFC8721DAB40A0004F198A /* BaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +209,7 @@
 		6734617D1D7FABDD00066BEF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				67EFC86F1DAB3F80004F198A /* ReadMe */,
 				6734619B1D800B4300066BEF /* Utilities.h */,
 				6734617E1D7FACDA00066BEF /* StringHelper.h */,
 				6734617F1D7FACDA00066BEF /* StringHelper.m */,
@@ -278,6 +294,7 @@
 		676C046C1D8E3440003EB057 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				67EFC8671DAB3B46004F198A /* ReadMe */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -342,6 +359,8 @@
 				676C08DE1D8FC740003EB057 /* BaseViewController.m */,
 				676C08E01D8FC75D003EB057 /* BaseView.h */,
 				676C08E11D8FC75D003EB057 /* BaseView.m */,
+				67EFC8711DAB40A0004F198A /* BaseModel.h */,
+				67EFC8721DAB40A0004F198A /* BaseModel.m */,
 			);
 			path = BaseClass;
 			sourceTree = "<group>";
@@ -424,16 +443,18 @@
 				6791162F1D7675C500432E46 /* AppDelegate.h */,
 				679116301D7675C500432E46 /* AppDelegate.m */,
 				676C08DC1D8FC713003EB057 /* BaseClass */,
+				67E052791DAA19D400AAA3EA /* UIRouter */,
 				676C046B1D8E3440003EB057 /* Controllers */,
 				676C046D1D8E3440003EB057 /* Views */,
 				676C046C1D8E3440003EB057 /* Models */,
+				67E052761DAA172D00AAA3EA /* BusinessModules */,
 				673461901D7FC7D700066BEF /* Libraries */,
 				6734618F1D7FC7D700066BEF /* Categories */,
 				6734617D1D7FABDD00066BEF /* Utilities */,
 				67BF707D1D7D7C07009E253A /* Resources */,
 				6791164A1D76CEEF00432E46 /* Supporting Files */,
-				679116351D7675C600432E46 /* Main.storyboard */,
 				679116381D7675C600432E46 /* Assets.xcassets */,
+				679116351D7675C600432E46 /* Main.storyboard */,
 				6791163A1D7675C600432E46 /* LaunchScreen.storyboard */,
 			);
 			path = base;
@@ -485,6 +506,49 @@
 				67BF70801D7D7C55009E253A /* Icon@3x.png */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		67E052761DAA172D00AAA3EA /* BusinessModules */ = {
+			isa = PBXGroup;
+			children = (
+				67EFC86B1DAB3D05004F198A /* ReadMe */,
+				67EFC86E1DAB3E43004F198A /* AccountModule */,
+				67E052771DAA172D00AAA3EA /* LoginModule */,
+				67E052781DAA172D00AAA3EA /* SettingModule */,
+			);
+			path = BusinessModules;
+			sourceTree = "<group>";
+		};
+		67E052771DAA172D00AAA3EA /* LoginModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LoginModule;
+			sourceTree = "<group>";
+		};
+		67E052781DAA172D00AAA3EA /* SettingModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SettingModule;
+			sourceTree = "<group>";
+		};
+		67E052791DAA19D400AAA3EA /* UIRouter */ = {
+			isa = PBXGroup;
+			children = (
+				67EFC8691DAB3C76004F198A /* ReadMe */,
+				67EFC8661DAB39E9004F198A /* AllViewControllerHeaders.h */,
+				67E0527A1DAA1A2200AAA3EA /* UIRouter.h */,
+				67E0527B1DAA1A2200AAA3EA /* UIRouter.m */,
+			);
+			path = UIRouter;
+			sourceTree = "<group>";
+		};
+		67EFC86E1DAB3E43004F198A /* AccountModule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AccountModule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -549,14 +613,18 @@
 				6791163C1D7675C600432E46 /* LaunchScreen.storyboard in Resources */,
 				676C08ED1D910ADF003EB057 /* naviBarBackBtn@2x.png in Resources */,
 				67BF70831D7D8047009E253A /* fzzy.ttf in Resources */,
+				67EFC86C1DAB3D05004F198A /* ReadMe in Resources */,
 				679116391D7675C600432E46 /* Assets.xcassets in Resources */,
+				67EFC86A1DAB3C76004F198A /* ReadMe in Resources */,
 				676C08E91D910ADF003EB057 /* noNaviBarBackBtn.png in Resources */,
 				679116371D7675C600432E46 /* Main.storyboard in Resources */,
 				676C08EB1D910ADF003EB057 /* noNaviBarBackBtn@3x.png in Resources */,
 				676C08EE1D910ADF003EB057 /* naviBarBackBtn@3x.png in Resources */,
 				67BF70811D7D7C55009E253A /* Icon@3x.png in Resources */,
+				67EFC8701DAB3F80004F198A /* ReadMe in Resources */,
 				67BF705E1D781E35009E253A /* InfoPlist.strings in Resources */,
 				676C08EA1D910ADF003EB057 /* noNaviBarBackBtn@2x.png in Resources */,
+				67EFC8681DAB3B46004F198A /* ReadMe in Resources */,
 				676C08EC1D910ADF003EB057 /* naviBarBackBtn.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,6 +646,7 @@
 				676C04651D895A7F003EB057 /* UIButton+Initialization.m in Sources */,
 				679116311D7675C500432E46 /* AppDelegate.m in Sources */,
 				676C04701D8E3648003EB057 /* ViewController.m in Sources */,
+				67EFC8731DAB40A0004F198A /* BaseModel.m in Sources */,
 				676C095C1D9D0BAC003EB057 /* UIWebView+AFNetworking.m in Sources */,
 				67C00BE01D87D876009BA769 /* UIImage+ImageEffects.m in Sources */,
 				676C094E1D9D0BAC003EB057 /* AFHTTPSessionManager.m in Sources */,
@@ -596,6 +665,7 @@
 				676C09571D9D0BAC003EB057 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				676C095F1D9D207C003EB057 /* HttpHelper.m in Sources */,
 				673461971D7FC7D700066BEF /* GTMBase64.m in Sources */,
+				67E0527C1DAA1A2200AAA3EA /* UIRouter.m in Sources */,
 				676C09541D9D0BAC003EB057 /* AFAutoPurgingImageCache.m in Sources */,
 				676C09511D9D0BAC003EB057 /* AFURLRequestSerialization.m in Sources */,
 				676C09581D9D0BAC003EB057 /* UIButton+AFNetworking.m in Sources */,

@@ -56,7 +56,7 @@
     CGFloat lineHeight = 25;
     
     CGSize contentSize = [StringHelper getStringSizeWith:content font:font lineHeight:lineHeight maxWidth:DeviceWidth];
-    NSAttributedString *attrStr = [StringHelper getAttributedStringWithString:content font:font color:color lineHeight:lineHeight maxWidth:DeviceWidth];
+    NSAttributedString *attrStr = [StringHelper getAttributedStringWithString:content font:font color:color lineHeight:lineHeight];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame) + 20, DeviceWidth, contentSize.height)];
     [label setBackgroundColor:[UIColor blackColor]];
@@ -114,8 +114,20 @@
 
 - (void)nextUI
 {
-    ViewController *newVC = [[ViewController alloc] init];
-    [self.navigationController pushViewController:newVC animated:YES];
+//    ViewController *newVC = [[ViewController alloc] init];
+//    [self.navigationController pushViewController:newVC animated:YES];
+    
+//    [UIRouter pushFromController:self toClass:@"ViewController" animated:YES];
+    
+//    WeakSelf(weakSelf);
+//    [UIRouter pushToClass:@"ViewController" beReady:^(UIViewController *toController) {
+//        toController.hidesBottomBarWhenPushed = YES;
+//        [weakSelf.navigationController pushViewController:toController animated:YES];
+//    }];
+    
+    [UIRouter pushFromController:self toClass:@"ViewController" withParameters:nil];
+
+//    [UIRouter pushFromController:self toClass:@"TestViewController" withParameters:nil];
 }
 
 - (void)testSnapshot

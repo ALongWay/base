@@ -81,10 +81,24 @@ static NSString *commonDateFormat = @"yyyy-MM-dd HH:mm:ss";
     
     return [self getStringSizeWith:string attributes:dic maxHeight:maxHeight];
 }
+
++ (CGSize)getAttributedStringSizeWith:(NSAttributedString *)attrString maxWidth:(CGFloat)maxWidth
+{
+    CGSize size = [attrString boundingRectWithSize:CGSizeMake(maxWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+    
+    return size;
+}
+
++ (CGSize)getAttributedStringSizeWith:(NSAttributedString *)attrString maxHeight:(CGFloat)maxHeight
+{
+    CGSize size = [attrString boundingRectWithSize:CGSizeMake(MAXFLOAT, maxHeight) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+    
+    return size;
+}
 #pragma mark -- 】计算字符串尺寸
 
 #pragma mark -- 【生成属性字符串
-+ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color lineHeight:(CGFloat)lineHeight maxWidth:(CGFloat)maxWidth
++ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color lineHeight:(CGFloat)lineHeight
 {
     CGFloat perLineHeight = [StringHelper getStringSizeWith:@"内容" font:font].height;
     CGFloat lineSpacing = (lineHeight - perLineHeight)/2.5;//2.5是在实际应用中，调校的值
@@ -100,10 +114,10 @@ static NSString *commonDateFormat = @"yyyy-MM-dd HH:mm:ss";
     paragraphStyle.paragraphSpacing = 0;//段间距
     paragraphStyle.alignment = commonTextAlignment;
 
-    return [self getAttributedStringWithString:string font:font color:color paragraphStyle:paragraphStyle maxWidth:maxWidth];
+    return [self getAttributedStringWithString:string font:font color:color paragraphStyle:paragraphStyle];
 }
 
-+ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color paragraphStyle:(NSParagraphStyle *)paragraphStyle maxWidth:(CGFloat)maxWidth
++ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color paragraphStyle:(NSParagraphStyle *)paragraphStyle
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:font forKey:NSFontAttributeName];

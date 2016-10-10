@@ -40,6 +40,15 @@
 + (void)setObject:(id)object forKey:(NSString *)key withName:(NSString *)name;
 
 /**
+ *  移除key对应的对象
+ *
+ *  @param object object description
+ *  @param key    key description
+ *  @param name   name description
+ */
++ (void)removeObject:(id)object forKey:(NSString *)key withName:(NSString *)name;
+
+/**
  *  清除全部levelDB缓存数据
  */
 + (void)clearAllLevelDBFileCache;

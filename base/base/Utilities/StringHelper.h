@@ -26,12 +26,17 @@
 + (CGSize)getStringSizeWith:(NSString *)string font:(UIFont *)font maxWidth:(CGFloat)maxWidth;
 
 + (CGSize)getStringSizeWith:(NSString *)string font:(UIFont *)font maxHeight:(CGFloat)maxHeight;
+
+#pragma mark -- 计算属性字符串尺寸
++ (CGSize)getAttributedStringSizeWith:(NSAttributedString *)attrString maxWidth:(CGFloat)maxWidth;
+
++ (CGSize)getAttributedStringSizeWith:(NSAttributedString *)attrString maxHeight:(CGFloat)maxHeight;
 #pragma mark -- 】计算字符串尺寸
 
 #pragma mark -- 【生成属性字符串
-+ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color lineHeight:(CGFloat)lineHeight maxWidth:(CGFloat)maxWidth;
++ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color lineHeight:(CGFloat)lineHeight;
 
-+ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color paragraphStyle:(NSParagraphStyle *)paragraphStyle maxWidth:(CGFloat)maxWidth;
++ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color paragraphStyle:(NSParagraphStyle *)paragraphStyle;
 #pragma mark -- 】生成属性字符串
 
 #pragma mark -- 【处理时间字符串
