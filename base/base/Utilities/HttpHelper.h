@@ -74,10 +74,10 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
                                     failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
 
 /**
- *  上传单个图像
+ *  上传单个图像，自动缓存
  *
  *  @param image          image description
- *  @param progress       You are responsible for dispatching to the main queue for UI updates
+ *  @param progress       You are responsible for dispatching to the main queue for UI updates(progress.fractionCompleted)
  *  @param success        success description
  *  @param failure        failure description
  *
@@ -89,7 +89,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
                                failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure;
 
 /**
- *  上传多个图像
+ *  上传多个图像，自动缓存
  *
  *  @param images   图像数组
  *  @param progress You are responsible for dispatching to the main queue for UI updates
@@ -100,5 +100,31 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
                               progress:(void (^)(NSInteger uploadedCount, NSInteger totalCount))progress
                                 success:(void (^)(NSArray<NSString*> *uploadedImageUrls, NSArray<UIImage*> *failureImages))success
                                failure:(void (^)(void))failure;
+
+/**
+ *  下载单个图像，自动缓存
+ *
+ *  @param url            url description
+ *  @param progressBlock  progressBlock description
+ *  @param completedBlock completedBlock description
+ *
+ *  @return return value description
+ */
++ (SDWebImageManager *)downloadImageWithURL:(NSURL *)url
+                                   progress:(void(^)(NSInteger receivedSize, NSInteger expectedSize, NSURL *targetURL))progressBlock
+                                  completed:(void(^)(UIImage *image, NSData *data, NSError *error, BOOL finished, NSURL *imageURL))completedBlock;
+
+/**
+ *  下载多个图片，自动缓存
+ *
+ *  @param urls            urls description
+ *  @param progressBlock   progressBlock description
+ *  @param completionBlock completionBlock description
+ *
+ *  @return return value description
+ */
++ (SDWebImagePrefetcher *)downloadImagesWithUrls:(NSArray<NSURL *> *)urls
+                                        progress:(void(^)(NSUInteger downloadedCount, NSUInteger totalCount))progressBlock
+                                       completed:(void(^)(NSUInteger downloadedCount, NSUInteger failureCount))completionBlock;
 
 @end

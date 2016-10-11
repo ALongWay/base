@@ -18,5 +18,7 @@
 #import "GTMBase64.h"
 #import "LevelDB.h"
 #import "AFNetworking.h"
+#import "SDWebImageHeader.h"
+#import "FLAnimatedImageView.h"
 
 #endif /* Libraries_h */

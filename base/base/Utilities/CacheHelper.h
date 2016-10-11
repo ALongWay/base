@@ -10,9 +10,11 @@
 
 typedef void(^archiveSuccessBlock)(void);
 
-#define AppArchivedFilesRootFile            @"appArchivedFiles"
+static NSString * const kAppImageCacheRootDirectory    = @"appImageCache";
 
-#define PersonalInfoArchivedFileName        @"personalInfo.archiver"
+static NSString * const kAppArchivedFilesRootDirectory = @"appArchivedFiles";
+
+static NSString * const kPersonalInfoArchivedFileName  = @"personalInfo.archiver";
 
 @interface CacheHelper : NSObject
 
@@ -66,5 +68,40 @@ typedef void(^archiveSuccessBlock)(void);
  *  @return 字典数据
  */
 + (NSDictionary *)unarchiveDataWithFilename:(NSString *)filename;
+
+@end
+
+#pragma mark -
+@interface CacheHelper (SDWebImageCache)
+
+/**
+ *  获取应用的图片缓存的根目录
+ *
+ *  @return return value description
+ */
++ (NSString *)getAppImageCacheRootPath;
+
+/**
+ *  获取应用的图片缓存信息：图片数量和总体积
+ *
+ *  @param completionBlock completionBlock description
+ */
++ (void)getAppImageCacheInformationWithCalculateCompletionBlock:(void (^)(NSInteger fileCount, NSInteger totalSize))completionBlock;
+
+/**
+ *  根据网络请求的图片地址，存储图像
+ *
+ *  @param image           image description
+ *  @param imageUrlString  imageUrlString description
+ *  @param completionBlock completionBlock description
+ */
++ (void)storeImage:(UIImage *)image withImageUrlString:(NSString *)imageUrlString completion:(void(^)())completionBlock;
+
+/**
+ *  清除缓存的应用图片
+ *
+ *  @param completion completion description
+ */
++ (void)clearAppImageCacheWithCompletion:(void(^)())completion;
 
 @end

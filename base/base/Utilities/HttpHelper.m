@@ -152,7 +152,7 @@ NSString * const kUploadImageMimeType = @"image/jpeg";
 + (NSString *)getUploadedImageUrlStringWithDictionary:(NSDictionary *)dic
 {
     NSString *imageUrlString = [StringHelper getSafeDecodeStringFromJsonValue:[dic objectForKey:@"url"]];//示例键值
-
+    
     return imageUrlString;
 }
 
@@ -171,6 +171,10 @@ NSString * const kUploadImageMimeType = @"image/jpeg";
         [formData appendPartWithFileData:data name:kUploadImageDataFieldName fileName:fileName mimeType:kUploadImageMimeType];
     } progress:progress success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSString *imageUrlString = [weakSelf getUploadedImageUrlStringWithDictionary:responseObject];
+        
+        //缓存该图片
+        [CacheHelper storeImage:image withImageUrlString:imageUrlString completion:nil];
+        
         success(task, imageUrlString);
     } failure:failure];
     
@@ -230,6 +234,9 @@ NSString * const kUploadImageMimeType = @"image/jpeg";
                 NSString *imageUrlString = [weakSelf getUploadedImageUrlStringWithDictionary:responseObject];
                 [successArray replaceObjectAtIndex:i withObject:imageUrlString];
                 
+                //缓存该图片
+                [CacheHelper storeImage:image withImageUrlString:imageUrlString completion:nil];
+
                 if (completedCount == uploadImagesArray.count) {
                     completionBlock();
                 }
@@ -248,6 +255,30 @@ NSString * const kUploadImageMimeType = @"image/jpeg";
     }
     
     return manager;
+}
+
++ (SDWebImageManager *)downloadImageWithURL:(NSURL *)url
+                                   progress:(void(^)(NSInteger receivedSize, NSInteger expectedSize, NSURL *targetURL))progressBlock
+                                  completed:(void(^)(UIImage *image, NSData *data, NSError *error, BOOL finished, NSURL *imageURL))completedBlock;
+{
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager loadImageWithURL:url options:SDWebImageRetryFailed | SDWebImageLowPriority progress:progressBlock completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+        completedBlock(image, data, error, finished, imageURL);
+    }];
+    
+    return manager;
+}
+
++ (SDWebImagePrefetcher *)downloadImagesWithUrls:(NSArray<NSURL *> *)urls
+                                        progress:(void(^)(NSUInteger downloadedCount, NSUInteger totalCount))progressBlock
+                                       completed:(void(^)(NSUInteger downloadedCount, NSUInteger failureCount))completionBlock;
+{
+ 
+    SDWebImagePrefetcher *prefetcher = [SDWebImagePrefetcher sharedImagePrefetcher];
+    prefetcher.options = SDWebImageRetryFailed | SDWebImageLowPriority;
+    [prefetcher prefetchURLs:urls progress:progressBlock completed:completionBlock];
+    
+    return prefetcher;
 }
 
 @end

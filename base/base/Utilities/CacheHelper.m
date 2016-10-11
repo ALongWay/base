@@ -12,7 +12,7 @@
 
 + (NSString *)getAppArchivedFilesRootPath
 {
-    NSString *filename = AppArchivedFilesRootFile;
+    NSString *filename = kAppArchivedFilesRootDirectory;
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *rootPath = [paths[0] stringByAppendingPathComponent:filename];
@@ -102,4 +102,30 @@
     return dic;
 }
 
+@end
+
+#pragma mark -
+@implementation CacheHelper (SDWebImageCache)
+
++ (NSString *)getAppImageCacheRootPath
+{
+    return [[SDImageCache sharedImageCache] makeDiskCachePath:kAppImageCacheRootDirectory];
+}
+
++ (void)getAppImageCacheInformationWithCalculateCompletionBlock:(void (^)(NSInteger, NSInteger))completionBlock
+{
+    [[SDImageCache sharedImageCache] calculateSizeWithCompletionBlock:^(NSUInteger fileCount, NSUInteger totalSize) {
+        completionBlock(fileCount, totalSize);
+    }];
+}
+
++ (void)storeImage:(UIImage *)image withImageUrlString:(NSString *)imageUrlString completion:(void (^)())completionBlock
+{
+    [[SDImageCache sharedImageCache] storeImage:image forKey:imageUrlString toDisk:YES completion:completionBlock];
+}
+
++ (void)clearAppImageCacheWithCompletion:(void (^)())completion
+{
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:completion];
+}
 @end
