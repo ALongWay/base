@@ -27,12 +27,10 @@
 
 #define ShowNaviBar
 #ifdef ShowNaviBar
-    UINavigationController *naviC = [[UINavigationController alloc] initWithRootViewController:_rootVC];
-    _window.rootViewController = naviC;
+    _window.rootViewController = [UIRouter sharedManager].tabBarC;
 #else
     _window.rootViewController = _rootVC;
 #endif
-
     
     [_window makeKeyAndVisible];
     

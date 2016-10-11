@@ -13,11 +13,67 @@
 
 static UIRouter *router;
 
+@interface UIRouter ()
+
+@property (nonatomic, strong, readwrite) UITabBarController      *tabBarC;
+
+@property (nonatomic, strong, readwrite) UINavigationController  *naviC1;
+@property (nonatomic, strong, readwrite) UINavigationController  *naviC2;
+@property (nonatomic, strong, readwrite) UINavigationController  *naviC3;
+@property (nonatomic, strong, readwrite) UINavigationController  *naviC4;
+
+@property (nonatomic, strong, readwrite) ViewController          *rootVC1;
+@property (nonatomic, strong, readwrite) ViewController          *rootVC2;
+@property (nonatomic, strong, readwrite) ViewController          *rootVC3;
+@property (nonatomic, strong, readwrite) ViewController          *rootVC4;
+
+@end
+
 @implementation UIRouter
 
 - (instancetype)init
 {
-    return [UIRouter sharedManager];
+    self = [super init];
+    if (self) {
+        [self buildAppBaseUI];
+    }
+    
+    return self;
+}
+
+- (void)buildAppBaseUI
+{
+    _rootVC1 = [[ViewController alloc] init];
+    _rootVC2 = [[ViewController alloc] init];
+    _rootVC3 = [[ViewController alloc] init];
+    _rootVC4 = [[ViewController alloc] init];
+    
+    _rootVC1.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"1" image:[LOADIMAGE(kImageNoNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[LOADIMAGE(kImageNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    _rootVC2.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"2" image:[LOADIMAGE(kImageNoNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[LOADIMAGE(kImageNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    _rootVC3.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"3" image:[LOADIMAGE(kImageNoNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[LOADIMAGE(kImageNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    _rootVC4.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"4" image:[LOADIMAGE(kImageNoNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[LOADIMAGE(kImageNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    
+    _naviC1 = [[UINavigationController alloc] initWithRootViewController:_rootVC1];
+    _naviC2 = [[UINavigationController alloc] initWithRootViewController:_rootVC2];
+    _naviC3 = [[UINavigationController alloc] initWithRootViewController:_rootVC3];
+    _naviC4 = [[UINavigationController alloc] initWithRootViewController:_rootVC4];
+    
+    _tabBarC = [[UITabBarController alloc] init];
+    //_tabBarC.delegate = self;
+    _tabBarC.viewControllers = [NSArray arrayWithObjects:_naviC1,_naviC2,_naviC3,_naviC4, nil];
+    _tabBarC.tabBar.shadowImage = [ImageHelper getImageWithColor:NaviBarShadowColor];
+    
+    UITabBar* tabBar = _tabBarC.tabBar;
+    [tabBar setBackgroundImage:[ImageHelper getImageWithColor:[UIColor whiteColor]]];
+    //    [tabBar setSelectionIndicatorImage:nil];//设置被选中选项背景图
+    CGFloat tabBarFontSize = 10;
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:NaviBarTitleUnselectedColor, NSForegroundColorAttributeName,FONTAppliedBase6(tabBarFontSize),NSFontAttributeName,nil] forState:UIControlStateNormal];//设置显示文字的颜色
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:NaviBarTitleSelectedColor, NSForegroundColorAttributeName,FONTAppliedBase6(tabBarFontSize),NSFontAttributeName,nil] forState:UIControlStateSelected];//设置显示文字的颜色
+    
+    //上移动title的位置
+    //UIOffset titleOffset = [[UITabBarItem appearance] titlePositionAdjustment];
+    //titleOffset.vertical -= 3;
+    //[[UITabBarItem appearance] setTitlePositionAdjustment:titleOffset];
 }
 
 + (UIRouter *)sharedManager

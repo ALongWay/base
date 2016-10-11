@@ -12,17 +12,17 @@
 @interface UIRouter : NSObject
 
 //统一管理界面的导航控制器和根视图控制器
-@property (nonatomic, strong) UITabBarController      *tabBarC;
+@property (nonatomic, strong, readonly) UITabBarController      *tabBarC;
 
-@property (nonatomic, strong) UINavigationController  *naviC1;
-@property (nonatomic, strong) UINavigationController  *naviC2;
-@property (nonatomic, strong) UINavigationController  *naviC3;
-@property (nonatomic, strong) UINavigationController  *naviC4;
+@property (nonatomic, strong, readonly) UINavigationController  *naviC1;
+@property (nonatomic, strong, readonly) UINavigationController  *naviC2;
+@property (nonatomic, strong, readonly) UINavigationController  *naviC3;
+@property (nonatomic, strong, readonly) UINavigationController  *naviC4;
 
-@property (nonatomic, strong) UIViewController        *rootVC1;
-@property (nonatomic, strong) UIViewController        *rootVC2;
-@property (nonatomic, strong) UIViewController        *rootVC3;
-@property (nonatomic, strong) UIViewController        *rootVC4;
+@property (nonatomic, strong, readonly) UIViewController        *rootVC1;
+@property (nonatomic, strong, readonly) UIViewController        *rootVC2;
+@property (nonatomic, strong, readonly) UIViewController        *rootVC3;
+@property (nonatomic, strong, readonly) UIViewController        *rootVC4;
 
 /**
  *  UIRouter单例，负责界面初始化、所有界面控制器的跳转；
