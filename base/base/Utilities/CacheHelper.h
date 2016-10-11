@@ -89,7 +89,7 @@ static NSString * const kPersonalInfoArchivedFileName  = @"personalInfo.archiver
 + (void)getAppImageCacheInformationWithCalculateCompletionBlock:(void (^)(NSInteger fileCount, NSInteger totalSize))completionBlock;
 
 /**
- *  根据网络请求的图片地址，存储图像
+ *  将图片url地址作为key，存储图像到缓存目录
  *
  *  @param image           image description
  *  @param imageUrlString  imageUrlString description

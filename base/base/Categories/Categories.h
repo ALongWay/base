@@ -14,5 +14,7 @@
 #import "UIView+ModifyFrame.h"
 #import "UIButton+Initialization.h"
 #import "UINavigationController+PopGesture.h"
+#import "UIImageView+HttpHelper.h"
+#import "FLAnimatedImageView+HttpHelper.h"
 
 #endif /* Categories_h */

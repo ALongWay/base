@@ -15,5 +15,6 @@
 #import "SDWebImagePrefetcher.h"
 #import "UIImageView+HighlightedWebCache.h"
 #import "UIImageView+WebCache.h"
+#import "UIView+WebCache.h"
 
 #endif /* SDWebImageHeader_h */

@@ -110,6 +110,13 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:nextUI];
     
     self.navigationItem.rightBarButtonItem = rightItem;
+    
+    SDImageCache *imageCache = [SDImageCache sharedImageCache];
+    NSCache *cache = (NSCache *)[imageCache valueForKey:@"memCache"];
+    NSString *memCache = cache.name;
+    NSString *diskCachePath = [imageCache valueForKey:@"diskCachePath"];
+    
+    LOG(@"SDImageCache memCache name: %@; diskCachePath: %@", memCache, diskCachePath);
 }
 
 - (void)nextUI

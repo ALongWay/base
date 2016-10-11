@@ -74,24 +74,8 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
     return instance;
 }
 
-/**
- *  自定义图片缓存路径
- */
-- (void)resetCustomImageCachePath {
-    NSString *rootDirectory = kAppImageCacheRootDirectory;
-    _memCache.name = rootDirectory;
-    
-    // reset the disk cache
-    NSString *path = [self makeDiskCachePath:rootDirectory];
-    _diskCachePath = path;
-}
-
 - (instancetype)init {
-    self = [self initWithNamespace:@"default"];
-    
-    [self resetCustomImageCachePath];
-
-    return self;
+    return [self initWithNamespace:@"default"];
 }
 
 - (nonnull instancetype)initWithNamespace:(nonnull NSString *)ns {
