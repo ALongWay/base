@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *  @param progressBlock  progressBlock description
  *  @param completedBlock completedBlock description
  *
- *  @return return value description
+ *  @return return shared SDWebImageManager
  */
 + (SDWebImageManager *)downloadImageWithURL:(NSURL *)url
                                    progress:(void(^)(NSInteger receivedSize, NSInteger expectedSize, NSURL *targetURL))progressBlock
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, HttpHelperMethod){
  *  @param progressBlock   progressBlock description
  *  @param completionBlock completionBlock description
  *
- *  @return return value description
+ *  @return return shared SDWebImagePrefetcher
  */
 + (SDWebImagePrefetcher *)downloadImagesWithUrls:(NSArray<NSURL *> *)urls
                                         progress:(void(^)(NSUInteger downloadedCount, NSUInteger totalCount))progressBlock

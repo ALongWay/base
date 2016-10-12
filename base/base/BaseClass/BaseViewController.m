@@ -31,9 +31,7 @@
     //存在导航栏
     if (self.navigationController) {
         //当存在导航栏时候，解决ios7.0以上系统的self.view的originY起始位置在屏幕顶部的问题
-        if (DeviceIOSVersionAbove(7)){
-            self.edgesForExtendedLayout = UIRectEdgeNone;
-        }
+        self.edgesForExtendedLayout = UIRectEdgeNone;
         
         //设置导航栏
         [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];

@@ -13,9 +13,12 @@
 
 static UIRouter *router;
 
-@interface UIRouter ()
+@interface UIRouter ()<UITabBarControllerDelegate>
 
-@property (nonatomic, strong, readwrite) UITabBarController      *tabBarC;
+@property (nonatomic, strong, readwrite) UIWindow                           *window;
+@property (nonatomic, strong, readwrite) UITabBarController                 *tabBarC;
+@property (nonatomic, strong, readwrite) NSArray<UINavigationController *>  *naviCArray;
+@property (nonatomic, strong, readwrite) NSArray<UIViewController *>        *rootVCArray;
 
 @property (nonatomic, strong, readwrite) UINavigationController  *naviC1;
 @property (nonatomic, strong, readwrite) UINavigationController  *naviC2;
@@ -48,6 +51,8 @@ static UIRouter *router;
     _rootVC3 = [[ViewController alloc] init];
     _rootVC4 = [[ViewController alloc] init];
     
+    _rootVCArray = @[_rootVC1, _rootVC2, _rootVC3, _rootVC4];
+    
     _rootVC1.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"1" image:[LOADIMAGE(kImageNoNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[LOADIMAGE(kImageNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     _rootVC2.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"2" image:[LOADIMAGE(kImageNoNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[LOADIMAGE(kImageNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     _rootVC3.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"3" image:[LOADIMAGE(kImageNoNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[LOADIMAGE(kImageNaviBarBackBtn) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -58,9 +63,11 @@ static UIRouter *router;
     _naviC3 = [[UINavigationController alloc] initWithRootViewController:_rootVC3];
     _naviC4 = [[UINavigationController alloc] initWithRootViewController:_rootVC4];
     
+    _naviCArray = @[_naviC1, _naviC2, _naviC3, _naviC4];
+    
     _tabBarC = [[UITabBarController alloc] init];
-    //_tabBarC.delegate = self;
-    _tabBarC.viewControllers = [NSArray arrayWithObjects:_naviC1,_naviC2,_naviC3,_naviC4, nil];
+    _tabBarC.delegate = self;
+    _tabBarC.viewControllers = _naviCArray;
     _tabBarC.tabBar.shadowImage = [ImageHelper getImageWithColor:NaviBarShadowColor];
     
     UITabBar* tabBar = _tabBarC.tabBar;
@@ -74,8 +81,33 @@ static UIRouter *router;
     //UIOffset titleOffset = [[UITabBarItem appearance] titlePositionAdjustment];
     //titleOffset.vertical -= 3;
     //[[UITabBarItem appearance] setTitlePositionAdjustment:titleOffset];
+    
+    //初始化window
+    _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [_window setBackgroundColor:[UIColor whiteColor]];
+    
+#define ShowNaviBar
+#ifdef ShowNaviBar
+    _window.rootViewController = _tabBarC;
+#else
+    _window.rootViewController = _rootVC1;
+#endif
+    
+    [_window makeKeyAndVisible];
 }
 
+#pragma mark -- UITabBarControllerDelegate
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    return YES;
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+
+}
+
+#pragma mark -
 + (UIRouter *)sharedManager
 {
     static dispatch_once_t onceToken;

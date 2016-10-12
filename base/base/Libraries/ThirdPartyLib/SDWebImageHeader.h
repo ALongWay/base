@@ -10,7 +10,7 @@
 #define SDWebImageHeader_h
 
 #pragma mark -- 在此处添加需要引用的SDWebImage类库的头文件
-#import "FLAnimatedImage/FLAnimatedImageView+WebCache.h"
+#import "FLAnimatedImageView+WebCache.h"
 #import "SDWebImageManager.h"
 #import "SDWebImagePrefetcher.h"
 #import "UIImageView+HighlightedWebCache.h"

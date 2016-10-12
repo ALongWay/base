@@ -10,7 +10,7 @@
 #import "ViewController.h"
 
 @interface AppDelegate (){
-    ViewController      *_rootVC;
+
 }
 
 @end
@@ -20,19 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    [_window setBackgroundColor:[UIColor whiteColor]];
-    
-    _rootVC = [[ViewController alloc] init];
-
-#define ShowNaviBar
-#ifdef ShowNaviBar
-    _window.rootViewController = [UIRouter sharedManager].tabBarC;
-#else
-    _window.rootViewController = _rootVC;
-#endif
-    
-    [_window makeKeyAndVisible];
+    [UIRouter sharedManager];
     
     return YES;
 }

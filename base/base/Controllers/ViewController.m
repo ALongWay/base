@@ -8,7 +8,9 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController (){
+    UIScrollView        *_scrollView;
+}
 
 @end
 
@@ -23,23 +25,44 @@
         self.willHideNavigationBar = YES;
     }
     
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, DeviceHeight - StatusBarHeight - NaviBarHeight - TabBarHeight)];
+    [self.view addSubview:_scrollView];
+    
+    __weak UIScrollView *weakScrollView = _scrollView;
+
+    [_scrollView addRefreshHeaderWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakScrollView endRefreshingHeader];
+            });
+        });
+    }];
+   
+    [_scrollView addRefreshFooterWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakScrollView endRefreshingFooter];
+            });
+        });
+    }];
+    
     UIView *statusBarBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, StatusBarHeight)];
     [statusBarBgView setBackgroundColor:[UIColor redColor]];
-    [self.view addSubview:statusBarBgView];
+    [_scrollView addSubview:statusBarBgView];
     
     UIView *naviBarBgView = [[UIView alloc] initWithFrame:CGRectMake(0, statusBarBgView.maxY, DeviceWidth, NaviBarHeight)];
     [naviBarBgView setBackgroundColor:[UIColor blackColor]];
-    [self.view addSubview:naviBarBgView];
+    [_scrollView addSubview:naviBarBgView];
 
     UIView *contentBgView = [[UIView alloc] initWithFrame:CGRectMake(0, naviBarBgView.maxY, DeviceWidth, NaviBarHeight)];
     [contentBgView setBackgroundColor:[UIColor blueColor]];
-    [self.view addSubview:contentBgView];
+    [_scrollView addSubview:contentBgView];
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
     [button setCommonButtonWithText:@"截屏"];
     button.center = CGPointMake(self.view.center.x, self.view.center.y - 150);
     [button addTarget:self action:@selector(testSnapshot) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    [_scrollView addSubview:button];
     
     UIImage *icon = LOADIMAGE(kImageAppIcon);
 
@@ -48,7 +71,7 @@
     [imageView setImage:icon];
     [imageView.layer setMasksToBounds:YES];
     [imageView.layer setCornerRadius:10];
-    [self.view addSubview:imageView];
+    [_scrollView addSubview:imageView];
     
     NSString *content = @"从这篇记录开始，记录的都算是干货了，都是一些编程日常的积累。\n我建议先将基础的工具加入项目，后续的开发效率会呈指数增长。如果在专注功能开发过程中，才发现缺少大量常用的工具，不仅会打断思路，还会拖慢开发节奏。\n当然，在每个项目开始的时候，不可能将全部工具都准备充分，只能依据个人的经验来评估需要提前准备的工具。\n一个好的工匠，必须要有一个好的工具箱，并且还要不断优化它。";
     UIFont *font = FONTAppliedBase6(15);
@@ -63,7 +86,9 @@
     [label setAttributedText:attrStr];
     [label setNumberOfLines:0];
 //    [label setTextAlignment:NSTextAlignmentCenter];
-    [self.view addSubview:label];
+    [_scrollView addSubview:label];
+    
+    [_scrollView setContentSize:CGSizeMake(DeviceWidth, CGRectGetMaxY(label.frame) + 20)];
     
     NSDateComponents *components = [StringHelper getDateComponentsWithDateString:@"2016-09-12 12:56:10"];
     LOG(@"%@", components);
@@ -139,6 +164,9 @@
 
 - (void)testSnapshot
 {
+    [_scrollView.refreshHeader setHidden:!_scrollView.refreshHeader.hidden];
+    [_scrollView.refreshFooter setHidden:!_scrollView.refreshFooter.hidden];
+    
     //测试GCD
     dispatch_queue_t mainQueue = dispatch_get_main_queue();
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);

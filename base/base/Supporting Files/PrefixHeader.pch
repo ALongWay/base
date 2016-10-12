@@ -17,6 +17,8 @@
 
 #import "UIRouter.h"
 
+#import "PublicModules.h"
+
 #import "Libraries.h"
 #import "Categories.h"
 #import "Utilities.h"
