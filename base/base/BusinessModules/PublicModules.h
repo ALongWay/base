@@ -9,6 +9,5 @@
 #ifndef PublicModules_h
 #define PublicModules_h
 
-#import "UIScrollView+RefreshControl.h"
 
 #endif /* PublicModules_h */

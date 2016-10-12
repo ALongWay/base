@@ -166,9 +166,16 @@
 {
     [_scrollView.refreshHeader setHidden:!_scrollView.refreshHeader.hidden];
     [_scrollView.refreshFooter setHidden:!_scrollView.refreshFooter.hidden];
+ 
+    [SVProgressHUD show];
+//    [SVProgressHUD showProgress:0.6 status:@"数据加载中..."];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     
     //测试GCD
-    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+//    dispatch_queue_t mainQueue = dispatch_get_main_queue();
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_queue_t customSerialQueue = dispatch_queue_create("customserialqueue", DISPATCH_QUEUE_SERIAL);
     dispatch_queue_t customConcurrentQueue  = dispatch_queue_create("customconcurrentqueue", DISPATCH_QUEUE_CONCURRENT);

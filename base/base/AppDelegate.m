@@ -20,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [UIRouter sharedManager];
+    self.window = [UIRouter sharedManager].window;
     
     return YES;
 }
