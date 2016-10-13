@@ -167,10 +167,12 @@
     [_scrollView.refreshHeader setHidden:!_scrollView.refreshHeader.hidden];
     [_scrollView.refreshFooter setHidden:!_scrollView.refreshFooter.hidden];
  
-    [SVProgressHUD show];
+//    [SVProgressHUD show];
 //    [SVProgressHUD showProgress:0.6 status:@"数据加载中..."];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [SVProgressHUD showAppUITransitionAnimation];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
     
