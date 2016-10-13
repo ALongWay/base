@@ -10,6 +10,7 @@
 #define AllViewControllerHeaders_h
 
 #pragma mark -- 【引用全部视图控制器
+#import "AppDelegate.h"
 #import "ViewController.h"
 
 #pragma mark -- 】引用全部视图控制器
