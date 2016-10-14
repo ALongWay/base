@@ -9,6 +9,7 @@
 #ifndef Categories_h
 #define Categories_h
 
+#import "NSObject+Extension.h"
 #import "UIImage+ImageEffects.h"
 #import "NSData+CommonCrypto.h"
 #import "UIView+ModifyFrame.h"

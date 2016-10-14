@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, ButtonImageLocation) {
+    ButtonImageLocationUp,
+    ButtonImageLocationLeft,
+    ButtonImageLocationDown,
+    ButtonImageLocationRight
+};
+
 @interface UIButton (Initialization)
 
 /**
@@ -37,6 +44,7 @@
  */
 + (UIButton *)createNavigationBarImageButtonWithImage:(UIImage *)image;
 
+#pragma mark -
 /**
  *  设置常用按钮，半径5，背景nor/disabled（255，120，100）背景highlight（235，109，88）
  *  文字nor/highlight(255,255,255) disabled(255,195,188) 字体：16号
@@ -91,5 +99,13 @@
  *  @param radius 圆角半径
  */
 - (void)setButtonBorderColor:(UIColor *)color borderWidth:(CGFloat)width cornerRadius:(CGFloat)radius;
+
+/**
+ *  当同时存在title和Image时候，用于调整两者的布局
+ *
+ *  @param midInset      中间间距
+ *  @param imageLocation 图片相对方位
+ */
+- (void)resetButtonTitleAndImageLayoutWithMidInset:(CGFloat)midInset imageLocation:(ButtonImageLocation)imageLocation;
 
 @end

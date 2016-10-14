@@ -7,8 +7,45 @@
 //
 
 #import "UIButton+Initialization.h"
+#import <objc/runtime.h>
+
+typedef void(^ResetTitleAndImageLayoutBlock)(void);
+
+@interface UIButton (InitializationPrivate)
+
+@property (nonatomic, strong) ResetTitleAndImageLayoutBlock     resetTitleAndImageLayoutBlock;
+
+@end
 
 @implementation UIButton (Initialization)
+
++(void)load
+{
+    __weak typeof(self) weakSelf = self;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        [weakSelf swizzleOriginalSelector:@selector(layoutSubviews) withNewSelector:@selector(base_layoutSubviews)];
+    });
+}
+
++(void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)newSelector
+{
+    Class selfClass = [self class];
+    
+    Method originalMethod = class_getInstanceMethod(selfClass, originalSelector);
+    Method newMethod = class_getInstanceMethod(selfClass, newSelector);
+    
+    IMP originalIMP = method_getImplementation(originalMethod);
+    IMP newIMP = method_getImplementation(newMethod);
+    
+    //先用新的IMP加到原始SEL中
+    BOOL addSuccess = class_addMethod(selfClass, originalSelector, newIMP, method_getTypeEncoding(newMethod));
+    if (addSuccess) {
+        class_replaceMethod(selfClass, newSelector, originalIMP, method_getTypeEncoding(originalMethod));
+    }else{
+        method_exchangeImplementations(originalMethod, newMethod);
+    }
+}
 
 + (UIButton *)createNavigationBarRedTextButtonWithText:(NSString *)text
 {
@@ -40,6 +77,16 @@
     [btn setImage:image forState:UIControlStateNormal];
     
     return btn;
+}
+
+#pragma mark -
+- (void)base_layoutSubviews
+{
+    [self base_layoutSubviews];
+    
+    if (self.resetTitleAndImageLayoutBlock) {
+        self.resetTitleAndImageLayoutBlock();
+    }
 }
 
 - (void)setCommonButtonWithText:(NSString *)text
@@ -87,6 +134,67 @@
     [self.layer setBorderColor:color.CGColor];
     [self.layer setBorderWidth:width];
     [self.layer setCornerRadius:radius];
+}
+
+- (void)resetButtonTitleAndImageLayoutWithMidInset:(CGFloat)midInset imageLocation:(ButtonImageLocation)imageLocation
+{
+    CGSize titleSize  = [self.titleLabel.attributedText boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;;
+    CGSize imageSize = self.imageView.size;
+    
+    __weak typeof(self) weakSelf = self;
+    
+    //因为UIButton在layoutSubviews时候，会重置titleLabel的frame，所以需要延迟调用block
+    self.resetTitleAndImageLayoutBlock = ^{
+        switch (imageLocation) {
+            case ButtonImageLocationUp: {
+                CGFloat imageOriginX = (weakSelf.width - imageSize.width) / 2.0;
+                CGFloat imageOriginY = (weakSelf.height - titleSize.height - midInset - imageSize.height) / 2.0;
+                weakSelf.imageEdgeInsets = UIEdgeInsetsMake(imageOriginY, imageOriginX, weakSelf.height - imageOriginY - imageSize.height, imageOriginX);
+                
+                CGFloat titleOriginX = (weakSelf.width - titleSize.width) / 2.0;
+                CGFloat titleOriginY = imageOriginY + imageSize.height + midInset;
+                weakSelf.titleEdgeInsets = UIEdgeInsetsMake(titleOriginY, titleOriginX, weakSelf.height - titleOriginY - titleSize.height, titleOriginX);
+                break;
+            }
+            case ButtonImageLocationLeft: {
+                CGFloat imageOriginX = (weakSelf.width - imageSize.width - midInset - titleSize.width) / 2.0;
+                CGFloat imageOriginY = (weakSelf.height - imageSize.height) /  2.0;
+                weakSelf.imageEdgeInsets = UIEdgeInsetsMake(imageOriginY, imageOriginX, imageOriginY, weakSelf.width - imageOriginX - imageSize.width);
+                
+                
+                CGFloat titleOriginX = imageOriginX + imageSize.width + midInset;
+                //横向时候，label的frame可以取较大范围
+//                CGFloat titleOriginY = (weakSelf.height - titleSize.height) / 2.0;
+//                weakSelf.titleLabel.frame = CGRectMake(titleOriginX, titleOriginY, titleSize.width, titleSize.height);
+                weakSelf.titleLabel.frame = CGRectMake(titleOriginX, 0, weakSelf.width - titleOriginX, weakSelf.height);
+                [weakSelf.titleLabel setTextAlignment:NSTextAlignmentLeft];
+                break;
+            }
+            case ButtonImageLocationDown: {
+                CGFloat titleOriginX = (weakSelf.width - titleSize.width) / 2.0;
+                CGFloat titleOriginY = (weakSelf.height - titleSize.height - midInset - imageSize.height) / 2.0;
+                weakSelf.titleEdgeInsets = UIEdgeInsetsMake(titleOriginY, titleOriginX, weakSelf.height - titleOriginY - titleSize.height, titleOriginX);
+                
+                CGFloat imageOriginX = (weakSelf.width - imageSize.width) / 2.0;
+                CGFloat imageOriginY = titleOriginY + titleSize.height + midInset;
+                weakSelf.imageEdgeInsets = UIEdgeInsetsMake(imageOriginY, imageOriginX, weakSelf.height - imageOriginY - imageSize.height, imageOriginX);
+                break;
+            }
+            case ButtonImageLocationRight: {
+                CGFloat titleOriginX = (weakSelf.width - imageSize.width - midInset - titleSize.width) / 2.0;
+                //横向时候，label的frame可以取较大范围
+//                CGFloat titleOriginY = (weakSelf.height - titleSize.height) / 2.0;
+//                weakSelf.titleLabel.frame = CGRectMake(titleOriginX, titleOriginY, titleSize.width, titleSize.height);
+                weakSelf.titleLabel.frame = CGRectMake(0, 0, titleOriginX + titleSize.width, weakSelf.height);
+                [weakSelf.titleLabel setTextAlignment:NSTextAlignmentRight];
+                
+                CGFloat imageOriginX = titleOriginX + titleSize.width + midInset;
+                CGFloat imageOriginY = (weakSelf.height - imageSize.height) /  2.0;
+                weakSelf.imageEdgeInsets = UIEdgeInsetsMake(imageOriginY, imageOriginX, imageOriginY, weakSelf.width - imageOriginX - imageSize.width);
+                break;
+            }
+        }
+    };
 }
 
 @end
