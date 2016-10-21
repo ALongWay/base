@@ -80,6 +80,16 @@ typedef void(^ResetTitleAndImageLayoutBlock)(void);
 }
 
 #pragma mark -
+- (ResetTitleAndImageLayoutBlock)resetTitleAndImageLayoutBlock
+{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setResetTitleAndImageLayoutBlock:(ResetTitleAndImageLayoutBlock)resetTitleAndImageLayoutBlock
+{
+    objc_setAssociatedObject(self, @selector(resetTitleAndImageLayoutBlock), resetTitleAndImageLayoutBlock, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (void)base_layoutSubviews
 {
     [self base_layoutSubviews];

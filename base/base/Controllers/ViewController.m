@@ -58,8 +58,10 @@
     [contentBgView setBackgroundColor:[UIColor blueColor]];
     [_scrollView addSubview:contentBgView];
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 40)];
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 40)];
     [button setCommonButtonWithText:@"截屏"];
+    [button setImage:LOADIMAGE(kImageNoNaviBarBackBtn) forState:UIControlStateNormal];
+    [button resetButtonTitleAndImageLayoutWithMidInset:5 imageLocation:ButtonImageLocationRight];
     button.center = CGPointMake(self.view.center.x, self.view.center.y - 150);
     [button addTarget:self action:@selector(testSnapshot) forControlEvents:UIControlEventTouchUpInside];
     [_scrollView addSubview:button];
