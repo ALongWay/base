@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		672172711DBDA79F00153D3D /* ALWCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 672172701DBDA79F00153D3D /* ALWCollectionViewLayout.m */; };
 		673461801D7FACDA00066BEF /* StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6734617F1D7FACDA00066BEF /* StringHelper.m */; };
 		673461831D7FAD0A00066BEF /* ImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461821D7FAD0A00066BEF /* ImageHelper.m */; };
 		673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461851D7FADB900066BEF /* EncryptionHelper.m */; };
@@ -120,6 +121,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6721726F1DBDA79F00153D3D /* ALWCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewLayout.h; sourceTree = "<group>"; };
+		672172701DBDA79F00153D3D /* ALWCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewLayout.m; sourceTree = "<group>"; };
 		6734617E1D7FACDA00066BEF /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHelper.h; sourceTree = "<group>"; };
 		6734617F1D7FACDA00066BEF /* StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringHelper.m; sourceTree = "<group>"; };
 		673461811D7FAD0A00066BEF /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelper.h; sourceTree = "<group>"; };
@@ -377,6 +380,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6721726E1DBDA76D00153D3D /* ALWCollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				6721726F1DBDA79F00153D3D /* ALWCollectionViewLayout.h */,
+				672172701DBDA79F00153D3D /* ALWCollectionViewLayout.m */,
+			);
+			path = ALWCollectionViewLayout;
+			sourceTree = "<group>";
+		};
 		6734617D1D7FABDD00066BEF /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,6 +451,7 @@
 		673461911D7FC7D700066BEF /* MyLib */ = {
 			isa = PBXGroup;
 			children = (
+				6721726E1DBDA76D00153D3D /* ALWCollectionViewLayout */,
 				67EFCA051DAF6D40004F198A /* RefreshControl */,
 			);
 			path = MyLib;
@@ -1045,6 +1058,7 @@
 				67EFC8731DAB40A0004F198A /* BaseModel.m in Sources */,
 				99A942721DAD16E800597123 /* SDImageCache+CacheHelper.m in Sources */,
 				67EFC9731DACDB36004F198A /* SDWebImageManager.m in Sources */,
+				672172711DBDA79F00153D3D /* ALWCollectionViewLayout.m in Sources */,
 				67EFC8A61DAC8E3D004F198A /* FLAnimatedImageView.m in Sources */,
 				67EFC9BE1DADD995004F198A /* MJRefreshHeader.m in Sources */,
 				67EFC97B1DACDB36004F198A /* UIView+WebCache.m in Sources */,
