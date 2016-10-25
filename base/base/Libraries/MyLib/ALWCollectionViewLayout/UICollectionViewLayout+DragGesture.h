@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#pragma mark -
+#pragma mark - ALWCollectionViewDataSource
 @protocol ALWCollectionViewDataSource <UICollectionViewDataSource>
 @optional
 
@@ -18,20 +18,20 @@
 
 @end
 
-#pragma mark -
+#pragma mark - ALWCollectionViewDelegate
 @protocol ALWCollectionViewDelegate <UICollectionViewDelegate>
 @optional
 - (void)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 
-- (void)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willEndDraggingItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)toIndexPath;
+- (void)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 
-- (void)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didEndDraggingItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)toIndexPath;
+- (void)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
-#pragma mark -
+#pragma mark - UICollectionViewLayout (DragGesture)
 @interface UICollectionViewLayout (DragGesture)
 
 @end

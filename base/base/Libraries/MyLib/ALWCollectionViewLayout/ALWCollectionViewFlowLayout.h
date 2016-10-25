@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UICollectionViewLayout+DragGesture.h"
 
 #pragma mark - ALWCollectionViewDelegateFlowLayout
 @protocol ALWCollectionViewDelegateFlowLayout <UICollectionViewDelegateFlowLayout>

@@ -97,7 +97,7 @@ static UIRouter *router;
     _window.rootViewController = _rootVC1;
 #endif
     
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.window = _window;
     [_window makeKeyAndVisible];
 }
