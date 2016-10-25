@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		672172711DBDA79F00153D3D /* ALWCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 672172701DBDA79F00153D3D /* ALWCollectionViewLayout.m */; };
+		672172771DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 672172761DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m */; };
+		6721727A1DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 672172791DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m */; };
 		673461801D7FACDA00066BEF /* StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6734617F1D7FACDA00066BEF /* StringHelper.m */; };
 		673461831D7FAD0A00066BEF /* ImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461821D7FAD0A00066BEF /* ImageHelper.m */; };
 		673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461851D7FADB900066BEF /* EncryptionHelper.m */; };
@@ -121,8 +122,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6721726F1DBDA79F00153D3D /* ALWCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewLayout.h; sourceTree = "<group>"; };
-		672172701DBDA79F00153D3D /* ALWCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewLayout.m; sourceTree = "<group>"; };
+		672172751DBF5CC500153D3D /* ALWCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		672172761DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		672172781DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewLayout+DragGesture.h"; sourceTree = "<group>"; };
+		672172791DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewLayout+DragGesture.m"; sourceTree = "<group>"; };
 		6734617E1D7FACDA00066BEF /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHelper.h; sourceTree = "<group>"; };
 		6734617F1D7FACDA00066BEF /* StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringHelper.m; sourceTree = "<group>"; };
 		673461811D7FAD0A00066BEF /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelper.h; sourceTree = "<group>"; };
@@ -383,8 +386,10 @@
 		6721726E1DBDA76D00153D3D /* ALWCollectionViewLayout */ = {
 			isa = PBXGroup;
 			children = (
-				6721726F1DBDA79F00153D3D /* ALWCollectionViewLayout.h */,
-				672172701DBDA79F00153D3D /* ALWCollectionViewLayout.m */,
+				672172751DBF5CC500153D3D /* ALWCollectionViewFlowLayout.h */,
+				672172761DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m */,
+				672172781DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.h */,
+				672172791DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m */,
 			);
 			path = ALWCollectionViewLayout;
 			sourceTree = "<group>";
@@ -1042,6 +1047,7 @@
 				67EFC9C61DADD995004F198A /* MJRefreshNormalHeader.m in Sources */,
 				6734619A1D7FCCD300066BEF /* NSData+CommonCrypto.m in Sources */,
 				676C09551D9D0BAC003EB057 /* AFImageDownloader.m in Sources */,
+				6721727A1DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m in Sources */,
 				67EFC96D1DACDB36004F198A /* SDImageCache.m in Sources */,
 				673461801D7FACDA00066BEF /* StringHelper.m in Sources */,
 				67EFCA101DAF6D40004F198A /* RefreshGifFooter.m in Sources */,
@@ -1055,10 +1061,10 @@
 				67EFC96A1DACDB36004F198A /* MKAnnotationView+WebCache.m in Sources */,
 				676C04701D8E3648003EB057 /* ViewController.m in Sources */,
 				67EFC9C51DADD995004F198A /* MJRefreshGifHeader.m in Sources */,
+				672172771DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m in Sources */,
 				67EFC8731DAB40A0004F198A /* BaseModel.m in Sources */,
 				99A942721DAD16E800597123 /* SDImageCache+CacheHelper.m in Sources */,
 				67EFC9731DACDB36004F198A /* SDWebImageManager.m in Sources */,
-				672172711DBDA79F00153D3D /* ALWCollectionViewLayout.m in Sources */,
 				67EFC8A61DAC8E3D004F198A /* FLAnimatedImageView.m in Sources */,
 				67EFC9BE1DADD995004F198A /* MJRefreshHeader.m in Sources */,
 				67EFC97B1DACDB36004F198A /* UIView+WebCache.m in Sources */,

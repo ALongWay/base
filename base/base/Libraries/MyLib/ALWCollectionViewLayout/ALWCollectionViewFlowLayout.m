@@ -1,12 +1,12 @@
 //
-//  ALWCollectionViewLayout.m
+//  ALWCollectionViewFlowLayout.m
 //  base
 //
-//  Created by 李松 on 16/10/24.
+//  Created by 李松 on 16/10/25.
 //  Copyright © 2016年 alongway. All rights reserved.
 //
 
-#import "ALWCollectionViewLayout.h"
+#import "ALWCollectionViewFlowLayout.h"
 
 #pragma mark - ALWCollectionViewLayoutAttributes
 @interface ALWCollectionViewLayoutAttributes : UICollectionViewLayoutAttributes
@@ -151,10 +151,5 @@
     
     return attributesArray;
 }
-
-@end
-
-#pragma mark - ALWCollectionViewLayout
-@implementation ALWCollectionViewLayout
 
 @end
