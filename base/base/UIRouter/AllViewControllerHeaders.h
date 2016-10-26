@@ -12,6 +12,7 @@
 #pragma mark -- 【引用全部视图控制器
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "TestCollectionViewController.h"
 
 #pragma mark -- 】引用全部视图控制器
 

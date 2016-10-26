@@ -149,7 +149,25 @@
         }
     }
     
+    for (UICollectionViewLayoutAttributes *attributes in attributesArray) {
+        switch (attributes.representedElementCategory) {
+            case UICollectionElementCategoryCell: {
+                [self applyLayoutAttributes:attributes];
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    
     return attributesArray;
+}
+
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
+{
+    if ([layoutAttributes.indexPath isEqual:self.selectedItemIndexPath]) {
+        layoutAttributes.hidden = YES;
+    }
 }
 
 @end

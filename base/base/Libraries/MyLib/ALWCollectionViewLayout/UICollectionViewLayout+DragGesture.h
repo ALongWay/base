@@ -11,10 +11,15 @@
 #pragma mark - ALWCollectionViewDataSource
 @protocol ALWCollectionViewDataSource <UICollectionViewDataSource>
 @optional
-
+//决定item是否可以移动或者被移动
 - (BOOL)alw_collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath;
 
-- (void)alw_collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath;
+@required
+//此方法用于数据源交换数据(如果部分item不能被移动，需要特别注意自行实现数据的交换算法)
+- (void)alw_collectionView:(UICollectionView *)collectionView willMoveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath;
+
+//此方法可用于重载数据
+- (void)alw_collectionView:(UICollectionView *)collectionView didMovedItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath;
 
 @end
 
@@ -33,5 +38,15 @@
 
 #pragma mark - UICollectionViewLayout (DragGesture)
 @interface UICollectionViewLayout (DragGesture)
+
+/**
+ *  启用自定义的拖拽手势，默认NO
+ */
+@property (assign, nonatomic) BOOL                      enableCustomDragGesture;
+
+/**
+ *  当前被拖拽的item
+ */
+@property (strong, nonatomic, readonly) NSIndexPath     *selectedItemIndexPath;
 
 @end

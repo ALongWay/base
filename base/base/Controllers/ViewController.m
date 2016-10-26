@@ -159,9 +159,9 @@
 //        [weakSelf.navigationController pushViewController:toController animated:YES];
 //    }];
     
-    [UIRouter pushFromController:self toClass:@"ViewController" withParameters:nil];
-
-//    [UIRouter pushFromController:self toClass:@"TestViewController" withParameters:nil];
+//    [UIRouter pushFromController:self toClass:@"ViewController" withParameters:nil];
+    
+    [UIRouter pushFromController:self toClass:@"TestCollectionViewController" animated:YES];
 }
 
 - (void)testSnapshot
