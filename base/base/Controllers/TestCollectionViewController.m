@@ -34,6 +34,13 @@
     return self;
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    _textLabel.frame = self.bounds;
+}
+
 @end
 
 #pragma mark -
@@ -77,11 +84,14 @@
         [_sizeArray addObject:[NSValue valueWithCGSize:CGSizeMake(kItemSize.width + addedWidth, kItemSize.height + addedHeight)]];
     }
     
-    ALWCollectionViewFlowLayout *layout = [[ALWCollectionViewFlowLayout alloc] init];
-    layout.enableCustomDragGesture = YES;
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.minimumLineSpacing = 10;
-    layout.minimumInteritemSpacing = 10;
+//    ALWCollectionViewFlowLayout *layout = [[ALWCollectionViewFlowLayout alloc] init];
+//    layout.enableCustomDragGesture = YES;
+//    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+//    layout.minimumLineSpacing = 10;
+//    layout.minimumInteritemSpacing = 10;
+
+    ALWCollectionViewLayout *layout = [[ALWCollectionViewLayout alloc] initWithColumnCount:4 itemWidth:kItemSize.width];
+//    layout.enableCustomDragGesture = YES;
     
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, DeviceWidth, DeviceHeight - StatusBarHeight - NaviBarHeight) collectionViewLayout:layout];
     _collectionView.delegate = self;
@@ -166,6 +176,31 @@
     }else{
         return CGSizeMake(40, 40);
     }
+}
+
+#pragma mark -- ALWCollectionViewDelegateLayout
+//竖向滑动时有效
+- (CGFloat)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout heightForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSValue *value = [_sizeArray objectAtIndex:indexPath.row];
+    return [value CGSizeValue].height;
+}
+
+//横向滑动时有效
+- (CGFloat)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout widthForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSValue *value = [_sizeArray objectAtIndex:indexPath.row];
+    return [value CGSizeValue].width;
+}
+
+- (UIEdgeInsets)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(10, 10, 10, 10);
+}
+
+- (UIColor *)alw_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout backgroundColorForSectionAtIndex:(NSInteger)section
+{
+    return [UIColor brownColor];
 }
 
 #pragma mark -- ALWCollectionViewDelegate

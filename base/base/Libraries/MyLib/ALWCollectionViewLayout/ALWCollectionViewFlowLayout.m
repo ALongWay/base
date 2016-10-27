@@ -7,56 +7,7 @@
 //
 
 #import "ALWCollectionViewFlowLayout.h"
-
-#pragma mark - ALWCollectionViewLayoutAttributes
-@interface ALWCollectionViewLayoutAttributes : UICollectionViewLayoutAttributes
-
-/**
- *  默认透明
- */
-@property (nonatomic, strong) UIColor       *backgroundColor;
-
-@end
-
-@implementation ALWCollectionViewLayoutAttributes
-@synthesize backgroundColor = _backgroundColor;
-
-- (UIColor *)backgroundColor
-{
-    if (_backgroundColor) {
-        return _backgroundColor;
-    }else{
-        return [UIColor clearColor];
-    }
-}
-
-- (void)setBackgroundColor:(UIColor *)backgroundColor
-{
-    _backgroundColor = backgroundColor;
-}
-
-@end
-
-#pragma mark - ALWCollectionReusableView
-@interface ALWCollectionReusableView : UICollectionReusableView
-
-@end
-
-@implementation ALWCollectionReusableView
-
-- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
-{
-    [super applyLayoutAttributes:layoutAttributes];
-    
-    if ([layoutAttributes isMemberOfClass:[ALWCollectionViewLayoutAttributes class]]) {
-        self.backgroundColor = ((ALWCollectionViewLayoutAttributes *)layoutAttributes).backgroundColor;
-    }
-}
-
-@end
-
-#pragma mark - ALWCollectionViewFlowLayout
-#define kALWSectionBackgroundColor      @"ALWSectionBackgroundColor"
+#import "ALWCollectionReusableView.h"
 
 @interface ALWCollectionViewFlowLayout ()
 

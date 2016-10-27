@@ -118,6 +118,8 @@
 		67EFCA131DAF6D40004F198A /* RefreshNormalHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFCA0D1DAF6D40004F198A /* RefreshNormalHeader.m */; };
 		67EFCA141DAF6D40004F198A /* UIScrollView+RefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFCA0F1DAF6D40004F198A /* UIScrollView+RefreshControl.m */; };
 		67EFCA1D1DB0EBE7004F198A /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFCA1C1DB0EBE7004F198A /* NSObject+Extension.m */; };
+		999E3F4C1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 999E3F4B1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m */; };
+		999E3F4F1DC22AAB00BECD02 /* ALWCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 999E3F4E1DC22AAB00BECD02 /* ALWCollectionReusableView.m */; };
 		99A942721DAD16E800597123 /* SDImageCache+CacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A942711DAD16E800597123 /* SDImageCache+CacheHelper.m */; };
 		99A942751DAD1FA100597123 /* UIImageView+HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A942741DAD1FA100597123 /* UIImageView+HttpHelper.m */; };
 		99A942781DAD1FC400597123 /* FLAnimatedImageView+HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A942771DAD1FC400597123 /* FLAnimatedImageView+HttpHelper.m */; };
@@ -368,6 +370,10 @@
 		67EFCA0F1DAF6D40004F198A /* UIScrollView+RefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+RefreshControl.m"; sourceTree = "<group>"; };
 		67EFCA1B1DB0EBE7004F198A /* NSObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extension.h"; sourceTree = "<group>"; };
 		67EFCA1C1DB0EBE7004F198A /* NSObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extension.m"; sourceTree = "<group>"; };
+		999E3F4A1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
+		999E3F4B1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
+		999E3F4D1DC22AAB00BECD02 /* ALWCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionReusableView.h; sourceTree = "<group>"; };
+		999E3F4E1DC22AAB00BECD02 /* ALWCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionReusableView.m; sourceTree = "<group>"; };
 		99A942701DAD16E800597123 /* SDImageCache+CacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDImageCache+CacheHelper.h"; sourceTree = "<group>"; };
 		99A942711DAD16E800597123 /* SDImageCache+CacheHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SDImageCache+CacheHelper.m"; sourceTree = "<group>"; };
 		99A942731DAD1FA100597123 /* UIImageView+HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+HttpHelper.h"; sourceTree = "<group>"; };
@@ -398,6 +404,10 @@
 				67BE9B9A1DC0863800D38F23 /* ALWCollectionViewLayout.m */,
 				672172781DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.h */,
 				672172791DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m */,
+				999E3F4A1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.h */,
+				999E3F4B1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m */,
+				999E3F4D1DC22AAB00BECD02 /* ALWCollectionReusableView.h */,
+				999E3F4E1DC22AAB00BECD02 /* ALWCollectionReusableView.m */,
 			);
 			path = ALWCollectionViewLayout;
 			sourceTree = "<group>";
@@ -1083,6 +1093,7 @@
 				67EFC9D21DADD995004F198A /* SVRadialGradientLayer.m in Sources */,
 				67EFC9CC1DADD995004F198A /* UIScrollView+MJRefresh.m in Sources */,
 				67EFC9BD1DADD995004F198A /* MJRefreshFooter.m in Sources */,
+				999E3F4F1DC22AAB00BECD02 /* ALWCollectionReusableView.m in Sources */,
 				67EFCA131DAF6D40004F198A /* RefreshNormalHeader.m in Sources */,
 				67EFCA141DAF6D40004F198A /* UIScrollView+RefreshControl.m in Sources */,
 				67EFC96C1DACDB36004F198A /* NSImage+WebCache.m in Sources */,
@@ -1125,6 +1136,7 @@
 				67EFC9CF1DADD995004F198A /* SVProgressAnimatedView.m in Sources */,
 				67EFC97C1DACDB36004F198A /* UIView+WebCacheOperation.m in Sources */,
 				67EFC9721DACDB36004F198A /* SDWebImageDownloaderOperation.m in Sources */,
+				999E3F4C1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m in Sources */,
 				67EFC9C41DADD995004F198A /* MJRefreshBackStateFooter.m in Sources */,
 				67EFC9BB1DADD995004F198A /* MJRefreshBackFooter.m in Sources */,
 				67EFC9C01DADD995004F198A /* MJRefreshAutoNormalFooter.m in Sources */,
