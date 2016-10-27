@@ -12,7 +12,7 @@
 @interface ALWCollectionViewLayoutAttributes : UICollectionViewLayoutAttributes
 
 /**
- *  默认为白色
+ *  默认透明
  */
 @property (nonatomic, strong) UIColor       *backgroundColor;
 
@@ -26,7 +26,7 @@
     if (_backgroundColor) {
         return _backgroundColor;
     }else{
-        return [UIColor whiteColor];
+        return [UIColor clearColor];
     }
 }
 
@@ -82,7 +82,7 @@
     
     NSInteger numberOfSections = [self.collectionView numberOfSections];
     
-    if (numberOfSections == 0 || self.collectionView.delegate == nil || ![self.collectionView.delegate conformsToProtocol:@protocol(ALWCollectionViewDelegateFlowLayout)]) {
+    if (numberOfSections == 0 || self.collectionView.delegate == nil) {
         return;
     }
     
@@ -165,6 +165,7 @@
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
 {
+    //隐藏被选中拖拽的原item
     if ([layoutAttributes.indexPath isEqual:self.selectedItemIndexPath]) {
         layoutAttributes.hidden = YES;
     }

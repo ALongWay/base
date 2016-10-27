@@ -374,6 +374,10 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
         case UIGestureRecognizerStateBegan: {
             NSIndexPath *currentIndexPath = [self.collectionView indexPathForItemAtPoint:[gestureRecognizer locationInView:self.collectionView]];
             
+            if (!currentIndexPath) {
+                return;
+            }
+            
             if ([self.dataSource respondsToSelector:@selector(alw_collectionView:canMoveItemAtIndexPath:)]
                 &&![self.dataSource alw_collectionView:self.collectionView canMoveItemAtIndexPath:currentIndexPath]) {
                 return;

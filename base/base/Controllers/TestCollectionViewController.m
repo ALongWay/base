@@ -26,7 +26,7 @@
     if (self) {
         _textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         [_textLabel setTextAlignment:NSTextAlignmentCenter];
-        [_textLabel setTextColor:COLOR(255, 120, 100)];
+        [_textLabel setTextColor:COLOR(255, 255, 255)];
         [_textLabel setBackgroundColor:COLOR(0, 0, 0)];
         [self.contentView addSubview:_textLabel];
     }
@@ -41,6 +41,7 @@
     UICollectionView        *_collectionView;
     
     NSMutableArray          *_dataArray;
+    NSMutableArray          *_sizeArray;
 }
 
 @end
@@ -61,13 +62,24 @@
     //50-60
     NSInteger count = arc4random() % 10 + 50;
     _dataArray = [NSMutableArray arrayWithCapacity:count];
-
+    
     for (int i = 0; i < count; i++) {
         [_dataArray addObject:@(i)];
     }
     
+    //+0~60
+    _sizeArray = [NSMutableArray arrayWithCapacity:count];
+    
+    for (int i = 0; i < count; i++) {
+        NSInteger addedWidth = arc4random() % 60;
+        NSInteger addedHeight = arc4random() % 60;
+
+        [_sizeArray addObject:[NSValue valueWithCGSize:CGSizeMake(kItemSize.width + addedWidth, kItemSize.height + addedHeight)]];
+    }
+    
     ALWCollectionViewFlowLayout *layout = [[ALWCollectionViewFlowLayout alloc] init];
-//    layout.enableCustomDragGesture = YES;
+    layout.enableCustomDragGesture = YES;
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.minimumLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
     
@@ -75,11 +87,18 @@
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     [_collectionView registerClass:[TestCollectionViewCell class] forCellWithReuseIdentifier:kTestCollectionViewCell];
+    [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:UICollectionElementKindSectionHeader];
+    [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:UICollectionElementKindSectionFooter];
     [_collectionView setBackgroundColor:COLOR(240, 240, 240)];
     [self.view addSubview:_collectionView];
 }
 
 #pragma mark -- UICollectionViewDelegate
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 2;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return _dataArray.count;
@@ -95,10 +114,58 @@
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kind forIndexPath:indexPath];
+        [view setBackgroundColor:[UIColor redColor]];
+        return view;
+    } else {
+        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kind forIndexPath:indexPath];
+        [view setBackgroundColor:[UIColor blueColor]];
+        return view;
+    }
+}
+
+
 #pragma mark -- ALWCollectionViewDelegateFlowLayout
+- (UIColor *)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout backgroundColorForSectionAtIndex:(NSInteger)section
+{
+    return [UIColor brownColor];
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return kItemSize;
+    NSValue *value = [_sizeArray objectAtIndex:indexPath.row];
+    return CGSizeMake([value CGSizeValue].width, kItemSize.height);
+//    return kItemSize;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(10, 10, 10, 10);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    if (collectionView.contentSize.height > collectionView.frame.size.height) {
+        return CGSizeMake(DeviceWidth, 40);
+    }else if (collectionView.contentSize.width > collectionView.frame.size.width){
+        return CGSizeMake(40, DeviceHeight);
+    }else{
+        return CGSizeMake(40, 40);
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    if (collectionView.contentSize.height > collectionView.frame.size.height) {
+        return CGSizeMake(DeviceWidth, 40);
+    }else if (collectionView.contentSize.width > collectionView.frame.size.width){
+        return CGSizeMake(40, DeviceHeight);
+    }else{
+        return CGSizeMake(40, 40);
+    }
 }
 
 #pragma mark -- ALWCollectionViewDelegate
