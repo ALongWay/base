@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
 @property (strong, nonatomic, readonly) NSIndexPath     *selectedItemIndexPath;//被选中的item
 @property (strong, nonatomic) UIView                    *currentView;//显示的被拖拽view
 @property (assign, nonatomic) CGPoint                   currentViewCenter;//显示的被拖拽view的中心
+@property (assign, nonatomic) CGPoint                   destinationItemCenter;//目标item的中心
 @property (assign, nonatomic) CGPoint                   panTranslationInCollectionView;//拖动位移
 @property (strong, nonatomic) CADisplayLink             *displayLink;//随屏幕帧刷新的定时器
 @property (assign, nonatomic) AutoScrollingDirection    currentScrollingDirection;//当前自动滚动的方向
@@ -118,6 +119,17 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
 - (void)setCurrentViewCenter:(CGPoint)point
 {
     objc_setAssociatedObject(self, @selector(currentViewCenter), [NSValue valueWithCGPoint:point], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGPoint)destinationItemCenter
+{
+    CGPoint center = [objc_getAssociatedObject(self, _cmd) CGPointValue];
+    return center;
+}
+
+- (void)setDestinationItemCenter:(CGPoint)point
+{
+    objc_setAssociatedObject(self, @selector(destinationItemCenter), [NSValue valueWithCGPoint:point], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (CGPoint)panTranslationInCollectionView
@@ -297,7 +309,7 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
     for (UICollectionViewLayoutAttributes *attributes in attributesArray) {
         switch (attributes.representedElementCategory) {
             case UICollectionElementCategoryCell: {
-                [self applyLayoutAttributes:attributes];
+                [self resetCellWithLayoutAttributes:attributes];
             }
                 break;
             default:
@@ -308,25 +320,11 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
     return attributesArray;
 }
 
-- (UICollectionViewLayoutAttributes *)alw_layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)resetCellWithLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
 {
-    UICollectionViewLayoutAttributes *layoutAttributes = [self alw_layoutAttributesForItemAtIndexPath:indexPath];
-    
-    switch (layoutAttributes.representedElementCategory) {
-        case UICollectionElementCategoryCell: {
-            [self applyLayoutAttributes:layoutAttributes];
-        }
-            break;
-        default:
-            break;
-    }
-    
-    return layoutAttributes;
-}
-
-- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
-{
-    if ([layoutAttributes.indexPath isEqual:self.selectedItemIndexPath]) {
+    //隐藏被选中拖拽的原item
+    if (self.enableCustomDragGesture
+        && [layoutAttributes.indexPath isEqual:self.selectedItemIndexPath]) {
         layoutAttributes.hidden = YES;
     }
 }
@@ -384,12 +382,15 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
             }
             
             self.selectedItemIndexPath = currentIndexPath;
-            
+
             if ([self.delegate respondsToSelector:@selector(alw_collectionView:layout:willBeginDraggingItemAtIndexPath:)]) {
                 [self.delegate alw_collectionView:self.collectionView layout:self willBeginDraggingItemAtIndexPath:self.selectedItemIndexPath];
             }
             
             UICollectionViewCell *collectionViewCell = [self.collectionView cellForItemAtIndexPath:self.selectedItemIndexPath];
+            
+            self.destinationItemCenter = collectionViewCell.center;
+            LOG(@"handleLongPressGestureBegan destinationItemCenter : %@", NSStringFromCGPoint(self.destinationItemCenter));
             
             //自定义显示的悬浮view
             self.currentView = [[UIView alloc] initWithFrame:collectionViewCell.frame];
@@ -411,6 +412,8 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
             [self.collectionView addSubview:self.currentView];
             
             self.currentViewCenter = self.currentView.center;
+            
+            [self invalidateLayout];
 
             __weak typeof(self) weakSelf = self;
             [UIView
@@ -435,8 +438,6 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
                      }
                  }
              }];
-            
-            [self invalidateLayout];
         }
             break;
         case UIGestureRecognizerStateCancelled:
@@ -448,10 +449,8 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
                     [self.delegate alw_collectionView:self.collectionView layout:self willEndDraggingItemAtIndexPath:currentIndexPath];
                 }
                 
-                self.selectedItemIndexPath = nil;
+//                self.selectedItemIndexPath = nil;
                 self.currentViewCenter = CGPointZero;
-
-                UICollectionViewLayoutAttributes *layoutAttributes = [self layoutAttributesForItemAtIndexPath:currentIndexPath];
                 
                 self.longPressGestureRecognizer.enabled = NO;
                 
@@ -464,7 +463,7 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
                      __strong typeof(self) strongSelf = weakSelf;
                      if (strongSelf) {
                          strongSelf.currentView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
-                         strongSelf.currentView.center = layoutAttributes.center;
+                         strongSelf.currentView.center = strongSelf.destinationItemCenter;
                      }
                  }
                  completion:^(BOOL finished) {
@@ -474,11 +473,13 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
 
                          [strongSelf.currentView removeFromSuperview];
                          strongSelf.currentView = nil;
-                         [strongSelf invalidateLayout];
                          
                          if ([strongSelf.delegate respondsToSelector:@selector(alw_collectionView:layout:didEndDraggingItemAtIndexPath:)]) {
                              [strongSelf.delegate alw_collectionView:self.collectionView layout:strongSelf didEndDraggingItemAtIndexPath:currentIndexPath];
                          }
+                         
+                         self.selectedItemIndexPath = nil;
+                         [strongSelf invalidateLayout];
                      }
                  }];
             }
@@ -621,6 +622,11 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
     }
     
     self.selectedItemIndexPath = newIndexPath;
+    
+    UICollectionViewCell *collectionViewCell = [self.collectionView cellForItemAtIndexPath:self.selectedItemIndexPath];
+    
+    self.destinationItemCenter = collectionViewCell.center;
+    LOG(@"updateCollectionViewItems destinationItemCenter : %@", NSStringFromCGPoint(self.destinationItemCenter));
     
     if ([self.dataSource respondsToSelector:@selector(alw_collectionView:willMoveItemAtIndexPath:toIndexPath:)]) {
         [self.dataSource alw_collectionView:self.collectionView willMoveItemAtIndexPath:previousIndexPath toIndexPath:self.selectedItemIndexPath];

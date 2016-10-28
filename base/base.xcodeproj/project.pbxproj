@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		672172771DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 672172761DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m */; };
-		6721727A1DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 672172791DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m */; };
 		6721727D1DC05B0F00153D3D /* TestCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721727C1DC05B0F00153D3D /* TestCollectionViewController.m */; };
 		673461801D7FACDA00066BEF /* StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6734617F1D7FACDA00066BEF /* StringHelper.m */; };
 		673461831D7FAD0A00066BEF /* ImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461821D7FAD0A00066BEF /* ImageHelper.m */; };
@@ -49,12 +47,13 @@
 		676C095B1D9D0BAC003EB057 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C094B1D9D0BAC003EB057 /* UIRefreshControl+AFNetworking.m */; };
 		676C095C1D9D0BAC003EB057 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C094D1D9D0BAC003EB057 /* UIWebView+AFNetworking.m */; };
 		676C095F1D9D207C003EB057 /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C095E1D9D207C003EB057 /* HttpHelper.m */; };
+		676EFC241DC3227900FB542A /* ALWCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 676EFC221DC3227900FB542A /* ALWCollectionViewFlowLayout.m */; };
+		676EFC271DC342E000FB542A /* UICollectionViewLayout+DragGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 676EFC261DC342E000FB542A /* UICollectionViewLayout+DragGesture.m */; };
 		679116311D7675C500432E46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 679116301D7675C500432E46 /* AppDelegate.m */; };
 		679116371D7675C600432E46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 679116351D7675C600432E46 /* Main.storyboard */; };
 		679116391D7675C600432E46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 679116381D7675C600432E46 /* Assets.xcassets */; };
 		6791163C1D7675C600432E46 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6791163A1D7675C600432E46 /* LaunchScreen.storyboard */; };
 		6791164E1D76CEEF00432E46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6791164C1D76CEEF00432E46 /* main.m */; };
-		67BE9B9B1DC0863800D38F23 /* ALWCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 67BE9B9A1DC0863800D38F23 /* ALWCollectionViewLayout.m */; };
 		67BF705E1D781E35009E253A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70601D781E35009E253A /* InfoPlist.strings */; };
 		67BF70721D783001009E253A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70741D783001009E253A /* Localizable.strings */; };
 		67BF70811D7D7C55009E253A /* Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70801D7D7C55009E253A /* Icon@3x.png */; };
@@ -126,10 +125,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		672172751DBF5CC500153D3D /* ALWCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		672172761DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewFlowLayout.m; sourceTree = "<group>"; };
-		672172781DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewLayout+DragGesture.h"; sourceTree = "<group>"; };
-		672172791DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewLayout+DragGesture.m"; sourceTree = "<group>"; };
 		6721727B1DC05B0F00153D3D /* TestCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCollectionViewController.h; sourceTree = "<group>"; };
 		6721727C1DC05B0F00153D3D /* TestCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCollectionViewController.m; sourceTree = "<group>"; };
 		6734617E1D7FACDA00066BEF /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHelper.h; sourceTree = "<group>"; };
@@ -225,6 +220,10 @@
 		676C094D1D9D0BAC003EB057 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		676C095D1D9D207C003EB057 /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		676C095E1D9D207C003EB057 /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
+		676EFC221DC3227900FB542A /* ALWCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		676EFC231DC3227900FB542A /* ALWCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		676EFC251DC342E000FB542A /* UICollectionViewLayout+DragGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewLayout+DragGesture.h"; sourceTree = "<group>"; };
+		676EFC261DC342E000FB542A /* UICollectionViewLayout+DragGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewLayout+DragGesture.m"; sourceTree = "<group>"; };
 		679116291D7675C500432E46 /* base.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = base.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6791162F1D7675C500432E46 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		679116301D7675C500432E46 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -234,8 +233,6 @@
 		6791164B1D76CEEF00432E46 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6791164C1D76CEEF00432E46 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6791164F1D76D27700432E46 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		67BE9B991DC0863800D38F23 /* ALWCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewLayout.h; sourceTree = "<group>"; };
-		67BE9B9A1DC0863800D38F23 /* ALWCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewLayout.m; sourceTree = "<group>"; };
 		67BF705F1D781E35009E253A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		67BF70611D781F5F009E253A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		67BF70731D783001009E253A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -398,16 +395,14 @@
 		6721726E1DBDA76D00153D3D /* ALWCollectionViewLayout */ = {
 			isa = PBXGroup;
 			children = (
-				672172751DBF5CC500153D3D /* ALWCollectionViewFlowLayout.h */,
-				672172761DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m */,
-				67BE9B991DC0863800D38F23 /* ALWCollectionViewLayout.h */,
-				67BE9B9A1DC0863800D38F23 /* ALWCollectionViewLayout.m */,
-				672172781DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.h */,
-				672172791DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m */,
+				676EFC231DC3227900FB542A /* ALWCollectionViewFlowLayout.h */,
+				676EFC221DC3227900FB542A /* ALWCollectionViewFlowLayout.m */,
 				999E3F4A1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.h */,
 				999E3F4B1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m */,
 				999E3F4D1DC22AAB00BECD02 /* ALWCollectionReusableView.h */,
 				999E3F4E1DC22AAB00BECD02 /* ALWCollectionReusableView.m */,
+				676EFC251DC342E000FB542A /* UICollectionViewLayout+DragGesture.h */,
+				676EFC261DC342E000FB542A /* UICollectionViewLayout+DragGesture.m */,
 			);
 			path = ALWCollectionViewLayout;
 			sourceTree = "<group>";
@@ -1067,7 +1062,6 @@
 				67EFC9C61DADD995004F198A /* MJRefreshNormalHeader.m in Sources */,
 				6734619A1D7FCCD300066BEF /* NSData+CommonCrypto.m in Sources */,
 				676C09551D9D0BAC003EB057 /* AFImageDownloader.m in Sources */,
-				6721727A1DBF5E0900153D3D /* UICollectionViewLayout+DragGesture.m in Sources */,
 				67EFC96D1DACDB36004F198A /* SDImageCache.m in Sources */,
 				673461801D7FACDA00066BEF /* StringHelper.m in Sources */,
 				67EFCA101DAF6D40004F198A /* RefreshGifFooter.m in Sources */,
@@ -1081,12 +1075,10 @@
 				67EFC96A1DACDB36004F198A /* MKAnnotationView+WebCache.m in Sources */,
 				676C04701D8E3648003EB057 /* ViewController.m in Sources */,
 				67EFC9C51DADD995004F198A /* MJRefreshGifHeader.m in Sources */,
-				672172771DBF5CC500153D3D /* ALWCollectionViewFlowLayout.m in Sources */,
 				67EFC8731DAB40A0004F198A /* BaseModel.m in Sources */,
 				99A942721DAD16E800597123 /* SDImageCache+CacheHelper.m in Sources */,
 				67EFC9731DACDB36004F198A /* SDWebImageManager.m in Sources */,
 				67EFC8A61DAC8E3D004F198A /* FLAnimatedImageView.m in Sources */,
-				67BE9B9B1DC0863800D38F23 /* ALWCollectionViewLayout.m in Sources */,
 				67EFC9BE1DADD995004F198A /* MJRefreshHeader.m in Sources */,
 				67EFC97B1DACDB36004F198A /* UIView+WebCache.m in Sources */,
 				676C095C1D9D0BAC003EB057 /* UIWebView+AFNetworking.m in Sources */,
@@ -1099,6 +1091,7 @@
 				67EFC96C1DACDB36004F198A /* NSImage+WebCache.m in Sources */,
 				67EFC96F1DACDB36004F198A /* SDWebImageCompat.m in Sources */,
 				67C00BE01D87D876009BA769 /* UIImage+ImageEffects.m in Sources */,
+				676EFC271DC342E000FB542A /* UICollectionViewLayout+DragGesture.m in Sources */,
 				67EFC9C21DADD995004F198A /* MJRefreshBackGifFooter.m in Sources */,
 				676C094E1D9D0BAC003EB057 /* AFHTTPSessionManager.m in Sources */,
 				67EFC9CE1DADD995004F198A /* SVIndefiniteAnimatedView.m in Sources */,
@@ -1130,6 +1123,7 @@
 				676C09571D9D0BAC003EB057 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				67EFC9CB1DADD995004F198A /* UIScrollView+MJExtension.m in Sources */,
 				676C095F1D9D207C003EB057 /* HttpHelper.m in Sources */,
+				676EFC241DC3227900FB542A /* ALWCollectionViewFlowLayout.m in Sources */,
 				673461971D7FC7D700066BEF /* GTMBase64.m in Sources */,
 				67E0527C1DAA1A2200AAA3EA /* UIRouter.m in Sources */,
 				67EFCA1D1DB0EBE7004F198A /* NSObject+Extension.m in Sources */,
