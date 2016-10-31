@@ -10,11 +10,10 @@
 
 #pragma mark - ALWCollectionViewDataSource
 @protocol ALWCollectionViewDataSource <UICollectionViewDataSource>
-@optional
+@required
 //决定item是否可以移动或者被移动
 - (BOOL)alw_collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath;
 
-@required
 //此方法用于数据源交换数据(如果部分item不能被移动，需要特别注意自行实现数据的交换算法)
 - (void)alw_collectionView:(UICollectionView *)collectionView willMoveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath;
 

@@ -84,7 +84,7 @@
         [_sizeArray addObject:[NSValue valueWithCGSize:CGSizeMake(kItemSize.width + addedWidth, kItemSize.height + addedHeight)]];
     }
     
-    _layout = [[ALWCollectionViewFlowLayout alloc] initWithCountPerLine:4 itemFixedSide:kItemSize.width flowLayoutType:ALWCollectionViewFlowLayoutTypeOrder];
+    _layout = [[ALWCollectionViewFlowLayout alloc] initWithCountPerLine:4 itemFixedSide:kItemSize.width flowLayoutType:ALWCollectionViewFlowLayoutTypeFill];
 //    _layout = [[ALWCollectionViewFlowLayout alloc] init];
     _layout.enableCustomDragGesture = YES;
 //    _layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

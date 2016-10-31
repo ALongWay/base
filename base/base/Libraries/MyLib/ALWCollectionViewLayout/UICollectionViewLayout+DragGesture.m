@@ -10,7 +10,7 @@
 #import <objc/runtime.h>
 
 static NSString *const kCollectionViewKeyPath = @"collectionView";
-static const CGFloat kAutoScrollingSpeed = 300;
+static const CGFloat kAutoScrollingSpeed = 500;
 static const UIEdgeInsets kAutoScrollingTriggerEdgeInsets = {50, 50, 50, 50};
 
 static CGPoint ALWCGPointAdd(CGPoint a, CGPoint b){
@@ -56,7 +56,6 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
         [weakSelf swizzleOriginalSelector:@selector(initWithCoder:) withNewSelector:@selector(alw_initWithCoder:)];
         [weakSelf swizzleOriginalSelector:NSSelectorFromString(@"dealloc") withNewSelector:@selector(alw_dealloc)];
         [weakSelf swizzleOriginalSelector:@selector(layoutAttributesForElementsInRect:) withNewSelector:@selector(alw_layoutAttributesForElementsInRect:)];
-        [weakSelf swizzleOriginalSelector:@selector(layoutAttributesForItemAtIndexPath:) withNewSelector:@selector(alw_layoutAttributesForItemAtIndexPath:)];
     });
 }
 
@@ -434,7 +433,7 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
                      [highlightedImageView removeFromSuperview];
                      
                      if ([strongSelf.delegate respondsToSelector:@selector(alw_collectionView:layout:didBeginDraggingItemAtIndexPath:)]) {
-                         [strongSelf.delegate alw_collectionView:self.collectionView layout:strongSelf didBeginDraggingItemAtIndexPath:strongSelf.selectedItemIndexPath];
+                         [strongSelf.delegate alw_collectionView:strongSelf.collectionView layout:strongSelf didBeginDraggingItemAtIndexPath:strongSelf.selectedItemIndexPath];
                      }
                  }
              }];
@@ -449,7 +448,6 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
                     [self.delegate alw_collectionView:self.collectionView layout:self willEndDraggingItemAtIndexPath:currentIndexPath];
                 }
                 
-//                self.selectedItemIndexPath = nil;
                 self.currentViewCenter = CGPointZero;
                 
                 self.longPressGestureRecognizer.enabled = NO;
@@ -475,10 +473,10 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
                          strongSelf.currentView = nil;
                          
                          if ([strongSelf.delegate respondsToSelector:@selector(alw_collectionView:layout:didEndDraggingItemAtIndexPath:)]) {
-                             [strongSelf.delegate alw_collectionView:self.collectionView layout:strongSelf didEndDraggingItemAtIndexPath:currentIndexPath];
+                             [strongSelf.delegate alw_collectionView:strongSelf.collectionView layout:strongSelf didEndDraggingItemAtIndexPath:currentIndexPath];
                          }
                          
-                         self.selectedItemIndexPath = nil;
+                         strongSelf.selectedItemIndexPath = nil;
                          [strongSelf invalidateLayout];
                      }
                  }];
@@ -643,7 +641,7 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
     } completion:^(BOOL finished) {
         __strong typeof(self) strongSelf = weakSelf;
         if ([strongSelf.dataSource respondsToSelector:@selector(alw_collectionView:didMovedItemAtIndexPath:toIndexPath:)]) {
-            [strongSelf.dataSource alw_collectionView:self.collectionView didMovedItemAtIndexPath:previousIndexPath toIndexPath:self.selectedItemIndexPath];
+            [strongSelf.dataSource alw_collectionView:strongSelf.collectionView didMovedItemAtIndexPath:previousIndexPath toIndexPath:strongSelf.selectedItemIndexPath];
         }
     }];
 }

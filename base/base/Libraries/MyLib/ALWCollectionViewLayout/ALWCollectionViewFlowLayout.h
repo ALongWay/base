@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, ALWCollectionViewFlowLayoutType) {
 /**
  *  采用自定义的流动布局初始化
  *
- *  @param count     每一行/列的item数量
+ *  @param count     每一排（行/列）的item数量
  *  @param fixedSide 固定边的长度（指与滑动方向垂直的边）
  *  @param type      自定义流动布局类型
  *
