@@ -20,27 +20,23 @@
 //记录每一排item占用的内容总长度
 @property (nonatomic, strong) NSMutableArray                                        *lineUsedLengthArray;
 
-@property (nonatomic, assign) BOOL                             enableCustomFlowLayout;
-@property (nonatomic, assign) ALWCollectionViewFlowLayoutType  flowLayoutType;
-
-@property (nonatomic, assign) NSInteger                        countPerLine;
-@property (nonatomic, assign) CGFloat                          fixedSide;
-@property (nonatomic, assign) CGFloat                          itemHorizontalMidInset;
-@property (nonatomic, assign) CGFloat                          itemVerticalMidInset;
-@property (nonatomic, assign) CGSize                           newContentSize;
+@property (nonatomic, assign) BOOL      enableCustomFlowLayout;
+@property (nonatomic, assign) CGFloat   itemHorizontalMidInset;
+@property (nonatomic, assign) CGFloat   itemVerticalMidInset;
+@property (nonatomic, assign) CGSize    newContentSize;
 
 @end
 
 @implementation ALWCollectionViewFlowLayout
 
-- (instancetype)initWithCountPerLine:(NSUInteger)count itemFixedSide:(CGFloat)fixedSide flowLayoutType:(ALWCollectionViewFlowLayoutType)type
+- (instancetype)initWithCustomFlowLayout
 {
     self = [self init];
     if (self) {
         _enableCustomFlowLayout = YES;
-        _flowLayoutType = type;
-        _countPerLine = count;
-        _fixedSide = fixedSide;
+        _flowLayoutType = ALWCollectionViewFlowLayoutTypeOrder;
+        _countPerLine = 1;
+        _itemFixedSide = 50;
         _newContentSize = CGSizeZero;
     }
     
@@ -195,7 +191,7 @@
                 currentSectionLength = sectionInset.top;
                 
                 if (_countPerLine > 1) {
-                    _itemHorizontalMidInset = (self.collectionView.frame.size.width - sectionInset.left - sectionInset.right - _countPerLine * _fixedSide) / (_countPerLine - 1);
+                    _itemHorizontalMidInset = (self.collectionView.frame.size.width - sectionInset.left - sectionInset.right - _countPerLine * _itemFixedSide) / (_countPerLine - 1);
                 }
                 break;
             }
@@ -203,7 +199,7 @@
                 currentSectionLength = sectionInset.left;
                 
                 if (_countPerLine > 1) {
-                    _itemVerticalMidInset = (self.collectionView.frame.size.height - sectionInset.top - sectionInset.bottom - _countPerLine * _fixedSide) / (_countPerLine - 1);
+                    _itemVerticalMidInset = (self.collectionView.frame.size.height - sectionInset.top - sectionInset.bottom - _countPerLine * _itemFixedSide) / (_countPerLine - 1);
                 }
                 break;
             }
@@ -298,7 +294,7 @@
 
     switch (self.scrollDirection) {
         case UICollectionViewScrollDirectionVertical: {
-            CGFloat itemHeight = _fixedSide;
+            CGFloat itemHeight = _itemFixedSide;
             
             if ([delegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)]) {
                 itemHeight = [delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:currentIndexPath].height;
@@ -308,10 +304,10 @@
             
             CGFloat oldLength = [_lineUsedLengthArray[locationIndex] floatValue];
             
-            CGFloat originX = sectionInset.left + locationIndex * (_fixedSide + _itemHorizontalMidInset);
+            CGFloat originX = sectionInset.left + locationIndex * (_itemFixedSide + _itemHorizontalMidInset);
             CGFloat originY = oldLength;
             
-            itemAttributes.frame = CGRectMake(originX, originY, _fixedSide, itemHeight);
+            itemAttributes.frame = CGRectMake(originX, originY, _itemFixedSide, itemHeight);
             
             CGFloat newLength = oldLength + itemHeight + _itemVerticalMidInset;
             _lineUsedLengthArray[locationIndex] = @(newLength);
@@ -323,7 +319,7 @@
             break;
         }
         case UICollectionViewScrollDirectionHorizontal: {
-            CGFloat itemWidth = _fixedSide;
+            CGFloat itemWidth = _itemFixedSide;
             
             if ([delegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)]) {
                 itemWidth = [delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:currentIndexPath].width;
@@ -333,10 +329,10 @@
             
             CGFloat oldLength = [_lineUsedLengthArray[locationIndex] floatValue];
             
-            CGFloat originY = sectionInset.top + locationIndex * (_fixedSide + _itemVerticalMidInset);
+            CGFloat originY = sectionInset.top + locationIndex * (_itemFixedSide + _itemVerticalMidInset);
             CGFloat originX = oldLength;
             
-            itemAttributes.frame = CGRectMake(originX, originY, itemWidth, _fixedSide);
+            itemAttributes.frame = CGRectMake(originX, originY, itemWidth, _itemFixedSide);
             
             CGFloat newLength = oldLength + itemWidth + _itemHorizontalMidInset;
             _lineUsedLengthArray[locationIndex] = @(newLength);
@@ -357,7 +353,7 @@
     
     switch (self.scrollDirection) {
         case UICollectionViewScrollDirectionVertical: {
-            CGFloat itemHeight = _fixedSide;
+            CGFloat itemHeight = _itemFixedSide;
             
             if ([delegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)]) {
                 itemHeight = [delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:currentIndexPath].height;
@@ -367,10 +363,10 @@
             
             CGFloat oldLength = [_lineUsedLengthArray[fillIndex] floatValue];
             
-            CGFloat originX = sectionInset.left + fillIndex * (_fixedSide + _itemHorizontalMidInset);
+            CGFloat originX = sectionInset.left + fillIndex * (_itemFixedSide + _itemHorizontalMidInset);
             CGFloat originY = oldLength;
             
-            itemAttributes.frame = CGRectMake(originX, originY, _fixedSide, itemHeight);
+            itemAttributes.frame = CGRectMake(originX, originY, _itemFixedSide, itemHeight);
             
             CGFloat newLength = oldLength + itemHeight + _itemVerticalMidInset;
             _lineUsedLengthArray[fillIndex] = @(newLength);
@@ -382,7 +378,7 @@
             break;
         }
         case UICollectionViewScrollDirectionHorizontal: {
-            CGFloat itemWidth = _fixedSide;
+            CGFloat itemWidth = _itemFixedSide;
             
             if ([delegate respondsToSelector:@selector(collectionView:layout:sizeForItemAtIndexPath:)]) {
                 itemWidth = [delegate collectionView:self.collectionView layout:self sizeForItemAtIndexPath:currentIndexPath].width;
@@ -392,10 +388,10 @@
             
             CGFloat oldLength = [_lineUsedLengthArray[fillIndex] floatValue];
             
-            CGFloat originY = sectionInset.top + fillIndex * (_fixedSide + _itemVerticalMidInset);
+            CGFloat originY = sectionInset.top + fillIndex * (_itemFixedSide + _itemVerticalMidInset);
             CGFloat originX = oldLength;
             
-            itemAttributes.frame = CGRectMake(originX, originY, itemWidth, _fixedSide);
+            itemAttributes.frame = CGRectMake(originX, originY, itemWidth, _itemFixedSide);
             
             CGFloat newLength = oldLength + itemWidth + _itemHorizontalMidInset;
             _lineUsedLengthArray[fillIndex] = @(newLength);

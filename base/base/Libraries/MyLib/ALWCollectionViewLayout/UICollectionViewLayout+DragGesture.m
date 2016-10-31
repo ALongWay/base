@@ -394,20 +394,13 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
             //自定义显示的悬浮view
             self.currentView = [[UIView alloc] initWithFrame:collectionViewCell.frame];
             
-            collectionViewCell.highlighted = YES;
-            [collectionViewCell setNeedsDisplay];
-            UIView *highlightedImageView = [collectionViewCell snapshotViewAfterScreenUpdates:NO];
-            highlightedImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            [highlightedImageView setHidden:NO];
-            
-            collectionViewCell.highlighted = NO;
-            [collectionViewCell setNeedsDisplay];
-            UIView *imageView = [collectionViewCell snapshotViewAfterScreenUpdates:NO];
+            UIImage *image = [self getSnapshotWithView:collectionViewCell];
+
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.currentView.bounds];
             imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            [imageView setHidden:YES];
+            [imageView setImage:image];
             
             [self.currentView addSubview:imageView];
-            [self.currentView addSubview:highlightedImageView];
             [self.collectionView addSubview:self.currentView];
             
             self.currentViewCenter = self.currentView.center;
@@ -428,10 +421,6 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
              completion:^(BOOL finished) {
                  __strong typeof(self) strongSelf = weakSelf;
                  if (strongSelf) {
-                     [imageView setHidden:NO];
-                     [highlightedImageView setHidden:YES];
-                     [highlightedImageView removeFromSuperview];
-                     
                      if ([strongSelf.delegate respondsToSelector:@selector(alw_collectionView:layout:didBeginDraggingItemAtIndexPath:)]) {
                          [strongSelf.delegate alw_collectionView:strongSelf.collectionView layout:strongSelf didBeginDraggingItemAtIndexPath:strongSelf.selectedItemIndexPath];
                      }
@@ -443,44 +432,46 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
         case UIGestureRecognizerStateEnded: {
             NSIndexPath *currentIndexPath = self.selectedItemIndexPath;
             
-            if (currentIndexPath) {
-                if ([self.delegate respondsToSelector:@selector(alw_collectionView:layout:willEndDraggingItemAtIndexPath:)]) {
-                    [self.delegate alw_collectionView:self.collectionView layout:self willEndDraggingItemAtIndexPath:currentIndexPath];
-                }
-                
-                self.currentViewCenter = CGPointZero;
-                
-                self.longPressGestureRecognizer.enabled = NO;
-                
-                __weak typeof(self) weakSelf = self;
-                [UIView
-                 animateWithDuration:0.3
-                 delay:0.0
-                 options:UIViewAnimationOptionBeginFromCurrentState
-                 animations:^{
-                     __strong typeof(self) strongSelf = weakSelf;
-                     if (strongSelf) {
-                         strongSelf.currentView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
-                         strongSelf.currentView.center = strongSelf.destinationItemCenter;
-                     }
-                 }
-                 completion:^(BOOL finished) {
-                     __strong typeof(self) strongSelf = weakSelf;
-                     if (strongSelf) {
-                         strongSelf.longPressGestureRecognizer.enabled = YES;
-
-                         [strongSelf.currentView removeFromSuperview];
-                         strongSelf.currentView = nil;
-                         
-                         if ([strongSelf.delegate respondsToSelector:@selector(alw_collectionView:layout:didEndDraggingItemAtIndexPath:)]) {
-                             [strongSelf.delegate alw_collectionView:strongSelf.collectionView layout:strongSelf didEndDraggingItemAtIndexPath:currentIndexPath];
-                         }
-                         
-                         strongSelf.selectedItemIndexPath = nil;
-                         [strongSelf invalidateLayout];
-                     }
-                 }];
+            if (!currentIndexPath) {
+                return;
             }
+            
+            if ([self.delegate respondsToSelector:@selector(alw_collectionView:layout:willEndDraggingItemAtIndexPath:)]) {
+                [self.delegate alw_collectionView:self.collectionView layout:self willEndDraggingItemAtIndexPath:currentIndexPath];
+            }
+            
+            self.currentViewCenter = CGPointZero;
+            
+            self.longPressGestureRecognizer.enabled = NO;
+            
+            __weak typeof(self) weakSelf = self;
+            [UIView
+             animateWithDuration:0.3
+             delay:0.0
+             options:UIViewAnimationOptionBeginFromCurrentState
+             animations:^{
+                 __strong typeof(self) strongSelf = weakSelf;
+                 if (strongSelf) {
+                     strongSelf.currentView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+                     strongSelf.currentView.center = strongSelf.destinationItemCenter;
+                 }
+             }
+             completion:^(BOOL finished) {
+                 __strong typeof(self) strongSelf = weakSelf;
+                 if (strongSelf) {
+                     strongSelf.longPressGestureRecognizer.enabled = YES;
+                     
+                     [strongSelf.currentView removeFromSuperview];
+                     strongSelf.currentView = nil;
+                     
+                     if ([strongSelf.delegate respondsToSelector:@selector(alw_collectionView:layout:didEndDraggingItemAtIndexPath:)]) {
+                         [strongSelf.delegate alw_collectionView:strongSelf.collectionView layout:strongSelf didEndDraggingItemAtIndexPath:currentIndexPath];
+                     }
+                     
+                     strongSelf.selectedItemIndexPath = nil;
+                     [strongSelf invalidateLayout];
+                 }
+             }];
         }
             break;
         default:
@@ -644,6 +635,16 @@ typedef NS_ENUM(NSInteger, AutoScrollingDirection) {
             [strongSelf.dataSource alw_collectionView:strongSelf.collectionView didMovedItemAtIndexPath:previousIndexPath toIndexPath:strongSelf.selectedItemIndexPath];
         }
     }];
+}
+
+- (UIImage *)getSnapshotWithView:(UIView *)view
+{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0.0);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 @end
