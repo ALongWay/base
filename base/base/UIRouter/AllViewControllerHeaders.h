@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "TestCollectionViewController.h"
+#import "TestStarViewController.h"
 
 #pragma mark -- 】引用全部视图控制器
 

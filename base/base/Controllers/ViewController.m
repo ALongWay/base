@@ -161,7 +161,10 @@
     
 //    [UIRouter pushFromController:self toClass:@"ViewController" withParameters:nil];
     
-    [UIRouter pushFromController:self toClass:@"TestCollectionViewController" animated:YES];
+#pragma mark -- 测试ViewController
+//    [UIRouter pushFromController:self toClass:@"TestCollectionViewController" animated:YES];
+
+    [UIRouter pushFromController:self toClass:@"TestStarViewController" animated:YES];
 }
 
 - (void)testSnapshot
