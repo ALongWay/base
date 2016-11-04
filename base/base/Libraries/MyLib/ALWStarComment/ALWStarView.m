@@ -11,21 +11,30 @@
 #define kStarViewCOLORWITHRGBA(R, G, B, A)      [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:A]
 #define kStarViewCOLOR(R, G, B)                 COLORWITHRGBA(R, G, B, 1.0)
 
+#define kDefaultBgColor                         kStarViewCOLOR(240, 240, 240)
+#define kDefaultFillColor                       [UIColor yellowColor]
+#define kDefaultBorderColor                     kStarViewCOLOR(255, 120, 100)
+
 static const NSInteger kDefaultTopPointCount = 5;
-static const CGFloat kDefaultRadius = 60;
+static const CGFloat kDefaultRadius = 15;
 
 @interface ALWStarView (){
+    CAShapeLayer    *_maskLayer;
+    CAShapeLayer    *_bgShapeLayer;
+    CAShapeLayer    *_starShapeLayer;
+    
     NSInteger       _topPointCount;
     CGFloat         _radius;
 }
 
-@property (nonatomic, strong) CAShapeLayer      *maskLayer;
-@property (nonatomic, strong) CAShapeLayer      *bgShapeLayer;
-@property (nonatomic, strong) CAShapeLayer      *starShapeLayer;
-
 @end
 
 @implementation ALWStarView
+
++ (ALWStarView *)getDefaultStarView
+{
+    return [[ALWStarView alloc] init];
+}
 
 - (instancetype)init
 {
@@ -39,22 +48,24 @@ static const CGFloat kDefaultRadius = 60;
 
 - (instancetype)initWithRadius:(CGFloat)radius topPointCount:(NSUInteger)count
 {
-    self = [self initWithFrame:CGRectMake(0, 0, radius * 2, radius * 2)];
-
-    _topPointCount = MAX(count, kDefaultTopPointCount);
-    _radius = radius;
-
-    return self;
+    _topPointCount = count;
+    
+    return [self initWithFrame:CGRectMake(0, 0, radius * 2, radius * 2)];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _topPointCount = kDefaultTopPointCount;
+        _enableTap = NO;
+        _bgColor = kDefaultBgColor;
+        _fillColor = kDefaultFillColor;
+        _borderColor = kDefaultBorderColor;
+        
+        _topPointCount = MAX(_topPointCount, kDefaultTopPointCount);
         _radius = frame.size.width / 2.0;
 
-        [self setBackgroundColor:kStarViewCOLOR(240, 240, 240)];
+        [self setBackgroundColor:_bgColor];
         
         UITapGestureRecognizer *tapStarGest = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didClickedStarView:)];
         [self setUserInteractionEnabled:YES];
@@ -65,18 +76,13 @@ static const CGFloat kDefaultRadius = 60;
         
         _bgShapeLayer = [CAShapeLayer layer];
         _bgShapeLayer.frame = self.bounds;
+        _bgShapeLayer.backgroundColor = _fillColor.CGColor;
         _bgShapeLayer.fillColor = [UIColor clearColor].CGColor;
-        _bgShapeLayer.strokeColor = [UIColor redColor].CGColor;
-        _bgShapeLayer.strokeStart = 0.0;
-        _bgShapeLayer.strokeEnd = 1.0;
-        _bgShapeLayer.lineWidth = 5;
-        _bgShapeLayer.lineCap = kCALineCapRound;
-        
+      
         _starShapeLayer = [CAShapeLayer layer];
         _starShapeLayer.frame = self.bounds;
-//        _starShapeLayer.fillColor = [UIColor redColor].CGColor;
         _starShapeLayer.fillColor = [UIColor clearColor].CGColor;
-        _starShapeLayer.strokeColor = [UIColor blueColor].CGColor;
+        _starShapeLayer.strokeColor = _borderColor.CGColor;
         _starShapeLayer.strokeStart = 0;
         _starShapeLayer.strokeEnd = 1;
         _starShapeLayer.lineWidth = 1;
@@ -91,17 +97,27 @@ static const CGFloat kDefaultRadius = 60;
     
     [self resetSublayerPath];
     
-//    self.layer.mask = _maskLayer;
-//    [_bgShapeLayer addSublayer:_starShapeLayer];
+    self.layer.mask = _maskLayer;
     [self.layer addSublayer:_bgShapeLayer];
     [self.layer addSublayer:_starShapeLayer];
 }
 
+#pragma mark -- Setter/getter
+- (void)setSelectedPercent:(CGFloat)selectedPercent
+{
+    _selectedPercent = selectedPercent;
+    
+    CGRect rect = _bgShapeLayer.frame;
+    rect.size.width = self.bounds.size.width * _selectedPercent;
+    _bgShapeLayer.frame = rect;
+}
+
+#pragma mark -- Private methods
 - (void)resetSublayerPath
 {
-    UIBezierPath *maskBezierPath = [UIBezierPath bezierPathWithOvalInRect:_maskLayer.bounds];
-    _maskLayer.path = maskBezierPath.CGPath;
-    
+//    UIBezierPath *maskBezierPath = [UIBezierPath bezierPathWithOvalInRect:_maskLayer.bounds];
+//    _maskLayer.path = maskBezierPath.CGPath;
+
     UIBezierPath *bezierPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(_bgShapeLayer.frame.size.width / 2.0, _bgShapeLayer.frame.size.height / 2.0) radius:_radius startAngle:0 endAngle: 2 * M_PI clockwise:YES];
     _bgShapeLayer.path = bezierPath.CGPath;
     
@@ -118,6 +134,7 @@ static const CGFloat kDefaultRadius = 60;
     
     CGPathAddLineToPoint(path, nil, firstPoint.x, firstPoint.y);
     
+    _maskLayer.path = path;
     _starShapeLayer.path = path;
     CGPathRelease(path);
 }
@@ -144,8 +161,6 @@ static const CGFloat kDefaultRadius = 60;
     //内交点
     NSMutableArray *crossPointsArray = [NSMutableArray array];
 
-#define UseEquation
-#ifdef UseEquation
     //采用二元一次方程求解
     //AC点确定直线方程y = kx + b
     //过B点直线y = B.y
@@ -191,30 +206,18 @@ static const CGFloat kDefaultRadius = 60;
         }else if (B.x == E.x) {
             F_y = k1 * F_x + b1;
         }else{
-            F_y = (b1 * k2 - b2 * k1) / (k2 - k1);
-            F_x = (F_y - b1) / k1;
+            if (k1 == 0) {
+                F_y = A.y;
+                F_x = (F_y - b2) / k2;
+            } else {
+                F_y = (b1 * k2 - b2 * k1) / (k2 - k1);
+                F_x = (F_y - b1) / k1;
+            }
         }
 
         CGPoint pointF = CGPointMake(F_x, F_y);
         [crossPointsArray addObject:[NSValue valueWithCGPoint:pointF]];
     }
-#else
-    for (int i = 0; i < kTopPointCount; i++) {
-        CGPoint pointA = [keyPointsArray[i] CGPointValue];
-        CGPoint pointB;
-        
-        if (i == kTopPointCount - 1) {
-            pointB = [keyPointsArray[0] CGPointValue];
-        } else {
-            pointB = [keyPointsArray[i + 1] CGPointValue];
-        }
-        
-        CGPoint midPoint = CGPointMake((pointA.x + pointB.x) / 2.0, (pointA.y + pointB.y) / 2.0);
-        CGPoint keyPoint = CGPointMake((midPoint.x + center.x) / 2.0, (midPoint.y + center.y) / 2.0);
-        
-        [crossPointsArray addObject:[NSValue valueWithCGPoint:keyPoint]];
-    }
-#endif
     
     //合并数据
     for (int i = 0; i < crossPointsArray.count; i++) {
@@ -226,15 +229,54 @@ static const CGFloat kDefaultRadius = 60;
 
 - (void)didClickedStarView:(UITapGestureRecognizer *)tapGest
 {
-    if (_bgShapeLayer.animationKeys.count) {
-        [_bgShapeLayer removeAllAnimations];
+    if (!self.enableTap) {
+        return;
+    }
+
+//    [self addAnimation];
+    
+    //点击范围
+    CGFloat percent = 0;
+    CGPoint touchPoint = [tapGest locationInView:tapGest.view];
+    CGPoint center = CGPointMake(self.frame.size.width / 2.0, _radius);
+    CGFloat distance = sqrtf(powf(touchPoint.x - center.x, 2) + powf(touchPoint.y - center.y, 2));
+    
+    if (distance < _radius) {
+        //判断左右范围
+        if (touchPoint.x < center.x) {
+            percent = 0.5;
+        } else {
+            percent = 1;
+        }
+    }else{
+        percent = 0;
+    }
+    
+    BOOL beEffective = YES;
+    if ([self.delegate respondsToSelector:@selector(alwStarView:shouldBeEffectiveWithPercent:)]) {
+        beEffective = [self.delegate alwStarView:self shouldBeEffectiveWithPercent:percent];
+    }
+    
+    if (beEffective) {
+        self.selectedPercent = percent;//setter方法
+        
+        if ([self.delegate respondsToSelector:@selector(alwStarView:didClickedWithPercent:)]) {
+            [self.delegate alwStarView:self didClickedWithPercent:percent];
+        }
+    }
+}
+
+- (void)addAnimation
+{
+    if (_starShapeLayer.animationKeys.count) {
+        [_starShapeLayer removeAllAnimations];
     } else {
         CABasicAnimation *animationRotation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
         animationRotation.fromValue = @(0);
         animationRotation.toValue = @(2 * M_PI);
         animationRotation.duration = 3;
         animationRotation.repeatCount = MAXFLOAT;
-        [_bgShapeLayer addAnimation:animationRotation forKey:@"rotation"];
+        [_starShapeLayer addAnimation:animationRotation forKey:@"rotation"];
         
         CABasicAnimation *animationEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
         animationEnd.fromValue = @(0);
@@ -256,7 +298,7 @@ static const CGFloat kDefaultRadius = 60;
         group.fillMode = kCAFillModeForwards;
         group.removedOnCompletion = YES;
         
-        [_bgShapeLayer addAnimation:group forKey:@"strokeStarPath"];
+        [_starShapeLayer addAnimation:group forKey:@"strokeStarPath"];
     }
 }
 

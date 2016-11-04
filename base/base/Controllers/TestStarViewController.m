@@ -20,8 +20,15 @@
 
 - (void)buildUI
 {
-    ALWStarView *star = [[ALWStarView alloc] initWithRadius:100];
+    ALWStarCommentView *starCommentView = [ALWStarCommentView getDefaultStarCommentView];
+    starCommentView.center = CGPointMake(DeviceWidth / 2.0, starCommentView.frame.size.height * 3);
+    starCommentView.enableTap = YES;
+    starCommentView.totalScore = 3.2;
+    [self.view addSubview:starCommentView];
+    
+    ALWStarView *star = [[ALWStarView alloc] initWithRadius:100 topPointCount:6];
     star.center = CGPointMake(DeviceWidth / 2.0, DeviceHeight / 2.0);
+    star.enableTap = YES;
     [self.view addSubview:star];
 }
 

@@ -10,6 +10,7 @@
 		6718B14D1DCAD8EA000D7FC2 /* ALWStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6718B14C1DCAD8EA000D7FC2 /* ALWStarView.m */; };
 		6718B1501DCB125F000D7FC2 /* TestStarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6718B14F1DCB125F000D7FC2 /* TestStarViewController.m */; };
 		6721727D1DC05B0F00153D3D /* TestCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721727C1DC05B0F00153D3D /* TestCollectionViewController.m */; };
+		6723AC5A1DCC379400EA41E8 /* ALWStarCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6723AC591DCC379400EA41E8 /* ALWStarCommentView.m */; };
 		673461801D7FACDA00066BEF /* StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6734617F1D7FACDA00066BEF /* StringHelper.m */; };
 		673461831D7FAD0A00066BEF /* ImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461821D7FAD0A00066BEF /* ImageHelper.m */; };
 		673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461851D7FADB900066BEF /* EncryptionHelper.m */; };
@@ -133,6 +134,8 @@
 		6718B14F1DCB125F000D7FC2 /* TestStarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestStarViewController.m; sourceTree = "<group>"; };
 		6721727B1DC05B0F00153D3D /* TestCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCollectionViewController.h; sourceTree = "<group>"; };
 		6721727C1DC05B0F00153D3D /* TestCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCollectionViewController.m; sourceTree = "<group>"; };
+		6723AC581DCC379400EA41E8 /* ALWStarCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWStarCommentView.h; sourceTree = "<group>"; };
+		6723AC591DCC379400EA41E8 /* ALWStarCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWStarCommentView.m; sourceTree = "<group>"; };
 		6734617E1D7FACDA00066BEF /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHelper.h; sourceTree = "<group>"; };
 		6734617F1D7FACDA00066BEF /* StringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringHelper.m; sourceTree = "<group>"; };
 		673461811D7FAD0A00066BEF /* ImageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageHelper.h; sourceTree = "<group>"; };
@@ -410,6 +413,8 @@
 			children = (
 				6718B14B1DCAD8EA000D7FC2 /* ALWStarView.h */,
 				6718B14C1DCAD8EA000D7FC2 /* ALWStarView.m */,
+				6723AC581DCC379400EA41E8 /* ALWStarCommentView.h */,
+				6723AC591DCC379400EA41E8 /* ALWStarCommentView.m */,
 			);
 			path = ALWStarComment;
 			sourceTree = "<group>";
@@ -1125,6 +1130,7 @@
 				67EFC9791DACDB36004F198A /* UIImageView+HighlightedWebCache.m in Sources */,
 				67EFCA121DAF6D40004F198A /* RefreshNormalFooter.m in Sources */,
 				676C08DF1D8FC740003EB057 /* BaseViewController.m in Sources */,
+				6723AC5A1DCC379400EA41E8 /* ALWStarCommentView.m in Sources */,
 				99A942781DAD1FC400597123 /* FLAnimatedImageView+HttpHelper.m in Sources */,
 				673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */,
 				67EFC97A1DACDB36004F198A /* UIImageView+WebCache.m in Sources */,
