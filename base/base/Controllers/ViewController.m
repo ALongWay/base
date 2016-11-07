@@ -164,7 +164,9 @@
 #pragma mark -- 测试ViewController
 //    [UIRouter pushFromController:self toClass:@"TestCollectionViewController" animated:YES];
 
-    [UIRouter pushFromController:self toClass:@"TestStarViewController" animated:YES];
+//    [UIRouter pushFromController:self toClass:@"TestStarViewController" animated:YES];
+    
+    [UIRouter pushFromController:self toClass:@"TestScratchCardViewController" animated:YES];
 }
 
 - (void)testSnapshot
@@ -340,7 +342,7 @@
         LOG(@"dispatch_group_async : completion");
     });
     
-    return;
+//    return;
     
     UIImage *icon = LOADIMAGE(kImageAppIcon);
 

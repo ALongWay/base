@@ -9,7 +9,7 @@
 #import "ALWStarView.h"
 
 #define kStarViewCOLORWITHRGBA(R, G, B, A)      [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:A]
-#define kStarViewCOLOR(R, G, B)                 COLORWITHRGBA(R, G, B, 1.0)
+#define kStarViewCOLOR(R, G, B)                 kStarViewCOLORWITHRGBA(R, G, B, 1.0)
 
 #define kDefaultBgColor                         kStarViewCOLOR(240, 240, 240)
 #define kDefaultFillColor                       [UIColor yellowColor]

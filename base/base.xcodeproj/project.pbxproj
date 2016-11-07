@@ -120,6 +120,8 @@
 		67EFCA131DAF6D40004F198A /* RefreshNormalHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFCA0D1DAF6D40004F198A /* RefreshNormalHeader.m */; };
 		67EFCA141DAF6D40004F198A /* UIScrollView+RefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFCA0F1DAF6D40004F198A /* UIScrollView+RefreshControl.m */; };
 		67EFCA1D1DB0EBE7004F198A /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFCA1C1DB0EBE7004F198A /* NSObject+Extension.m */; };
+		67FE91EA1DD07B3A00CE6071 /* ALWScratchCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FE91E91DD07B3A00CE6071 /* ALWScratchCardView.m */; };
+		67FE91ED1DD080D900CE6071 /* TestScratchCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FE91EC1DD080D900CE6071 /* TestScratchCardViewController.m */; };
 		999E3F4C1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 999E3F4B1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m */; };
 		999E3F4F1DC22AAB00BECD02 /* ALWCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 999E3F4E1DC22AAB00BECD02 /* ALWCollectionReusableView.m */; };
 		99A942721DAD16E800597123 /* SDImageCache+CacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A942711DAD16E800597123 /* SDImageCache+CacheHelper.m */; };
@@ -376,6 +378,10 @@
 		67EFCA0F1DAF6D40004F198A /* UIScrollView+RefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+RefreshControl.m"; sourceTree = "<group>"; };
 		67EFCA1B1DB0EBE7004F198A /* NSObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extension.h"; sourceTree = "<group>"; };
 		67EFCA1C1DB0EBE7004F198A /* NSObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extension.m"; sourceTree = "<group>"; };
+		67FE91E81DD07B3A00CE6071 /* ALWScratchCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWScratchCardView.h; sourceTree = "<group>"; };
+		67FE91E91DD07B3A00CE6071 /* ALWScratchCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWScratchCardView.m; sourceTree = "<group>"; };
+		67FE91EB1DD080D900CE6071 /* TestScratchCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestScratchCardViewController.h; sourceTree = "<group>"; };
+		67FE91EC1DD080D900CE6071 /* TestScratchCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestScratchCardViewController.m; sourceTree = "<group>"; };
 		999E3F4A1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
 		999E3F4B1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
 		999E3F4D1DC22AAB00BECD02 /* ALWCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionReusableView.h; sourceTree = "<group>"; };
@@ -496,6 +502,7 @@
 		673461911D7FC7D700066BEF /* MyLib */ = {
 			isa = PBXGroup;
 			children = (
+				67FE91E71DD07A5700CE6071 /* ALWScratchCard */,
 				6718B1491DCAD81C000D7FC2 /* ALWDataChart */,
 				6718B14A1DCAD81C000D7FC2 /* ALWStarComment */,
 				6721726E1DBDA76D00153D3D /* ALWCollectionViewLayout */,
@@ -538,6 +545,8 @@
 				6721727C1DC05B0F00153D3D /* TestCollectionViewController.m */,
 				6718B14E1DCB125F000D7FC2 /* TestStarViewController.h */,
 				6718B14F1DCB125F000D7FC2 /* TestStarViewController.m */,
+				67FE91EB1DD080D900CE6071 /* TestScratchCardViewController.h */,
+				67FE91EC1DD080D900CE6071 /* TestScratchCardViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -999,6 +1008,15 @@
 			path = RefreshControl;
 			sourceTree = "<group>";
 		};
+		67FE91E71DD07A5700CE6071 /* ALWScratchCard */ = {
+			isa = PBXGroup;
+			children = (
+				67FE91E81DD07B3A00CE6071 /* ALWScratchCardView.h */,
+				67FE91E91DD07B3A00CE6071 /* ALWScratchCardView.m */,
+			);
+			path = ALWScratchCard;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1025,7 +1043,7 @@
 		679116211D7675C500432E46 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = alongway;
 				TargetAttributes = {
 					679116281D7675C500432E46 = {
@@ -1099,6 +1117,7 @@
 				67EFC9751DACDB36004F198A /* UIButton+WebCache.m in Sources */,
 				6791164E1D76CEEF00432E46 /* main.m in Sources */,
 				67EFC96E1DACDB36004F198A /* SDImageCacheConfig.m in Sources */,
+				67FE91EA1DD07B3A00CE6071 /* ALWScratchCardView.m in Sources */,
 				67EFC9701DACDB36004F198A /* SDWebImageDecoder.m in Sources */,
 				676C04651D895A7F003EB057 /* UIButton+Initialization.m in Sources */,
 				67EFC9D11DADD995004F198A /* SVProgressHUD.m in Sources */,
@@ -1183,6 +1202,7 @@
 				67EFC9C31DADD995004F198A /* MJRefreshBackNormalFooter.m in Sources */,
 				676C09521D9D0BAC003EB057 /* AFURLResponseSerialization.m in Sources */,
 				676C07A01D8E8B2C003EB057 /* LevelDB.mm in Sources */,
+				67FE91ED1DD080D900CE6071 /* TestScratchCardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1240,8 +1260,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1286,8 +1308,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
