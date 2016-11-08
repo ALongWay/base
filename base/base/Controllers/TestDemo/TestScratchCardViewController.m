@@ -27,14 +27,13 @@
     UILabel *contentView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
     [contentView setBackgroundColor:COLOR(240, 240, 240)];
     [contentView setText:@"恭喜中一等奖"];
-    [contentView setTextColor:COLOR(255, 120, 100)];
+    [contentView setTextColor:[UIColor redColor]];
     [contentView setTextAlignment:NSTextAlignmentCenter];
     [contentView setFont:FONTAppliedBoldBase6(35)];
     
     UIImage *snapshot = [ImageHelper getSnapshotWithView:contentView];
     UIImage *coverImage = [ImageHelper getBlurEffectImageWithOriginalImage:snapshot style:ImageHelperBlurEffectStyleDark];
     UIImageView *coverView = [[UIImageView alloc] initWithImage:coverImage];
-    [coverView removeFromSuperview];
     
     ALWScratchCardView *card = [[ALWScratchCardView alloc] initWithContentView:contentView coverView:coverView];
     card.center = CGPointMake(self.view.center.x, card.height);

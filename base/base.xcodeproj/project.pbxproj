@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6718B14D1DCAD8EA000D7FC2 /* ALWStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6718B14C1DCAD8EA000D7FC2 /* ALWStarView.m */; };
-		6718B1501DCB125F000D7FC2 /* TestStarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6718B14F1DCB125F000D7FC2 /* TestStarViewController.m */; };
-		6721727D1DC05B0F00153D3D /* TestCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721727C1DC05B0F00153D3D /* TestCollectionViewController.m */; };
 		6723AC5A1DCC379400EA41E8 /* ALWStarCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6723AC591DCC379400EA41E8 /* ALWStarCommentView.m */; };
 		673461801D7FACDA00066BEF /* StringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6734617F1D7FACDA00066BEF /* StringHelper.m */; };
 		673461831D7FAD0A00066BEF /* ImageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461821D7FAD0A00066BEF /* ImageHelper.m */; };
@@ -121,7 +119,9 @@
 		67EFCA141DAF6D40004F198A /* UIScrollView+RefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFCA0F1DAF6D40004F198A /* UIScrollView+RefreshControl.m */; };
 		67EFCA1D1DB0EBE7004F198A /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EFCA1C1DB0EBE7004F198A /* NSObject+Extension.m */; };
 		67FE91EA1DD07B3A00CE6071 /* ALWScratchCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FE91E91DD07B3A00CE6071 /* ALWScratchCardView.m */; };
-		67FE91ED1DD080D900CE6071 /* TestScratchCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FE91EC1DD080D900CE6071 /* TestScratchCardViewController.m */; };
+		67FE91F51DD1640700CE6071 /* TestCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FE91F01DD1640700CE6071 /* TestCollectionViewController.m */; };
+		67FE91F61DD1640700CE6071 /* TestScratchCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FE91F21DD1640700CE6071 /* TestScratchCardViewController.m */; };
+		67FE91F71DD1640700CE6071 /* TestStarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FE91F41DD1640700CE6071 /* TestStarViewController.m */; };
 		999E3F4C1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 999E3F4B1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m */; };
 		999E3F4F1DC22AAB00BECD02 /* ALWCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 999E3F4E1DC22AAB00BECD02 /* ALWCollectionReusableView.m */; };
 		99A942721DAD16E800597123 /* SDImageCache+CacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A942711DAD16E800597123 /* SDImageCache+CacheHelper.m */; };
@@ -132,10 +132,6 @@
 /* Begin PBXFileReference section */
 		6718B14B1DCAD8EA000D7FC2 /* ALWStarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWStarView.h; sourceTree = "<group>"; };
 		6718B14C1DCAD8EA000D7FC2 /* ALWStarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWStarView.m; sourceTree = "<group>"; };
-		6718B14E1DCB125F000D7FC2 /* TestStarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStarViewController.h; sourceTree = "<group>"; };
-		6718B14F1DCB125F000D7FC2 /* TestStarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestStarViewController.m; sourceTree = "<group>"; };
-		6721727B1DC05B0F00153D3D /* TestCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCollectionViewController.h; sourceTree = "<group>"; };
-		6721727C1DC05B0F00153D3D /* TestCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCollectionViewController.m; sourceTree = "<group>"; };
 		6723AC581DCC379400EA41E8 /* ALWStarCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWStarCommentView.h; sourceTree = "<group>"; };
 		6723AC591DCC379400EA41E8 /* ALWStarCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWStarCommentView.m; sourceTree = "<group>"; };
 		6734617E1D7FACDA00066BEF /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHelper.h; sourceTree = "<group>"; };
@@ -380,8 +376,12 @@
 		67EFCA1C1DB0EBE7004F198A /* NSObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Extension.m"; sourceTree = "<group>"; };
 		67FE91E81DD07B3A00CE6071 /* ALWScratchCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWScratchCardView.h; sourceTree = "<group>"; };
 		67FE91E91DD07B3A00CE6071 /* ALWScratchCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWScratchCardView.m; sourceTree = "<group>"; };
-		67FE91EB1DD080D900CE6071 /* TestScratchCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestScratchCardViewController.h; sourceTree = "<group>"; };
-		67FE91EC1DD080D900CE6071 /* TestScratchCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestScratchCardViewController.m; sourceTree = "<group>"; };
+		67FE91EF1DD1640700CE6071 /* TestCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCollectionViewController.h; sourceTree = "<group>"; };
+		67FE91F01DD1640700CE6071 /* TestCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCollectionViewController.m; sourceTree = "<group>"; };
+		67FE91F11DD1640700CE6071 /* TestScratchCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestScratchCardViewController.h; sourceTree = "<group>"; };
+		67FE91F21DD1640700CE6071 /* TestScratchCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestScratchCardViewController.m; sourceTree = "<group>"; };
+		67FE91F31DD1640700CE6071 /* TestStarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStarViewController.h; sourceTree = "<group>"; };
+		67FE91F41DD1640700CE6071 /* TestStarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestStarViewController.m; sourceTree = "<group>"; };
 		999E3F4A1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
 		999E3F4B1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
 		999E3F4D1DC22AAB00BECD02 /* ALWCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCollectionReusableView.h; sourceTree = "<group>"; };
@@ -539,14 +539,9 @@
 		676C046B1D8E3440003EB057 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				67FE91EE1DD1640700CE6071 /* TestDemo */,
 				676C046F1D8E3648003EB057 /* ViewController.h */,
 				676C046E1D8E3648003EB057 /* ViewController.m */,
-				6721727B1DC05B0F00153D3D /* TestCollectionViewController.h */,
-				6721727C1DC05B0F00153D3D /* TestCollectionViewController.m */,
-				6718B14E1DCB125F000D7FC2 /* TestStarViewController.h */,
-				6718B14F1DCB125F000D7FC2 /* TestStarViewController.m */,
-				67FE91EB1DD080D900CE6071 /* TestScratchCardViewController.h */,
-				67FE91EC1DD080D900CE6071 /* TestScratchCardViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1017,6 +1012,19 @@
 			path = ALWScratchCard;
 			sourceTree = "<group>";
 		};
+		67FE91EE1DD1640700CE6071 /* TestDemo */ = {
+			isa = PBXGroup;
+			children = (
+				67FE91EF1DD1640700CE6071 /* TestCollectionViewController.h */,
+				67FE91F01DD1640700CE6071 /* TestCollectionViewController.m */,
+				67FE91F11DD1640700CE6071 /* TestScratchCardViewController.h */,
+				67FE91F21DD1640700CE6071 /* TestScratchCardViewController.m */,
+				67FE91F31DD1640700CE6071 /* TestStarViewController.h */,
+				67FE91F41DD1640700CE6071 /* TestStarViewController.m */,
+			);
+			path = TestDemo;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1111,6 +1119,7 @@
 				67EFC9C61DADD995004F198A /* MJRefreshNormalHeader.m in Sources */,
 				6734619A1D7FCCD300066BEF /* NSData+CommonCrypto.m in Sources */,
 				676C09551D9D0BAC003EB057 /* AFImageDownloader.m in Sources */,
+				67FE91F71DD1640700CE6071 /* TestStarViewController.m in Sources */,
 				67EFC96D1DACDB36004F198A /* SDImageCache.m in Sources */,
 				673461801D7FACDA00066BEF /* StringHelper.m in Sources */,
 				67EFCA101DAF6D40004F198A /* RefreshGifFooter.m in Sources */,
@@ -1137,6 +1146,7 @@
 				67EFC9BD1DADD995004F198A /* MJRefreshFooter.m in Sources */,
 				999E3F4F1DC22AAB00BECD02 /* ALWCollectionReusableView.m in Sources */,
 				67EFCA131DAF6D40004F198A /* RefreshNormalHeader.m in Sources */,
+				67FE91F51DD1640700CE6071 /* TestCollectionViewController.m in Sources */,
 				67EFCA141DAF6D40004F198A /* UIScrollView+RefreshControl.m in Sources */,
 				67EFC96C1DACDB36004F198A /* NSImage+WebCache.m in Sources */,
 				67EFC96F1DACDB36004F198A /* SDWebImageCompat.m in Sources */,
@@ -1182,6 +1192,7 @@
 				67EFC9CF1DADD995004F198A /* SVProgressAnimatedView.m in Sources */,
 				67EFC97C1DACDB36004F198A /* UIView+WebCacheOperation.m in Sources */,
 				67EFC9721DACDB36004F198A /* SDWebImageDownloaderOperation.m in Sources */,
+				67FE91F61DD1640700CE6071 /* TestScratchCardViewController.m in Sources */,
 				999E3F4C1DC22A7500BECD02 /* ALWCollectionViewLayoutAttributes.m in Sources */,
 				67EFC9C41DADD995004F198A /* MJRefreshBackStateFooter.m in Sources */,
 				67EFC9BB1DADD995004F198A /* MJRefreshBackFooter.m in Sources */,
@@ -1191,18 +1202,15 @@
 				676C09541D9D0BAC003EB057 /* AFAutoPurgingImageCache.m in Sources */,
 				67EFC9711DACDB36004F198A /* SDWebImageDownloader.m in Sources */,
 				676C09511D9D0BAC003EB057 /* AFURLRequestSerialization.m in Sources */,
-				6718B1501DCB125F000D7FC2 /* TestStarViewController.m in Sources */,
 				676C09581D9D0BAC003EB057 /* UIButton+AFNetworking.m in Sources */,
 				676C095B1D9D0BAC003EB057 /* UIRefreshControl+AFNetworking.m in Sources */,
 				67EFCA041DAF6C95004F198A /* SVProgressHUD+Extension.m in Sources */,
 				67EFC8A51DAC8E3D004F198A /* FLAnimatedImage.m in Sources */,
 				67EFC9CD1DADD995004F198A /* UIView+MJExtension.m in Sources */,
 				676C09501D9D0BAC003EB057 /* AFSecurityPolicy.m in Sources */,
-				6721727D1DC05B0F00153D3D /* TestCollectionViewController.m in Sources */,
 				67EFC9C31DADD995004F198A /* MJRefreshBackNormalFooter.m in Sources */,
 				676C09521D9D0BAC003EB057 /* AFURLResponseSerialization.m in Sources */,
 				676C07A01D8E8B2C003EB057 /* LevelDB.mm in Sources */,
-				67FE91ED1DD080D900CE6071 /* TestScratchCardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

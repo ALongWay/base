@@ -15,6 +15,7 @@
 
 static CGFloat const kDefaultLineWidth = 20;
 static NSInteger const kMinPointCountPerPath = 2;
+static CGFloat const kTimerInterval = 4;
 
 @interface ALWScratchCardView (){
     UIView              *_bgIV;
@@ -34,8 +35,6 @@ static NSInteger const kMinPointCountPerPath = 2;
     self = [super initWithFrame:CGRectMake(0, 0, contentView.frame.size.width, contentView.frame.size.height)];
     if (self) {
         [self.layer setMasksToBounds:YES];
-        [self.layer setBorderWidth:0.5];
-        [self.layer setBorderColor:kDefaultBorderColor.CGColor];
         [self setUserInteractionEnabled:YES];
         UIPanGestureRecognizer *panGest = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panFingerOnSelfViewWith:)];
         [self addGestureRecognizer:panGest];
@@ -84,9 +83,60 @@ static NSInteger const kMinPointCountPerPath = 2;
         UILabel *label = [[UILabel alloc] initWithFrame:_contentIV.bounds];
         [label setText:@"谢谢惠顾"];
         [label setTextAlignment:NSTextAlignmentCenter];
-        [label setTextColor:kScratchCardCOLOR(0, 0, 0)];
+        [label setTextColor:[UIColor whiteColor]];
         [label setFont:[UIFont boldSystemFontOfSize:30]];
         [_contentIV addSubview:label];
+        
+        //锁屏“滑动解锁”的效果
+        UILabel *coverLabel = [[UILabel alloc] initWithFrame:_contentIV.bounds];
+        [coverLabel setBackgroundColor:[UIColor greenColor]];
+        [coverLabel setText:@"谢谢惠顾"];
+        [coverLabel setTextAlignment:NSTextAlignmentCenter];
+        [coverLabel setTextColor:[UIColor blackColor]];
+        [coverLabel setFont:[UIFont boldSystemFontOfSize:30]];
+        [_contentIV addSubview:coverLabel];
+        
+        CALayer *textMaskLayer = [CALayer layer];
+        textMaskLayer.frame = coverLabel.bounds;
+        coverLabel.layer.mask = textMaskLayer;
+        
+        CGSize textSize = [coverLabel.attributedText boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+        CGFloat startX = (coverLabel.frame.size.width - textSize.width) / 2.0;
+        
+        CAShapeLayer *sublayer = [CAShapeLayer layer];
+        sublayer.frame = textMaskLayer.bounds;
+        sublayer.fillColor = nil;
+        sublayer.strokeColor = [UIColor redColor].CGColor;
+        sublayer.strokeEnd = 0;
+        sublayer.lineWidth = textSize.height;
+        sublayer.lineCap = kCALineCapRound;
+        
+        UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+        [bezierPath moveToPoint:CGPointMake(startX - sublayer.lineWidth /2.0, sublayer.frame.size.height / 2.0)];
+        [bezierPath addLineToPoint:CGPointMake(startX + textSize.width * 2 + sublayer.lineWidth, sublayer.frame.size.height / 2.0)];
+        sublayer.path = [bezierPath CGPath];
+        [textMaskLayer addSublayer:sublayer];
+        
+        CABasicAnimation *animationEnd = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        animationEnd.fromValue = @(0);
+        animationEnd.toValue = @(1);
+        animationEnd.duration = kTimerInterval;
+        animationEnd.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        
+        CABasicAnimation *animationStart = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
+        animationStart.fromValue = @(0);
+        animationStart.toValue = @(1);
+        animationStart.duration = kTimerInterval;
+        animationEnd.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        
+        CAAnimationGroup *group = [CAAnimationGroup animation];
+        group.animations = @[animationEnd, animationStart];
+        group.duration = kTimerInterval + 1;
+        group.repeatCount = MAXFLOAT;
+        group.fillMode = kCAFillModeForwards;
+        group.removedOnCompletion = YES;
+        
+        [sublayer addAnimation:group forKey:@"strokeStarPath"];
         
         _pathArray = [NSMutableArray array];
     }
@@ -94,6 +144,7 @@ static NSInteger const kMinPointCountPerPath = 2;
     return self;
 }
 
+#pragma mark -- Getter/setter
 - (CGFloat)lineWidth
 {
     if (_lineWidth == 0) {
@@ -108,6 +159,7 @@ static NSInteger const kMinPointCountPerPath = 2;
     _lineWidth = lineWidth;
 }
 
+#pragma mark -- Private Methods
 - (void)panFingerOnSelfViewWith:(UIPanGestureRecognizer *)panGest
 {
     CGPoint currentPoint = [panGest locationInView:panGest.view];
@@ -152,10 +204,9 @@ static NSInteger const kMinPointCountPerPath = 2;
         case UIGestureRecognizerStateEnded:
         case UIGestureRecognizerStateCancelled:{
             if (_pathArray.count > 0) {
-                CAShapeLayer *currentLayer = [_pathArray lastObject];
                 if (_currentPointsArray
                     && _currentPointsArray.count < kMinPointCountPerPath) {
-                    [_pathArray removeObject:currentLayer];
+                    [_pathArray removeLastObject];
                 }
             }
             
