@@ -123,4 +123,7 @@
 #define WeakSelf(weakSelf)              __weak typeof(self) weakSelf = self;
 #define StrongSelf(strongSelf)          __strong typeof(self) strongSelf = self;
 
+#define WeakObject(weakObject, object)      __weak typeof(object) weakObject = object;
+#define StrongObject(strongObject, object)  __strong typeof(object) strongObject = object;
+
 #endif /* CommonHeader_h */

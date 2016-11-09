@@ -11,6 +11,8 @@
 
 @interface ViewController : BaseViewController
 
+#pragma mark -- Handle Callback Block
+- (void)handleCallbackBlockDidSelectedTotalScoreWithScore:(CGFloat)totalScore;
 
 @end
 

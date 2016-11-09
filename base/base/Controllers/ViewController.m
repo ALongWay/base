@@ -150,23 +150,25 @@
 {
 //    ViewController *newVC = [[ViewController alloc] init];
 //    [self.navigationController pushViewController:newVC animated:YES];
-    
+//    
 //    [UIRouter pushFromController:self toClass:@"ViewController" animated:YES];
-    
+//    
 //    WeakSelf(weakSelf);
 //    [UIRouter pushToClass:@"ViewController" beReady:^(UIViewController *toController) {
 //        toController.hidesBottomBarWhenPushed = YES;
 //        [weakSelf.navigationController pushViewController:toController animated:YES];
 //    }];
-    
-//    [UIRouter pushFromController:self toClass:@"ViewController" withParameters:nil];
+//    
+//    [UIRouter pushToViewControllerFromUIViewController:self withParas:nil];
     
 #pragma mark -- 测试ViewController
 //    [UIRouter pushFromController:self toClass:@"TestCollectionViewController" animated:YES];
-
+//
 //    [UIRouter pushFromController:self toClass:@"TestStarViewController" animated:YES];
+//    
+//    [UIRouter pushFromController:self toClass:@"TestScratchCardViewController" animated:YES];
     
-    [UIRouter pushFromController:self toClass:@"TestScratchCardViewController" animated:YES];
+    [UIRouter pushToTestStarViewControllerFromUIViewController:self withParas:nil];
 }
 
 - (void)testSnapshot
@@ -378,6 +380,12 @@
 {
     UIView *coverView = tapGest.view;
     [coverView removeFromSuperview];
+}
+
+#pragma mark -- Handle Callback Block
+- (void)handleCallbackBlockDidSelectedTotalScoreWithScore:(CGFloat)totalScore
+{
+    LOG(@"ViewController totalScore: %f", totalScore);
 }
 
 @end

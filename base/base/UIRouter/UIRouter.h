@@ -28,7 +28,7 @@
 + (UIRouter *)sharedManager;
 
 /**
- *  通用的简单跳转方法，无传参和实现协议
+ *  通用的简单跳转方法，无传参和回调
  *
  *  @param fromController 原视图控制器
  *  @param toClassName    目标类的名称
@@ -37,21 +37,16 @@
 + (void)pushFromController:(UIViewController *)fromController toClass:(NSString *)toClassName animated:(BOOL)animated;
 
 /**
- *  通用的简单跳转方法，无传参和实现协议；可自定义跳转配置
+ *  通用的简单跳转方法，无传参和回调；可自定义跳转配置
  *
  *  @param toClassName  目标类的名称
  *  @param beReadyBlock 自定义的跳转配置
  */
 + (void)pushToClass:(NSString *)toClassName beReady:(void (^)(UIViewController *toController))beReadyBlock;
 
-/**
- *  有传参或者实现协议的跳转过程方法；
- *  router负责解析双方控制器、解析传递参数、实现代理方法、回调原控制器的实现方法
- *
- *  @param fromController 原视图控制器
- *  @param toClassName    目标类的名称
- *  @param paras          参数字典，可以为nil
- */
-+ (void)pushFromController:(id)fromController toClass:(NSString *)toClassName withParameters:(NSDictionary *)paras;
+#pragma mark - 以下，每个方法统一处理具有相同目标控制器、并带有参数或者回调操作的跳转逻辑
++ (void)pushToViewControllerFromUIViewController:(UIViewController *)fromController withParas:(NSDictionary *)paras;
+
++ (void)pushToTestStarViewControllerFromUIViewController:(UIViewController *)fromController withParas:(NSDictionary *)paras;
 
 @end
