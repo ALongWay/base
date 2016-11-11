@@ -7,8 +7,39 @@
 //
 
 #import "SVProgressHUD+Extension.h"
+#import "objc/runtime.h"
 
 @implementation SVProgressHUD (Extension)
+
++ (void)load
+{
+    __weak typeof(self) weakSelf = self;
+    
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        [weakSelf swizzleOriginalSelector:@selector(initWithFrame:) withNewSelector:@selector(base_initWithFrame:)];
+        [weakSelf swizzleOriginalSelector:@selector(dismissWithDelay:completion:) withNewSelector:@selector(base_dismissWithDelay:completion:)];
+    });
+}
+
++ (void)swizzleOriginalSelector:(SEL)originalSelector withNewSelector:(SEL)newSelector
+{
+    Class selfClass = [self class];
+    
+    Method originalMethod = class_getInstanceMethod(selfClass, originalSelector);
+    Method newMethod = class_getInstanceMethod(selfClass, newSelector);
+    
+    IMP originalIMP = method_getImplementation(originalMethod);
+    IMP newIMP = method_getImplementation(newMethod);
+    
+    //先用新的IMP加到原始SEL中
+    BOOL addSuccess = class_addMethod(selfClass, originalSelector, newIMP, method_getTypeEncoding(newMethod));
+    if (addSuccess) {
+        class_replaceMethod(selfClass, newSelector, originalIMP, method_getTypeEncoding(originalMethod));
+    }else{
+        method_exchangeImplementations(originalMethod, newMethod);
+    }
+}
 
 + (void)showAppUITransitionAnimation
 {
@@ -84,6 +115,28 @@
             [strongInstance setValue:timer forKey:@"fadeOutTimer"];
         }
     }];
+#pragma clang diagnostic pop
+}
+
+#pragma mark -- 
+- (instancetype)base_initWithFrame:(CGRect)frame
+{
+    id instance = [self base_initWithFrame:frame];
+    
+    self.minimumDismissTimeInterval = 2;
+    
+    return instance;
+}
+
+- (void)base_dismissWithDelay:(NSTimeInterval)delay completion:(SVProgressHUDDismissCompletion)completion
+{
+    [self base_dismissWithDelay:delay completion:completion];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wundeclared-selector"
+    SVProgressHUD *sharedProgressHUD = (SVProgressHUD *)[SVProgressHUD performSelector:@selector(sharedView)];
+    UIImageView *imageView = (UIImageView *)[sharedProgressHUD valueForKey:@"imageView"];
+    [imageView setAnimationImages:nil];
 #pragma clang diagnostic pop
 }
 
