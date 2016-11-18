@@ -13,5 +13,6 @@
 #import "ALWCollectionViewFlowLayout.h"
 #import "ALWStarCommentView.h"
 #import "ALWScratchCardView.h"
+#import "ALWCoverBrowser.h"
 
 #endif /* MyLib_h */

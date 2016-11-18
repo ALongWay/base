@@ -28,6 +28,9 @@
 		6764A4DD1DDD8FF300C2ADC6 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4CF1DDD8FF300C2ADC6 /* NSLayoutConstraint+MASDebugAdditions.m */; };
 		6764A4DE1DDD8FF300C2ADC6 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4D11DDD8FF300C2ADC6 /* View+MASAdditions.m */; };
 		6764A4DF1DDD8FF300C2ADC6 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4D41DDD8FF300C2ADC6 /* ViewController+MASAdditions.m */; };
+		6764A4E31DDEAF6A00C2ADC6 /* ALWCoverBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4E21DDEAF6A00C2ADC6 /* ALWCoverBrowser.m */; };
+		6764A4E61DDEEB4300C2ADC6 /* TestCoverBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4E51DDEEB4300C2ADC6 /* TestCoverBrowserViewController.m */; };
+		6764A4E91DDF0F7300C2ADC6 /* ALWCoverBrowserLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4E81DDF0F7300C2ADC6 /* ALWCoverBrowserLayout.m */; };
 		676C04651D895A7F003EB057 /* UIButton+Initialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C04641D895A7F003EB057 /* UIButton+Initialization.m */; };
 		676C04701D8E3648003EB057 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C046E1D8E3648003EB057 /* ViewController.m */; };
 		676C04731D8E3F34003EB057 /* CacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 676C04721D8E3F34003EB057 /* CacheHelper.m */; };
@@ -191,6 +194,12 @@
 		6764A4D21DDD8FF300C2ADC6 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		6764A4D31DDD8FF300C2ADC6 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
 		6764A4D41DDD8FF300C2ADC6 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
+		6764A4E11DDEAF6A00C2ADC6 /* ALWCoverBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCoverBrowser.h; sourceTree = "<group>"; };
+		6764A4E21DDEAF6A00C2ADC6 /* ALWCoverBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCoverBrowser.m; sourceTree = "<group>"; };
+		6764A4E41DDEEB4300C2ADC6 /* TestCoverBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCoverBrowserViewController.h; sourceTree = "<group>"; };
+		6764A4E51DDEEB4300C2ADC6 /* TestCoverBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCoverBrowserViewController.m; sourceTree = "<group>"; };
+		6764A4E71DDF0F7300C2ADC6 /* ALWCoverBrowserLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWCoverBrowserLayout.h; sourceTree = "<group>"; };
+		6764A4E81DDF0F7300C2ADC6 /* ALWCoverBrowserLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWCoverBrowserLayout.m; sourceTree = "<group>"; };
 		676C04611D89576D003EB057 /* Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Categories.h; sourceTree = "<group>"; };
 		676C04631D895A7F003EB057 /* UIButton+Initialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Initialization.h"; sourceTree = "<group>"; };
 		676C04641D895A7F003EB057 /* UIButton+Initialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Initialization.m"; sourceTree = "<group>"; };
@@ -536,6 +545,7 @@
 			isa = PBXGroup;
 			children = (
 				6764A4B91DDD602A00C2ADC6 /* MyLib.h */,
+				6764A4E01DDEAF4600C2ADC6 /* ALWCoverBrowser */,
 				67FE91E71DD07A5700CE6071 /* ALWScratchCard */,
 				6718B1491DCAD81C000D7FC2 /* ALWDataChart */,
 				6718B14A1DCAD81C000D7FC2 /* ALWStarComment */,
@@ -617,6 +627,17 @@
 				6764A4D41DDD8FF300C2ADC6 /* ViewController+MASAdditions.m */,
 			);
 			path = Masonry;
+			sourceTree = "<group>";
+		};
+		6764A4E01DDEAF4600C2ADC6 /* ALWCoverBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				6764A4E11DDEAF6A00C2ADC6 /* ALWCoverBrowser.h */,
+				6764A4E21DDEAF6A00C2ADC6 /* ALWCoverBrowser.m */,
+				6764A4E71DDF0F7300C2ADC6 /* ALWCoverBrowserLayout.h */,
+				6764A4E81DDF0F7300C2ADC6 /* ALWCoverBrowserLayout.m */,
+			);
+			path = ALWCoverBrowser;
 			sourceTree = "<group>";
 		};
 		676C046B1D8E3440003EB057 /* Controllers */ = {
@@ -1104,6 +1125,8 @@
 				67FE91F21DD1640700CE6071 /* TestScratchCardViewController.m */,
 				67FE91F31DD1640700CE6071 /* TestStarViewController.h */,
 				67FE91F41DD1640700CE6071 /* TestStarViewController.m */,
+				6764A4E41DDEEB4300C2ADC6 /* TestCoverBrowserViewController.h */,
+				6764A4E51DDEEB4300C2ADC6 /* TestCoverBrowserViewController.m */,
 			);
 			path = TestDemo;
 			sourceTree = "<group>";
@@ -1193,6 +1216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6764A4E31DDEAF6A00C2ADC6 /* ALWCoverBrowser.m in Sources */,
 				676C095A1D9D0BAC003EB057 /* UIProgressView+AFNetworking.m in Sources */,
 				67EFC9C71DADD995004F198A /* MJRefreshStateHeader.m in Sources */,
 				67EFC9691DACDB36004F198A /* FLAnimatedImageView+WebCache.m in Sources */,
@@ -1244,6 +1268,7 @@
 				67EFC9C21DADD995004F198A /* MJRefreshBackGifFooter.m in Sources */,
 				676C094E1D9D0BAC003EB057 /* AFHTTPSessionManager.m in Sources */,
 				6764A4DC1DDD8FF300C2ADC6 /* NSArray+MASAdditions.m in Sources */,
+				6764A4E91DDF0F7300C2ADC6 /* ALWCoverBrowserLayout.m in Sources */,
 				67EFC9CE1DADD995004F198A /* SVIndefiniteAnimatedView.m in Sources */,
 				67EFC9741DACDB36004F198A /* SDWebImagePrefetcher.m in Sources */,
 				67EFC9791DACDB36004F198A /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1294,6 +1319,7 @@
 				67EFC9CA1DADD995004F198A /* NSBundle+MJRefresh.m in Sources */,
 				67EFCA111DAF6D40004F198A /* RefreshGifHeader.m in Sources */,
 				676C09541D9D0BAC003EB057 /* AFAutoPurgingImageCache.m in Sources */,
+				6764A4E61DDEEB4300C2ADC6 /* TestCoverBrowserViewController.m in Sources */,
 				67EFC9711DACDB36004F198A /* SDWebImageDownloader.m in Sources */,
 				676C09511D9D0BAC003EB057 /* AFURLRequestSerialization.m in Sources */,
 				676C09581D9D0BAC003EB057 /* UIButton+AFNetworking.m in Sources */,

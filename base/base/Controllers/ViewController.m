@@ -165,10 +165,12 @@
 //    [UIRouter pushFromController:self toClass:@"TestCollectionViewController" animated:YES];
 //
 //    [UIRouter pushFromController:self toClass:@"TestStarViewController" animated:YES];
-//    
+//
 //    [UIRouter pushFromController:self toClass:@"TestScratchCardViewController" animated:YES];
     
-    [UIRouter pushToTestStarViewControllerFromUIViewController:self withParas:nil];
+//    [UIRouter pushToTestStarViewControllerFromUIViewController:self withParas:nil];
+    
+    [UIRouter pushFromController:self toClass:@"TestCoverBrowserViewController" animated:YES];
 }
 
 - (void)testSnapshot
