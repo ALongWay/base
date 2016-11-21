@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ALWCoverBrowserLayoutDelegate <UICollectionViewDelegate>
+
+@required
+- (CGSize)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
+
+- (CGFloat)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout rightSpacingForItemAtIndexPath:(NSIndexPath *)indexPath;
+
+- (CGFloat)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout angleForItemAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
 @interface ALWCoverBrowserLayout : UICollectionViewLayout
 
 @end
