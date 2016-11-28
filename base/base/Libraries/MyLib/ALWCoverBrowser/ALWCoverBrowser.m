@@ -41,6 +41,8 @@ static const NSInteger kItemMinCount = 7;
     CGFloat                 _itemMidMaxInset;
     CGFloat                 _itemMidMinInset;
     CGFloat                 _itemTransform3DAngle;
+    
+    NSTimer                 *_autoScrollTimer;
 }
 
 @property (nonatomic, strong) UICollectionView          *collectionView;
@@ -49,6 +51,7 @@ static const NSInteger kItemMinCount = 7;
 @end
 
 @implementation ALWCoverBrowser
+@synthesize autoScrollDuration = _autoScrollDuration;
 
 - (instancetype)init
 {
@@ -62,8 +65,8 @@ static const NSInteger kItemMinCount = 7;
         CGFloat rate = frame.size.width / 375.0;
         _itemMaxSize = CGSizeMake(250 * rate, 228 * rate);
         _itemMinSize = CGSizeMake(_itemMaxSize.width * 0.76, _itemMaxSize.height * 0.76);
-        _itemMidMinInset = 10 * rate;
         _itemMidMaxInset = 50 * rate;
+        _itemMidMinInset = 10 * rate;
         _itemTransform3DAngle = (M_PI * 20 / 180.0);
     }
     
@@ -86,6 +89,51 @@ static const NSInteger kItemMinCount = 7;
     }
     
     return _collectionView;
+}
+
+- (void)setDisableCircle:(BOOL)disableCircle
+{
+    _disableCircle = disableCircle;
+
+    [self.collectionView setBounces:!disableCircle];
+
+    if (disableCircle) {
+        self.isAutoScrolling = NO;
+    }
+}
+
+- (void)setIsAutoScrolling:(BOOL)isAutoScrolling
+{
+    _isAutoScrolling = isAutoScrolling;
+    
+    if (_autoScrollTimer) {
+        [_autoScrollTimer invalidate];
+        _autoScrollTimer = nil;
+    }
+
+    if (isAutoScrolling) {
+        self.disableCircle = NO;
+        
+        _autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:self.autoScrollDuration target:self selector:@selector(autoScroll) userInfo:nil repeats:YES];
+    }
+}
+
+- (CGFloat)autoScrollDuration
+{
+    if (_autoScrollDuration == 0) {
+        return 3;
+    }
+    
+    return _autoScrollDuration;
+}
+
+- (void)setAutoScrollDuration:(CGFloat)autoScrollDuration
+{
+    _autoScrollDuration = autoScrollDuration;
+    
+    if (_isAutoScrolling) {
+        self.isAutoScrolling = YES;
+    }
 }
 
 #pragma mark -- ALWCoverBrowserLayoutDelegate
@@ -128,8 +176,9 @@ static const NSInteger kItemMinCount = 7;
 {
     _currentCenterIndex = indexPath.row;
     
-    CGFloat offsetX = MAX(indexPath.row * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - collectionView.frame.size.width / 2.0, 0);
-    [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    if (!_disableCircle) {
+        [self adjustContentViewOffset];
+    }
     
     if ([self.delegate respondsToSelector:@selector(alwCoverBrowser:didSelectItemAtIndex:)]) {
         ALWCoverItemConfiguration *config = [_itemConfigArray objectAtIndex:indexPath.row];
@@ -141,68 +190,73 @@ static const NSInteger kItemMinCount = 7;
 #pragma mark -- UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self refreshItemConfiguration:scrollView];
+    if (!self.collectionView.pagingEnabled) {
+        [self refreshItemConfiguration:scrollView];
+    }
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
-    [self adjustContentViewOffset];
+    if (!self.collectionView.pagingEnabled) {
+        [self adjustContentViewOffset];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (self.collectionView.pagingEnabled) {
+        _currentCenterIndex = scrollView.contentOffset.x / _itemMaxSize.width;
+        [self recoverContentViewOffset];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (_autoScrollTimer) {
+        [_autoScrollTimer invalidate];
+        _autoScrollTimer = nil;
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    NSLog(@"速度：%f", velocity.x);
+    
+    if (!self.collectionView.pagingEnabled) {
+        if (velocity.x > 0) {
+            //向左滑动
+            CGFloat nextFixedItemOffsetX = MAX((_originalCenterIndex + 1) * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
+            
+            if (targetContentOffset->x > nextFixedItemOffsetX) {
+                _currentCenterIndex = _originalCenterIndex + 1;
+            }
+        }else if (velocity.x < 0){
+            //向右滑动
+            CGFloat nextFixedItemOffsetX = MAX((_originalCenterIndex - 1) * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
+            
+            if (targetContentOffset->x < nextFixedItemOffsetX) {
+                _currentCenterIndex = _originalCenterIndex - 1;
+            }
+        }
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (!decelerate) {
-        [self adjustContentViewOffset];
+    if (!self.collectionView.pagingEnabled) {
+        if (!decelerate) {
+            [self adjustContentViewOffset];
+        }
+    }
+    
+    if (_isAutoScrolling) {
+        self.isAutoScrolling = YES;
     }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
-    //排序显示数据
-    if (_currentCenterIndex == _originalCenterIndex) {
-        return;
-    }
-    
-    NSInteger offsetIndex = _currentCenterIndex - _originalCenterIndex;
-    _currentCenterIndex = _originalCenterIndex;
-    
-    if (offsetIndex < 0) {
-        //将尾部的元素移到前面
-        for (int i = 0; i < -offsetIndex; i++) {
-            ALWCoverItemConfiguration *config = [_itemConfigArray lastObject];
-            [_itemConfigArray removeLastObject];
-            [_itemConfigArray insertObject:config atIndex:0];
-        }
-    } else if (offsetIndex > 0) {
-        //将前面的元素移到末尾
-        for (int i = 0; i < offsetIndex; i++) {
-            ALWCoverItemConfiguration *config = [_itemConfigArray firstObject];
-            [_itemConfigArray removeObjectAtIndex:0];
-            [_itemConfigArray addObject:config];
-        }
-    }
-    
-    for (int i = 0; i < _itemConfigArray.count; i++) {
-        ALWCoverItemConfiguration *itemConfig = _itemConfigArray[i];
-        itemConfig.rightSpacing = _itemMidMinInset;
-        
-        if (i == _originalCenterIndex) {
-            itemConfig.itemSize = _itemMaxSize;
-            itemConfig.transformAngle = 0;
-        } else if (i < _originalCenterIndex) {
-            itemConfig.itemSize = _itemMinSize;
-            itemConfig.transformAngle = -_itemTransform3DAngle;
-        } else{
-            itemConfig.itemSize = _itemMinSize;
-            itemConfig.transformAngle = _itemTransform3DAngle;
-        }
-    }
-    
-    [_collectionView reloadData];
-    
-    CGFloat offsetX = MAX(_originalCenterIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - scrollView.frame.size.width / 2.0, 0);
-    
-    [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:NO];
+    [self recoverContentViewOffset];
 }
 
 #pragma mark -- Private methods
@@ -282,7 +336,81 @@ static const NSInteger kItemMinCount = 7;
     [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
 }
 
+- (void)recoverContentViewOffset
+{
+    if (_disableCircle) {
+        return;
+    }
+    
+    //排序显示数据
+    if (_currentCenterIndex == _originalCenterIndex) {
+        return;
+    }
+    
+    NSInteger offsetIndex = _currentCenterIndex - _originalCenterIndex;
+    _currentCenterIndex = _originalCenterIndex;
+    
+    if (offsetIndex < 0) {
+        //将尾部的元素移到前面
+        for (int i = 0; i < -offsetIndex; i++) {
+            ALWCoverItemConfiguration *config = [_itemConfigArray lastObject];
+            [_itemConfigArray removeLastObject];
+            [_itemConfigArray insertObject:config atIndex:0];
+        }
+    } else if (offsetIndex > 0) {
+        //将前面的元素移到末尾
+        for (int i = 0; i < offsetIndex; i++) {
+            ALWCoverItemConfiguration *config = [_itemConfigArray firstObject];
+            [_itemConfigArray removeObjectAtIndex:0];
+            [_itemConfigArray addObject:config];
+        }
+    }
+    
+    for (int i = 0; i < _itemConfigArray.count; i++) {
+        ALWCoverItemConfiguration *itemConfig = _itemConfigArray[i];
+        itemConfig.rightSpacing = _itemMidMinInset;
+        
+        if (i == _originalCenterIndex) {
+            itemConfig.itemSize = _itemMaxSize;
+            itemConfig.transformAngle = 0;
+        } else if (i < _originalCenterIndex) {
+            itemConfig.itemSize = _itemMinSize;
+            itemConfig.transformAngle = -_itemTransform3DAngle;
+        } else{
+            itemConfig.itemSize = _itemMinSize;
+            itemConfig.transformAngle = _itemTransform3DAngle;
+        }
+    }
+    
+    [_collectionView reloadData];
+    
+    CGFloat offsetX = MAX(_originalCenterIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
+    
+    [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:NO];
+}
+
+- (void)autoScroll
+{
+    _currentCenterIndex = _originalCenterIndex + 1;
+    
+    [self adjustContentViewOffset];
+}
+
 #pragma mark -- Public methods
+- (void)resetItemFillCoverBrowser
+{
+    CGFloat width = self.frame.size.width;
+    CGFloat height = self.frame.size.height;
+    
+    _itemMaxSize = CGSizeMake(width, height);
+    _itemMinSize = _itemMaxSize;
+    _itemMidMaxInset = 0;
+    _itemMidMinInset = _itemMidMaxInset;
+    _itemTransform3DAngle = 0;
+    
+    [self.collectionView setPagingEnabled:YES];
+}
+
 - (void)setupDelegate:(id<ALWCoverBrowserDelegate>)delegate registerUICollectionViewCellClass:(Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier
 {
     self.delegate = delegate;
@@ -297,19 +425,24 @@ static const NSInteger kItemMinCount = 7;
     
     NSInteger itemCount = _realItemCount;
     
-    if (itemCount > 0
-        && itemCount < kItemMinCount) {
-        for (int i = 2; i <= kItemMinCount; i++) {
-            itemCount = _realItemCount * i;
-            
-            if (itemCount >= kItemMinCount) {
-                break;
+    if (_disableCircle) {
+        _originalCenterIndex = 0;
+    }else{
+        if (itemCount > 0
+            && itemCount < kItemMinCount) {
+            for (int i = 2; i <= kItemMinCount; i++) {
+                itemCount = _realItemCount * i;
+                
+                if (itemCount >= kItemMinCount) {
+                    break;
+                }
             }
         }
+        
+        _originalCenterIndex = itemCount / 2.0;
     }
     
     _itemConfigArray = [NSMutableArray arrayWithCapacity:itemCount];
-    _originalCenterIndex = itemCount / 2.0;
     _currentCenterIndex = _originalCenterIndex;
     
     for (int i = 0; i < itemCount; i++) {
@@ -354,8 +487,10 @@ static const NSInteger kItemMinCount = 7;
         [_itemConfigArray addObject:itemConfig];
     }
     
-    CGFloat contentCenterX = (_itemMinSize.width + _itemMidMinInset) * _originalCenterIndex + _itemMaxSize.width / 2.0;
-    [self.collectionView setContentOffset:CGPointMake(contentCenterX - _collectionView.frame.size.width / 2.0, 0) animated:NO];
+    if (!_disableCircle) {
+        CGFloat contentCenterX = (_itemMinSize.width + _itemMidMinInset) * _originalCenterIndex + _itemMaxSize.width / 2.0;
+        [self.collectionView setContentOffset:CGPointMake(contentCenterX - _collectionView.frame.size.width / 2.0, 0) animated:NO];
+    }
 }
 
 @end

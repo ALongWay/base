@@ -30,8 +30,18 @@ static const NSInteger kTestItemCount = 4;
         [_testData addObject:@(i)];
     }
     
+    ALWCoverBrowser *defaultCB = [[ALWCoverBrowser alloc] init];
+    defaultCB.originY = 20;
+    defaultCB.isAutoScrolling = YES;
+    [defaultCB setupDelegate:self registerUICollectionViewCellClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
+    [self.view addSubview:defaultCB];
+
+    
     ALWCoverBrowser *cBView = [[ALWCoverBrowser alloc] init];
-    cBView.center = CGPointMake(cBView.center.x, self.view.center.y - 64);
+    cBView.originY = CGRectGetMaxY(defaultCB.frame) + 40;
+    [cBView resetItemFillCoverBrowser];
+    cBView.isAutoScrolling = YES;
+    
     [cBView setupDelegate:self registerUICollectionViewCellClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
     [self.view addSubview:cBView];
 }

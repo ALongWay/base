@@ -12,11 +12,27 @@
 
 @interface ALWCoverBrowser : UIView
 
+//item配置属性
 @property (nonatomic, assign) CGSize    itemMaxSize;
 @property (nonatomic, assign) CGSize    itemMinSize;
 @property (nonatomic, assign) CGFloat   itemMidMaxInset;
 @property (nonatomic, assign) CGFloat   itemMidMinInset;
 @property (nonatomic, assign) CGFloat   itemTransform3DAngle;
+
+/**
+ 是否禁止循环滑动，默认NO
+ */
+@property (nonatomic, assign) BOOL      disableCircle;
+
+/**
+ 是否自动滑动，默认NO
+ */
+@property (nonatomic, assign) BOOL      isAutoScrolling;
+
+/**
+ 自动滑动周期，默认3秒
+ */
+@property (nonatomic, assign) CGFloat   autoScrollDuration;
 
 @property (nonatomic, weak) id<ALWCoverBrowserDelegate> delegate;
 
@@ -26,6 +42,11 @@
  @return return value description
  */
 - (instancetype)init;
+
+/**
+ 重置item配置，使其填充满容器
+ */
+- (void)resetItemFillCoverBrowser;
 
 /**
  赋值代理对象，注册UICollectionViewCell
