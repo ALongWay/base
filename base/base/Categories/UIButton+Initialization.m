@@ -163,7 +163,8 @@ typedef void(^ResetTitleAndImageLayoutBlock)(void);
                 
                 CGFloat titleOriginX = (weakSelf.width - titleSize.width) / 2.0;
                 CGFloat titleOriginY = imageOriginY + imageSize.height + midInset;
-                weakSelf.titleEdgeInsets = UIEdgeInsetsMake(titleOriginY, titleOriginX, weakSelf.height - titleOriginY - titleSize.height, titleOriginX);
+                weakSelf.titleLabel.frame = CGRectMake(titleOriginX, titleOriginY, titleSize.width, titleSize.height);
+                [weakSelf.titleLabel setTextAlignment:NSTextAlignmentCenter];
                 break;
             }
             case ButtonImageLocationLeft: {
@@ -183,13 +184,15 @@ typedef void(^ResetTitleAndImageLayoutBlock)(void);
             case ButtonImageLocationDown: {
                 CGFloat titleOriginX = (weakSelf.width - titleSize.width) / 2.0;
                 CGFloat titleOriginY = (weakSelf.height - titleSize.height - midInset - imageSize.height) / 2.0;
-                weakSelf.titleEdgeInsets = UIEdgeInsetsMake(titleOriginY, titleOriginX, weakSelf.height - titleOriginY - titleSize.height, titleOriginX);
+                weakSelf.titleLabel.frame = CGRectMake(titleOriginX, titleOriginY, titleSize.width, titleSize.height);
+                [weakSelf.titleLabel setTextAlignment:NSTextAlignmentCenter];
                 
                 CGFloat imageOriginX = (weakSelf.width - imageSize.width) / 2.0;
                 CGFloat imageOriginY = titleOriginY + titleSize.height + midInset;
                 weakSelf.imageEdgeInsets = UIEdgeInsetsMake(imageOriginY, imageOriginX, weakSelf.height - imageOriginY - imageSize.height, imageOriginX);
                 break;
             }
+
             case ButtonImageLocationRight: {
                 CGFloat titleOriginX = (weakSelf.width - imageSize.width - midInset - titleSize.width) / 2.0;
                 //横向时候，label的frame可以取较大范围
@@ -205,6 +208,10 @@ typedef void(^ResetTitleAndImageLayoutBlock)(void);
             }
         }
     };
+    
+    if (self.resetTitleAndImageLayoutBlock) {
+        self.resetTitleAndImageLayoutBlock();
+    }
 }
 
 @end

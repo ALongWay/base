@@ -31,9 +31,8 @@ static const NSInteger kTestItemCount = 4;
     }
     
     ALWCoverBrowser *cBView = [[ALWCoverBrowser alloc] init];
-    cBView.delegate = self;
     cBView.center = CGPointMake(cBView.center.x, self.view.center.y - 64);
-    [cBView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
+    [cBView setupDelegate:self registerUICollectionViewCellClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
     [self.view addSubview:cBView];
 }
 

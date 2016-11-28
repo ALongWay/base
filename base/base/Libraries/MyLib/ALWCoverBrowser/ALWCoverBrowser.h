@@ -27,14 +27,14 @@
  */
 - (instancetype)init;
 
-
 /**
- 注册UICollectionViewCell
-
+ 赋值代理对象，注册UICollectionViewCell
+ 
+ @param delegate delegate description
  @param cellClass cellClass description
  @param identifier identifier description
  */
-- (void)registerClass:(Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier;
+- (void)setupDelegate:(id<ALWCoverBrowserDelegate>)delegate registerUICollectionViewCellClass:(Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier;
 
 /**
  重新加载数据

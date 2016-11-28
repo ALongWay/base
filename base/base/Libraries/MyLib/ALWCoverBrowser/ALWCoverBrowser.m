@@ -45,23 +45,25 @@ static const NSInteger kItemMinCount = 7;
 
 @property (nonatomic, strong) UICollectionView          *collectionView;
 @property (nonatomic, strong) ALWCoverBrowserLayout     *layout;
+
 @end
 
 @implementation ALWCoverBrowser
 
 - (instancetype)init
 {
-    return [self initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 228)];
+    return [self initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 228 * ([UIScreen mainScreen].bounds.size.width / 375))];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _itemMaxSize = CGSizeMake(250, 228);
+        CGFloat rate = frame.size.width / 375.0;
+        _itemMaxSize = CGSizeMake(250 * rate, 228 * rate);
         _itemMinSize = CGSizeMake(_itemMaxSize.width * 0.76, _itemMaxSize.height * 0.76);
-        _itemMidMinInset = 10;
-        _itemMidMaxInset = 50;
+        _itemMidMinInset = 10 * rate;
+        _itemMidMaxInset = 50 * rate;
         _itemTransform3DAngle = (M_PI * 20 / 180.0);
     }
     
@@ -76,6 +78,8 @@ static const NSInteger kItemMinCount = 7;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) collectionViewLayout:_layout];
         [_collectionView setBackgroundColor:[UIColor clearColor]];
+        [_collectionView setShowsHorizontalScrollIndicator:NO];
+        [_collectionView setShowsVerticalScrollIndicator:NO];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [self addSubview:_collectionView];
@@ -142,18 +146,25 @@ static const NSInteger kItemMinCount = 7;
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
-    [self resetContentViewOffset:scrollView];
+    [self adjustContentViewOffset];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self resetContentViewOffset:scrollView];
+    if (!decelerate) {
+        [self adjustContentViewOffset];
+    }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     //排序显示数据
+    if (_currentCenterIndex == _originalCenterIndex) {
+        return;
+    }
+    
     NSInteger offsetIndex = _currentCenterIndex - _originalCenterIndex;
+    _currentCenterIndex = _originalCenterIndex;
     
     if (offsetIndex < 0) {
         //将尾部的元素移到前面
@@ -202,6 +213,9 @@ static const NSInteger kItemMinCount = 7;
     //变换动画期间移动的距离
     CGFloat animationDistance = (_itemMaxSize.width + _itemMinSize.width) / 2.0 + _itemMidMinInset;
     
+    CGFloat minDistance = 0;
+    NSInteger scrollCenterIndex = 0;
+    
     NSArray *visibleCellArray = [_collectionView visibleCells];
     
     for (int i = 0; i < visibleCellArray.count; i++) {
@@ -211,14 +225,25 @@ static const NSInteger kItemMinCount = 7;
         config.rightSpacing = _itemMidMinInset;
 
         CGFloat distance = visibleCenterX - cell.center.x;
+        CGFloat absDistance = fabs(distance);
         
-        if (fabs(distance) > animationDistance) {
+        if (i == 0) {
+            minDistance = absDistance;
+            scrollCenterIndex = [_collectionView indexPathForCell:cell].row;
+        }else{
+            if (absDistance < minDistance) {
+                minDistance = absDistance;
+                scrollCenterIndex = [_collectionView indexPathForCell:cell].row;
+            }
+        }
+        
+        if (absDistance > animationDistance) {
             config.itemSize = _itemMinSize;
         } else if (distance == 0) {
             config.itemSize = _itemMaxSize;
             config.transformAngle = 0;
         } else {
-            CGFloat rate = 1 - fabs(distance) / animationDistance;
+            CGFloat rate = 1 - absDistance / animationDistance;
             CGFloat nowWidth = _itemMinSize.width + (_itemMaxSize.width - _itemMinSize.width) * rate;
             CGFloat nowHeight = _itemMinSize.height + (_itemMaxSize.height - _itemMinSize.height) * rate;
             
@@ -246,43 +271,21 @@ static const NSInteger kItemMinCount = 7;
         }
     }
     
+    _currentCenterIndex = scrollCenterIndex;
+    
     [_layout invalidateLayout];
 }
 
-- (void)resetContentViewOffset:(UIScrollView *)scrollView
+- (void)adjustContentViewOffset
 {
-    CGFloat visibleCenterX = scrollView.contentOffset.x + scrollView.frame.size.width / 2.0;
-    
-    CGFloat minDistance = 0;
-    NSInteger currentIndex = 0;
-    
-    NSArray *visibleCellArray = [_collectionView visibleCells];
-    
-    for (int i = 0; i < visibleCellArray.count; i++) {
-        UICollectionViewCell *cell = visibleCellArray[i];
-        
-        CGFloat distance = fabs(visibleCenterX - cell.center.x);
-        
-        if (i == 0) {
-            minDistance = distance;
-            currentIndex = [_collectionView indexPathForCell:cell].row;
-        }else{
-            if (distance < minDistance) {
-                minDistance = distance;
-                currentIndex = [_collectionView indexPathForCell:cell].row;
-            }
-        }
-    }
-    
-    _currentCenterIndex = currentIndex;
-    
-    CGFloat offsetX = MAX(currentIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - scrollView.frame.size.width / 2.0, 0);
+    CGFloat offsetX = MAX(_currentCenterIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
     [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
 }
 
 #pragma mark -- Public methods
-- (void)registerClass:(Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier
+- (void)setupDelegate:(id<ALWCoverBrowserDelegate>)delegate registerUICollectionViewCellClass:(Class)cellClass forCellWithReuseIdentifier:(NSString *)identifier
 {
+    self.delegate = delegate;
     _reuseCellIdentifier = identifier;
     [self.collectionView registerClass:cellClass forCellWithReuseIdentifier:identifier];
     [self reloadData];
