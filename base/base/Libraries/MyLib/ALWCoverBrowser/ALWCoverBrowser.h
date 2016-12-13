@@ -74,4 +74,6 @@
 @optional
 - (void)alwCoverBrowser:(ALWCoverBrowser *)coverBrowser didSelectItemAtIndex:(NSInteger)index;
 
+- (void)alwCoverBrowser:(ALWCoverBrowser *)coverBrowser didScrollAtIndex:(NSInteger)index;
+
 @end

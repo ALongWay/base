@@ -220,8 +220,6 @@ static const NSInteger kItemMinCount = 7;
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    NSLog(@"速度：%f", velocity.x);
-    
     if (!self.collectionView.pagingEnabled) {
         if (velocity.x > 0) {
             //向左滑动
@@ -339,6 +337,10 @@ static const NSInteger kItemMinCount = 7;
 - (void)recoverContentViewOffset
 {
     if (_disableCircle) {
+        if ([self.delegate respondsToSelector:@selector(alwCoverBrowser:didScrollAtIndex:)]) {
+            [self.delegate alwCoverBrowser:self didScrollAtIndex:_currentCenterIndex];
+        }
+        
         return;
     }
     
@@ -387,6 +389,12 @@ static const NSInteger kItemMinCount = 7;
     CGFloat offsetX = MAX(_originalCenterIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
     
     [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:NO];
+    
+    if ([self.delegate respondsToSelector:@selector(alwCoverBrowser:didScrollAtIndex:)]) {
+        ALWCoverItemConfiguration *config = [_itemConfigArray objectAtIndex:_currentCenterIndex];
+        
+        [self.delegate alwCoverBrowser:self didScrollAtIndex:config.realIndex];
+    }
 }
 
 - (void)autoScroll

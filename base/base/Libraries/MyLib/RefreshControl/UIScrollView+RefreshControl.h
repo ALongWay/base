@@ -59,4 +59,14 @@
  */
 - (void)endRefreshingHeaderAndFooter;
 
+/**
+ 显示无更多数据的footer
+ */
+- (void)showNoMoreDataFooter;
+
+/**
+ 显示可以加载更多数据的footer
+ */
+- (void)showLoadMoreDataFooter;
+
 @end

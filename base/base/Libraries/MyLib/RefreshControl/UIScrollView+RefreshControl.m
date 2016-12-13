@@ -56,6 +56,13 @@
     [self setRefreshCountPerPage:10];
     
     self.mj_header = header;
+    
+    //增加背景view
+    [header setBackgroundColor:[UIColor whiteColor]];
+    
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, -[UIScreen mainScreen].bounds.size.height, self.frame.size.width, [UIScreen mainScreen].bounds.size.height)];
+    [bgView setBackgroundColor:header.backgroundColor];
+    [header insertSubview:bgView atIndex:0];
 }
 
 - (void)addRefreshFooterWithRefreshingBlock:(void (^)(void))refreshingBlock
@@ -64,6 +71,13 @@
     objc_setAssociatedObject(self, @selector(refreshFooter), footer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     self.mj_footer = footer;
+    
+    //增加背景view
+    [footer setBackgroundColor:[UIColor whiteColor]];
+    
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, MJRefreshFooterHeight, self.frame.size.width, [UIScreen mainScreen].bounds.size.height)];
+    [bgView setBackgroundColor:footer.backgroundColor];
+    [footer insertSubview:bgView atIndex:0];
 }
 
 - (void)endRefreshingHeader
@@ -80,6 +94,16 @@
 {
     [self endRefreshingHeader];
     [self endRefreshingFooter];
+}
+
+- (void)showNoMoreDataFooter
+{
+    [self.mj_footer endRefreshingWithNoMoreData];
+}
+
+- (void)showLoadMoreDataFooter
+{
+    [self.mj_footer resetNoMoreData];
 }
 
 @end
