@@ -11,8 +11,8 @@
 
 @interface ViewController : BaseViewController
 
-#pragma mark -- Handle Callback Block
-- (void)handleCallbackBlockDidSelectedTotalScoreWithScore:(CGFloat)totalScore;
+#pragma mark -- Callback methods
+- (void)testStarViewControllerDidSelectedTotalScoreWithScore:(CGFloat)totalScore;
 
 @end
 

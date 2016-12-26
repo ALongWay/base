@@ -124,7 +124,8 @@ static UIRouter *router;
     return router;
 }
 
-+ (void)pushFromController:(UIViewController *)fromController toClass:(NSString *)toClassName animated:(BOOL)animated
+
++ (void)pushToClass:(NSString *)toClassName FromController:(UIViewController *)fromController animated:(BOOL)animated
 {
     Class toClass = NSClassFromString(toClassName);
     id toController = [[toClass alloc] init];
@@ -167,8 +168,8 @@ static UIRouter *router;
         ViewController *realController = (ViewController *)fromController;
         WeakObject(weakObject, realController);
         
-        [starVC addCallbackBlockDidSelectedTotalScore:^(CGFloat totalScore) {
-            [weakObject handleCallbackBlockDidSelectedTotalScoreWithScore:totalScore];
+        [starVC setDidSelectedTotalScoreBlock:^(CGFloat totalScore) {
+            [weakObject testStarViewControllerDidSelectedTotalScoreWithScore:totalScore];
         }];
     }
     

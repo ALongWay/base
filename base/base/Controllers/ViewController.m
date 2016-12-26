@@ -168,9 +168,9 @@
 //
 //    [UIRouter pushFromController:self toClass:@"TestScratchCardViewController" animated:YES];
     
-//    [UIRouter pushToTestStarViewControllerFromUIViewController:self withParas:nil];
+    [UIRouter pushToTestStarViewControllerFromUIViewController:self withParas:nil];
     
-    [UIRouter pushFromController:self toClass:@"TestCoverBrowserViewController" animated:YES];
+//    [UIRouter pushToClass:@"TestCoverBrowserViewController" FromController:self animated:YES];
 }
 
 - (void)testSnapshot
@@ -384,8 +384,8 @@
     [coverView removeFromSuperview];
 }
 
-#pragma mark -- Handle Callback Block
-- (void)handleCallbackBlockDidSelectedTotalScoreWithScore:(CGFloat)totalScore
+#pragma mark -- Callback methods
+- (void)testStarViewControllerDidSelectedTotalScoreWithScore:(CGFloat)totalScore
 {
     LOG(@"ViewController totalScore: %f", totalScore);
 }

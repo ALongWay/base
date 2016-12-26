@@ -9,8 +9,11 @@
 #import "TestStarViewController.h"
 
 @interface TestStarViewController ()<ALWStarCommentViewDelegate>{
-    DidSelectedTotalScoreBlock      _didSelectedTotalScoreBlock;
+
 }
+
+//不能使用assign关键字，避免block被释放
+@property (nonatomic, strong) DidSelectedTotalScoreBlock    didSelectedTotalScoreBlock;
 
 @end
 
@@ -39,18 +42,18 @@
     [self.view addSubview:star];
 }
 
+#pragma mark -- Setter/Getter
+- (void)setDidSelectedTotalScoreBlock:(DidSelectedTotalScoreBlock)didSelectedTotalScoreBlock
+{
+    _didSelectedTotalScoreBlock = didSelectedTotalScoreBlock;
+}
+
 #pragma mark -- ALWStarCommentViewDelegate
 - (void)alwStarCommentViewDidSelectedTotalScore:(CGFloat)totalScore
 {
     if (_didSelectedTotalScoreBlock) {
         _didSelectedTotalScoreBlock(totalScore);
     }
-}
-
-#pragma mark -- Add Callback Block
-- (void)addCallbackBlockDidSelectedTotalScore:(DidSelectedTotalScoreBlock)didSelectedTotalScoreBlock
-{
-    _didSelectedTotalScoreBlock = didSelectedTotalScoreBlock;
 }
 
 @end

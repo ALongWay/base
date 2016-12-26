@@ -34,7 +34,7 @@
  *  @param toClassName    目标类的名称
  *  @param animated       是否显示push动画
  */
-+ (void)pushFromController:(UIViewController *)fromController toClass:(NSString *)toClassName animated:(BOOL)animated;
++ (void)pushToClass:(NSString *)toClassName FromController:(UIViewController *)fromController animated:(BOOL)animated;
 
 /**
  *  通用的简单跳转方法，无传参和回调；可自定义跳转配置

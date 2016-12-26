@@ -12,7 +12,6 @@ typedef void(^DidSelectedTotalScoreBlock)(CGFloat totalScore);
 
 @interface TestStarViewController : BaseViewController
 
-#pragma mark -- Add Callback Block
-- (void)addCallbackBlockDidSelectedTotalScore:(DidSelectedTotalScoreBlock)didSelectedTotalScoreBlock;
+- (void)setDidSelectedTotalScoreBlock:(DidSelectedTotalScoreBlock)didSelectedTotalScoreBlock;
 
 @end
