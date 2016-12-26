@@ -27,29 +27,52 @@
     
     id<ALWCoverBrowserLayoutDelegate> delegate = (id<ALWCoverBrowserLayoutDelegate>)self.collectionView.delegate;
 
-    CGFloat offsetX = 0;
+    CGFloat offset = 0;
     
     for (int i = 0; i < itemCount; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         CGSize itemSize = [delegate cb_collectionView:self.collectionView layout:self sizeForItemAtIndexPath:indexPath];
-        CGFloat rightSpacing = [delegate cb_collectionView:self.collectionView layout:self rightSpacingForItemAtIndexPath:indexPath];
+        CGFloat spacing = [delegate cb_collectionView:self.collectionView layout:self spacingForItemAtIndexPath:indexPath];
         CGFloat angle = [delegate cb_collectionView:self.collectionView layout:self angleForItemAtIndexPath:indexPath];
         
         UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-        attributes.frame = CGRectMake(offsetX, (self.collectionView.frame.size.height - itemSize.height) / 2.0, itemSize.width, itemSize.height);
-        CATransform3D rotation = CATransform3DMakeRotation(angle, 0, 1, 0);
-        attributes.transform3D = CATransform3DPerspect(rotation, CGPointMake(0, 0), self.collectionView.frame.size.width);
+        
+        switch (_itemScrollDirection) {
+            case UICollectionViewScrollDirectionVertical:{
+                attributes.frame = CGRectMake((self.collectionView.frame.size.width - itemSize.width) / 2.0, offset, itemSize.width, itemSize.height);
+                CATransform3D rotation = CATransform3DMakeRotation(-angle, 1, 0, 0);
+                attributes.transform3D = CATransform3DPerspect(rotation, CGPointMake(0, 0), 1000);
                 
+                offset += itemSize.height;
+            }
+                break;
+            case UICollectionViewScrollDirectionHorizontal:{
+                attributes.frame = CGRectMake(offset, (self.collectionView.frame.size.height - itemSize.height) / 2.0, itemSize.width, itemSize.height);
+                CATransform3D rotation = CATransform3DMakeRotation(angle, 0, 1, 0);
+                attributes.transform3D = CATransform3DPerspect(rotation, CGPointMake(0, 0), MAX(self.collectionView.frame.size.width, self.collectionView.frame.size.height));
+            
+                offset += itemSize.width;
+            }
+                break;
+        }
+        
         [_itemAttributesArray addObject:attributes];
         
-        if (i == itemCount - 1) {
-            offsetX += itemSize.width;
-        } else {
-            offsetX += itemSize.width + rightSpacing;
+        if (i != itemCount - 1) {
+            offset += spacing;
         }
     }
     
-    _contentSize = CGSizeMake(offsetX, self.collectionView.frame.size.height);
+    switch (_itemScrollDirection) {
+        case UICollectionViewScrollDirectionVertical:{
+            _contentSize = CGSizeMake(self.collectionView.frame.size.width, offset);
+        }
+            break;
+        case UICollectionViewScrollDirectionHorizontal:{
+            _contentSize = CGSizeMake(offset, self.collectionView.frame.size.height);
+        }
+            break;
+    }
 }
 
 - (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect

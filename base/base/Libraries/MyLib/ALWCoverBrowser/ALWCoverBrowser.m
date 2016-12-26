@@ -16,7 +16,7 @@ static const NSInteger kItemMinCount = 7;
 
 @property (nonatomic, assign) CGSize        itemSize;
 @property (nonatomic, assign) CGFloat       transformAngle;
-@property (nonatomic, assign) CGFloat       rightSpacing;
+@property (nonatomic, assign) CGFloat       spacing;
 @property (nonatomic, assign) NSInteger     realIndex;
 
 @end
@@ -68,6 +68,7 @@ static const NSInteger kItemMinCount = 7;
         _itemMidMaxInset = 50 * rate;
         _itemMidMinInset = 10 * rate;
         _itemTransform3DAngle = (M_PI * 20 / 180.0);
+        _itemScrollDirection = UICollectionViewScrollDirectionHorizontal;
     }
     
     return self;
@@ -78,6 +79,7 @@ static const NSInteger kItemMinCount = 7;
 {
     if (!_collectionView) {
         _layout = [[ALWCoverBrowserLayout alloc] init];
+        _layout.itemScrollDirection = _itemScrollDirection;
         
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height) collectionViewLayout:_layout];
         [_collectionView setBackgroundColor:[UIColor clearColor]];
@@ -89,6 +91,17 @@ static const NSInteger kItemMinCount = 7;
     }
     
     return _collectionView;
+}
+
+- (void)setItemScrollDirection:(UICollectionViewScrollDirection)itemScrollDirection
+{
+    _itemScrollDirection = itemScrollDirection;
+    
+    if (_layout) {
+        _layout.itemScrollDirection = _itemScrollDirection;
+        
+        [self reloadData];
+    }
 }
 
 - (void)setDisableCircle:(BOOL)disableCircle
@@ -143,10 +156,10 @@ static const NSInteger kItemMinCount = 7;
     return config.itemSize;
 }
 
-- (CGFloat)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout rightSpacingForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout spacingForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ALWCoverItemConfiguration *config = [_itemConfigArray objectAtIndex:indexPath.row];
-    return config.rightSpacing;
+    return config.spacing;
 }
 
 - (CGFloat)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout angleForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -205,7 +218,17 @@ static const NSInteger kItemMinCount = 7;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if (self.collectionView.pagingEnabled) {
-        _currentCenterIndex = scrollView.contentOffset.x / _itemMaxSize.width;
+        switch (_itemScrollDirection) {
+            case UICollectionViewScrollDirectionHorizontal:{
+                _currentCenterIndex = scrollView.contentOffset.x / _itemMaxSize.width;
+            }
+                break;
+            case UICollectionViewScrollDirectionVertical:{
+                _currentCenterIndex = scrollView.contentOffset.y / _itemMaxSize.height;
+            }
+                break;
+        }
+        
         [self recoverContentViewOffset];
     }
 }
@@ -221,20 +244,43 @@ static const NSInteger kItemMinCount = 7;
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
     if (!self.collectionView.pagingEnabled) {
-        if (velocity.x > 0) {
-            //向左滑动
-            CGFloat nextFixedItemOffsetX = MAX((_originalCenterIndex + 1) * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
-            
-            if (targetContentOffset->x > nextFixedItemOffsetX) {
-                _currentCenterIndex = _originalCenterIndex + 1;
+        switch (_itemScrollDirection) {
+            case UICollectionViewScrollDirectionHorizontal:{
+                if (velocity.x > 0) {
+                    //向左滑动
+                    CGFloat nextFixedItemOffsetX = MAX((_originalCenterIndex + 1) * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
+                    
+                    if (targetContentOffset->x > nextFixedItemOffsetX) {
+                        _currentCenterIndex = _originalCenterIndex + 1;
+                    }
+                }else if (velocity.x < 0){
+                    //向右滑动
+                    CGFloat nextFixedItemOffsetX = MAX((_originalCenterIndex - 1) * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
+                    
+                    if (targetContentOffset->x < nextFixedItemOffsetX) {
+                        _currentCenterIndex = _originalCenterIndex - 1;
+                    }
+                }
             }
-        }else if (velocity.x < 0){
-            //向右滑动
-            CGFloat nextFixedItemOffsetX = MAX((_originalCenterIndex - 1) * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
-            
-            if (targetContentOffset->x < nextFixedItemOffsetX) {
-                _currentCenterIndex = _originalCenterIndex - 1;
+                break;
+            case UICollectionViewScrollDirectionVertical:{
+                if (velocity.y > 0) {
+                    //向上滑动
+                    CGFloat nextFixedItemOffsetY = MAX((_originalCenterIndex + 1) * (_itemMinSize.height + _itemMidMinInset) + _itemMaxSize.height / 2.0 - _collectionView.frame.size.height / 2.0, 0);
+                    
+                    if (targetContentOffset->y > nextFixedItemOffsetY) {
+                        _currentCenterIndex = _originalCenterIndex + 1;
+                    }
+                }else if (velocity.y < 0){
+                    //向下滑动
+                    CGFloat nextFixedItemOffsetY = MAX((_originalCenterIndex - 1) * (_itemMinSize.height + _itemMidMinInset) + _itemMaxSize.height / 2.0 - _collectionView.frame.size.height / 2.0, 0);
+                    
+                    if (targetContentOffset->y < nextFixedItemOffsetY) {
+                        _currentCenterIndex = _originalCenterIndex - 1;
+                    }
+                }
             }
+                break;
         }
     }
 }
@@ -261,6 +307,7 @@ static const NSInteger kItemMinCount = 7;
 - (void)refreshItemConfiguration:(UIScrollView *)scrollView
 {
     CGFloat visibleCenterX = scrollView.contentOffset.x + scrollView.frame.size.width / 2.0;
+    CGFloat visibleCenterY = scrollView.contentOffset.y + scrollView.frame.size.height / 2.0;
     
     //变换动画期间移动的距离
     CGFloat animationDistance = (_itemMaxSize.width + _itemMinSize.width) / 2.0 + _itemMidMinInset;
@@ -274,9 +321,21 @@ static const NSInteger kItemMinCount = 7;
         UICollectionViewCell *cell = visibleCellArray[i];
         NSInteger row = [_collectionView indexPathForCell:cell].row;
         ALWCoverItemConfiguration *config = [_itemConfigArray objectAtIndex:row];
-        config.rightSpacing = _itemMidMinInset;
+        config.spacing = _itemMidMinInset;
 
-        CGFloat distance = visibleCenterX - cell.center.x;
+        CGFloat distance = 0;
+        
+        switch (_itemScrollDirection) {
+            case UICollectionViewScrollDirectionHorizontal:{
+                distance = visibleCenterX - cell.center.x;
+            }
+                break;
+            case UICollectionViewScrollDirectionVertical:{
+                distance = visibleCenterY - cell.center.y;
+            }
+                break;
+        }
+        
         CGFloat absDistance = fabs(distance);
         
         if (i == 0) {
@@ -310,16 +369,16 @@ static const NSInteger kItemMinCount = 7;
                 config.transformAngle = angle;
             }
             
-            //右边间距
-            CGFloat nowRightSpacing = _itemMidMinInset;
+            //间距
+            CGFloat nowSpacing = _itemMidMinInset;
 
             if (rate < 0.5) {
-                nowRightSpacing = _itemMidMinInset + (_itemMidMaxInset - _itemMidMinInset) * rate * 2;
+                nowSpacing = _itemMidMinInset + (_itemMidMaxInset - _itemMidMinInset) * rate * 2;
             } else {
-                nowRightSpacing = _itemMidMaxInset - (_itemMidMaxInset - _itemMidMinInset) * (rate - 0.5) * 2;
+                nowSpacing = _itemMidMaxInset - (_itemMidMaxInset - _itemMidMinInset) * (rate - 0.5) * 2;
             }
             
-            config.rightSpacing = nowRightSpacing;
+            config.spacing = nowSpacing;
         }
     }
     
@@ -330,8 +389,18 @@ static const NSInteger kItemMinCount = 7;
 
 - (void)adjustContentViewOffset
 {
-    CGFloat offsetX = MAX(_currentCenterIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
-    [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    switch (_itemScrollDirection) {
+        case UICollectionViewScrollDirectionHorizontal:{
+            CGFloat offsetX = MAX(_currentCenterIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
+            [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+        }
+            break;
+        case UICollectionViewScrollDirectionVertical:{
+            CGFloat offsetY = MAX(_currentCenterIndex * (_itemMinSize.height + _itemMidMinInset) + _itemMaxSize.height / 2.0 - _collectionView.frame.size.height / 2.0, 0);
+            [_collectionView setContentOffset:CGPointMake(0, offsetY) animated:YES];
+        }
+            break;
+    }
 }
 
 - (void)recoverContentViewOffset
@@ -370,7 +439,7 @@ static const NSInteger kItemMinCount = 7;
     
     for (int i = 0; i < _itemConfigArray.count; i++) {
         ALWCoverItemConfiguration *itemConfig = _itemConfigArray[i];
-        itemConfig.rightSpacing = _itemMidMinInset;
+        itemConfig.spacing = _itemMidMinInset;
         
         if (i == _originalCenterIndex) {
             itemConfig.itemSize = _itemMaxSize;
@@ -386,9 +455,20 @@ static const NSInteger kItemMinCount = 7;
     
     [_collectionView reloadData];
     
-    CGFloat offsetX = MAX(_originalCenterIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
-    
-    [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:NO];
+    switch (_itemScrollDirection) {
+        case UICollectionViewScrollDirectionHorizontal:{
+            CGFloat offsetX = MAX(_originalCenterIndex * (_itemMinSize.width + _itemMidMinInset) + _itemMaxSize.width / 2.0 - _collectionView.frame.size.width / 2.0, 0);
+            
+            [_collectionView setContentOffset:CGPointMake(offsetX, 0) animated:NO];
+        }
+            break;
+        case UICollectionViewScrollDirectionVertical:{
+            CGFloat offsetY = MAX(_currentCenterIndex * (_itemMinSize.height + _itemMidMinInset) + _itemMaxSize.height / 2.0 - _collectionView.frame.size.height / 2.0, 0);
+            
+            [_collectionView setContentOffset:CGPointMake(0, offsetY) animated:NO];
+        }
+            break;
+    }
     
     if ([self.delegate respondsToSelector:@selector(alwCoverBrowser:didScrollAtIndex:)]) {
         ALWCoverItemConfiguration *config = [_itemConfigArray objectAtIndex:_currentCenterIndex];
@@ -467,7 +547,7 @@ static const NSInteger kItemMinCount = 7;
             itemConfig.transformAngle = _itemTransform3DAngle;
         }
         
-        itemConfig.rightSpacing = _itemMidMinInset;
+        itemConfig.spacing = _itemMidMinInset;
         
         //源数据的真实索引
         NSInteger index = i - _originalCenterIndex;
@@ -496,8 +576,18 @@ static const NSInteger kItemMinCount = 7;
     }
     
     if (!_disableCircle) {
-        CGFloat contentCenterX = (_itemMinSize.width + _itemMidMinInset) * _originalCenterIndex + _itemMaxSize.width / 2.0;
-        [self.collectionView setContentOffset:CGPointMake(contentCenterX - _collectionView.frame.size.width / 2.0, 0) animated:NO];
+        switch (_itemScrollDirection) {
+            case UICollectionViewScrollDirectionHorizontal:{
+                CGFloat contentCenterX = (_itemMinSize.width + _itemMidMinInset) * _originalCenterIndex + _itemMaxSize.width / 2.0;
+                [self.collectionView setContentOffset:CGPointMake(contentCenterX - _collectionView.frame.size.width / 2.0, 0) animated:NO];
+            }
+                break;
+            case UICollectionViewScrollDirectionVertical:{
+                CGFloat contentCenterY = (_itemMinSize.height + _itemMidMinInset) * _originalCenterIndex + _itemMaxSize.height / 2.0;
+                [self.collectionView setContentOffset:CGPointMake(0, contentCenterY - _collectionView.frame.size.height / 2.0) animated:NO];
+            }
+                break;
+        }
     }
 }
 

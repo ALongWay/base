@@ -20,6 +20,11 @@
 @property (nonatomic, assign) CGFloat   itemTransform3DAngle;
 
 /**
+ 滑动方向，默认横向滑动
+ */
+@property (nonatomic, assign) UICollectionViewScrollDirection   itemScrollDirection;
+
+/**
  是否禁止循环滑动，默认NO
  */
 @property (nonatomic, assign) BOOL      disableCircle;

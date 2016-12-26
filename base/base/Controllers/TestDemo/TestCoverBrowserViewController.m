@@ -31,6 +31,15 @@ static const NSInteger kTestItemCount = 4;
     }
     
     ALWCoverBrowser *defaultCB = [[ALWCoverBrowser alloc] init];
+    defaultCB.size = CGSizeMake(228 * ([UIScreen mainScreen].bounds.size.width / 375), [UIScreen mainScreen].bounds.size.width);
+    defaultCB.center = self.view.center;
+    defaultCB.itemScrollDirection = UICollectionViewScrollDirectionVertical;
+    defaultCB.isAutoScrolling = YES;
+    [defaultCB setupDelegate:self registerUICollectionViewCellClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
+    [self.view addSubview:defaultCB];
+ 
+/*
+    ALWCoverBrowser *defaultCB = [[ALWCoverBrowser alloc] init];
     defaultCB.originY = 20;
     defaultCB.isAutoScrolling = YES;
     [defaultCB setupDelegate:self registerUICollectionViewCellClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
@@ -44,6 +53,7 @@ static const NSInteger kTestItemCount = 4;
     
     [cBView setupDelegate:self registerUICollectionViewCellClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kCollectionViewCellIdentifier];
     [self.view addSubview:cBView];
+ */
 }
 
 #pragma mark -- ALWCoverBrowserDelegate

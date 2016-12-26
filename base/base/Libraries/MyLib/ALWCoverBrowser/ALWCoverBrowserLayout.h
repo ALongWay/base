@@ -13,12 +13,14 @@
 @required
 - (CGSize)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
 
-- (CGFloat)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout rightSpacingForItemAtIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout spacingForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 - (CGFloat)cb_collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout angleForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
 @interface ALWCoverBrowserLayout : UICollectionViewLayout
+
+@property (nonatomic, assign) UICollectionViewScrollDirection   itemScrollDirection;
 
 @end
