@@ -14,6 +14,8 @@
 		673461861D7FADB900066BEF /* EncryptionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461851D7FADB900066BEF /* EncryptionHelper.m */; };
 		673461971D7FC7D700066BEF /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461951D7FC7D700066BEF /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6734619A1D7FCCD300066BEF /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 673461991D7FCCD300066BEF /* NSData+CommonCrypto.m */; };
+		6736955B1E138D25004165B6 /* ALWWordCloudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736955A1E138D25004165B6 /* ALWWordCloudView.m */; };
+		6736955E1E139E9B004165B6 /* ALWWordCloudCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736955D1E139E9B004165B6 /* ALWWordCloudCreator.m */; };
 		6764A4B51DDC49D900C2ADC6 /* FLAnimatedImageView+HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4B01DDC49D900C2ADC6 /* FLAnimatedImageView+HttpHelper.m */; };
 		6764A4B61DDC49D900C2ADC6 /* SDImageCache+CacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4B21DDC49D900C2ADC6 /* SDImageCache+CacheHelper.m */; };
 		6764A4B71DDC49D900C2ADC6 /* SVProgressHUD+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4B41DDC49D900C2ADC6 /* SVProgressHUD+Extension.m */; };
@@ -160,6 +162,10 @@
 		673461981D7FCCD300066BEF /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CommonCrypto.h"; sourceTree = "<group>"; };
 		673461991D7FCCD300066BEF /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
 		6734619B1D800B4300066BEF /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		673695591E138D25004165B6 /* ALWWordCloudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWWordCloudView.h; sourceTree = "<group>"; };
+		6736955A1E138D25004165B6 /* ALWWordCloudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWWordCloudView.m; sourceTree = "<group>"; };
+		6736955C1E139E9B004165B6 /* ALWWordCloudCreator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWWordCloudCreator.h; sourceTree = "<group>"; };
+		6736955D1E139E9B004165B6 /* ALWWordCloudCreator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWWordCloudCreator.m; sourceTree = "<group>"; };
 		6764A4AF1DDC49D900C2ADC6 /* FLAnimatedImageView+HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FLAnimatedImageView+HttpHelper.h"; sourceTree = "<group>"; };
 		6764A4B01DDC49D900C2ADC6 /* FLAnimatedImageView+HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FLAnimatedImageView+HttpHelper.m"; sourceTree = "<group>"; };
 		6764A4B11DDC49D900C2ADC6 /* SDImageCache+CacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDImageCache+CacheHelper.h"; sourceTree = "<group>"; };
@@ -545,6 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				6764A4B91DDD602A00C2ADC6 /* MyLib.h */,
+				673695581E138C8F004165B6 /* ALWWordCloud */,
 				6764A4E01DDEAF4600C2ADC6 /* ALWCoverBrowser */,
 				67FE91E71DD07A5700CE6071 /* ALWScratchCard */,
 				6718B1491DCAD81C000D7FC2 /* ALWDataChart */,
@@ -581,6 +588,17 @@
 				673461961D7FC7D700066BEF /* GTMDefines.h */,
 			);
 			path = GTMBase64;
+			sourceTree = "<group>";
+		};
+		673695581E138C8F004165B6 /* ALWWordCloud */ = {
+			isa = PBXGroup;
+			children = (
+				673695591E138D25004165B6 /* ALWWordCloudView.h */,
+				6736955A1E138D25004165B6 /* ALWWordCloudView.m */,
+				6736955C1E139E9B004165B6 /* ALWWordCloudCreator.h */,
+				6736955D1E139E9B004165B6 /* ALWWordCloudCreator.m */,
+			);
+			path = ALWWordCloud;
 			sourceTree = "<group>";
 		};
 		6764A4AE1DDC49D900C2ADC6 /* Categories */ = {
@@ -1283,6 +1301,7 @@
 				676C094F1D9D0BAC003EB057 /* AFNetworkReachabilityManager.m in Sources */,
 				676C07B51D8E8EAB003EB057 /* LevelDBHelper.m in Sources */,
 				676C04731D8E3F34003EB057 /* CacheHelper.m in Sources */,
+				6736955E1E139E9B004165B6 /* ALWWordCloudCreator.m in Sources */,
 				67EFC9781DACDB36004F198A /* UIImage+WebP.m in Sources */,
 				676C08E21D8FC75D003EB057 /* BaseView.m in Sources */,
 				6764A4DB1DDD8FF300C2ADC6 /* MASViewConstraint.m in Sources */,
@@ -1291,6 +1310,7 @@
 				99A942751DAD1FA100597123 /* UIImageView+HttpHelper.m in Sources */,
 				6718B14D1DCAD8EA000D7FC2 /* ALWStarView.m in Sources */,
 				6764A4D71DDD8FF300C2ADC6 /* MASConstraint.m in Sources */,
+				6736955B1E138D25004165B6 /* ALWWordCloudView.m in Sources */,
 				67EFC9771DACDB36004F198A /* UIImage+MultiFormat.m in Sources */,
 				67EFC9761DACDB36004F198A /* UIImage+GIF.m in Sources */,
 				67EFC9BA1DADD995004F198A /* MJRefreshAutoFooter.m in Sources */,
