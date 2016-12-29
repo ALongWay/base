@@ -37,14 +37,14 @@
     UIImage *image = [ImageHelper getSnapshotWithView:bgView];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     
-    WeakSelf(weakSelf);
     ALWWordCloudCreator *wcCreator = [[ALWWordCloudCreator alloc] init];
-    [wcCreator createWordCloudViewWithImageView:imageView completionBlock:^(UIView *wordCloudView) {
-        [SVProgressHUD dismiss];
-        
-        wordCloudView.origin = CGPointMake((DeviceWidth - wordCloudView.width) / 2.0, 40);
-        [weakSelf.view addSubview:wordCloudView];
+    UIView *wordCloudView = [wcCreator createWordCloudViewWithImageView:imageView completionBlock:^{
+        LOG(@"计算完成");
+        [SVProgressHUD showSuccessWithStatus:@"计算完成"];
     }];
+   
+    wordCloudView.origin = CGPointMake((DeviceWidth - wordCloudView.width) / 2.0, 40);
+    [self.view addSubview:wordCloudView];
 }
 
 @end

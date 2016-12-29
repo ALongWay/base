@@ -10,6 +10,6 @@
 
 @interface ALWWordCloudCreator : NSObject
 
-- (void)createWordCloudViewWithImageView:(UIImageView *)imageView completionBlock:(void(^)(UIView *wordCloudView))completion;
+- (UIView *)createWordCloudViewWithImageView:(UIImageView *)imageView completionBlock:(void (^)())completion;
 
 @end

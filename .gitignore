@@ -58,3 +58,7 @@ fastlane/screenshots
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+base/base.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+
+base/base.xcodeproj/project.xcworkspace/xcshareddata/base.xcscmblueprint
