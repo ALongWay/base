@@ -67,8 +67,8 @@
     self = [super init];
     if (self) {
         //初始化变量
-        self.wordMaxFontSize = 14;
-        self.wordMinFontSize = 3;
+        self.wordMaxFontSize = 16;
+        self.wordMinFontSize = 2;
         self.wordFontStepValue = 2;
         self.wordMinInset = 3;
         
@@ -87,7 +87,8 @@
         self.wordColorArray = @[[UIColor redColor],
                                 [UIColor greenColor],
                                 [UIColor grayColor],
-                                [UIColor yellowColor]
+                                [UIColor brownColor],
+                                [UIColor blackColor]
                                 ];
 //        self.wordTextArray = @[@"测试",
 //                               @"haha",
@@ -108,14 +109,16 @@
 //                               @"iOS"
 //                               ];
         
-        self.wordTextArray = @[@"2017"
-                               ];
-        
-        self.wordKeyTextArray = @[@"字体云",
+        self.wordTextArray = @[@"字体云",
                                @"2017"
                                ];
         
+        self.wordKeyTextArray = @[@"字体云",
+                                  @"2017"
+                                  ];
+        
         //目前先支持水平和垂直方向
+        //正弧度值表示逆时针旋转，负弧度值表示顺时针旋转
         self.wordAngleArray = @[@(0), @(M_PI), @(M_PI_2), @(-M_PI_2)];
     }
     
@@ -133,10 +136,10 @@
     
     UIImage *currentImage = imageView.image;
     
-    UIImageView *newImageView = [[UIImageView alloc] initWithFrame:_bgView.frame];
-    [newImageView setBackgroundColor:[UIColor clearColor]];
-    [newImageView setImage:currentImage];
-    [_bgView addSubview:newImageView];
+//    UIImageView *newImageView = [[UIImageView alloc] initWithFrame:_bgView.frame];
+//    [newImageView setBackgroundColor:[UIColor clearColor]];
+//    [newImageView setImage:currentImage];
+//    [_bgView addSubview:newImageView];
 
     NSLog(@"计时开始！");
     
@@ -205,7 +208,6 @@
     size_t dataLength = width * height * 4;
     unsigned char *data = calloc(dataLength, sizeof(unsigned char));//取图片首地址
     size_t bitsPerComponent = 8;// r g b a 每个component bits数目
-    size_t bitsPerPixel = bitsPerComponent * 4;
     size_t bytesPerRow = width * 4;//一张图片每行字节数目 (每个像素点包含r g b a 四个字节)
     CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();//创建rgb颜色空间
     
@@ -232,7 +234,7 @@
             
             if (alpha < 128 || tone > 128 * 3) {
                 // Area not to draw
-                //修改像素值
+                //修改像素值，有待进一步处理
 //                data[i] = data[i + 1] = data[i + 2] = 255;
 //                data[i + 3] = 255;//不透明
                 
@@ -264,13 +266,17 @@
     self.blackPointsArray = [NSArray arrayWithArray:tempBlackPointsArray];
     self.pointsDic = tempPointsDic;
     
-    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, data, dataLength, NULL);
-
-    cgimage = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, space, kCGImageAlphaLast | kCGBitmapByteOrder32Little, provider, NULL, true, kCGRenderingIntentDefault);
-
-    UIImage *newImage = [UIImage imageWithCGImage:cgimage];
+    //生成新的图像
+//    size_t bitsPerPixel = bitsPerComponent * 4;
+//    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, data, dataLength, NULL);
+//
+//    cgimage = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, space, kCGImageAlphaLast | kCGBitmapByteOrder32Little, provider, NULL, true, kCGRenderingIntentDefault);
+//
+//    UIImage *newImage = [UIImage imageWithCGImage:cgimage];
+//    
+//    return newImage;
     
-    return newImage;
+    return nil;
 }
 
 - (UIFont *)getCurrentShowFontWithFontSize:(CGFloat)fontSize
@@ -280,6 +286,15 @@
     return showFont;
 }
 
+
+/**
+ 生成可能的标签对象
+ 如果倾斜角度非水平或者垂直，需要使用二维旋转矩阵，如下：
+ (x, y)表示旋转前的点坐标，(x', y')表示旋转后的点坐标，(Cx, Cy)表示平移到原点的向量，θ表示旋转角
+ 
+ x' = x*cosθ - y*sinθ - [Cx*(1 + cosθ) + Cy*(1 - sinθ)];
+ y' = x*sinθ + y*cosθ - [Cx*(1 + sinθ) + Cy*(1 + cosθ)];
+ */
 - (void)generatePossibleLabelContainerArray
 {
     NSMutableArray *tempLabelContainerArray = [NSMutableArray array];
