@@ -26,7 +26,8 @@
 {
     [SVProgressHUD show];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:LOADIMAGE(@"wordcloudTestBg.jpg")];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 500, 500)];
+    [imageView setImage:LOADIMAGE(@"wordcloudTestBg.jpg")];
     
     ALWWordCloudCreator *wcCreator = [[ALWWordCloudCreator alloc] init];
     UIView *wordCloudView = [wcCreator createWordCloudViewWithImageView:imageView completionBlock:^{

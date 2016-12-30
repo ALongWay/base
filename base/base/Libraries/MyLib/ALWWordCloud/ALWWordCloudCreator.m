@@ -67,9 +67,9 @@
     self = [super init];
     if (self) {
         //初始化变量
-        self.wordMaxFontSize = 20;
-        self.wordMinFontSize = 5;
-        self.wordFontStepValue = 3;
+        self.wordMaxFontSize = 14;
+        self.wordMinFontSize = 3;
+        self.wordFontStepValue = 2;
         self.wordMinInset = 3;
         
         NSMutableArray *fontSizeArray = [NSMutableArray array];
@@ -89,36 +89,34 @@
                                 [UIColor grayColor],
                                 [UIColor yellowColor]
                                 ];
-        self.wordTextArray = @[@"测试",
-                               @"haha",
-                               @"额",
-                               @"试一试seee",
-                               @"什么龟ccc",
-                               @"字体云ee",
-                               @"效果bbb",
-                               @"不知道ee",
-                               @"PHPqqq",
-                               @"JSxxx",
-                               @"Objective-C",
-                               @"Java",
-                               @"C++",
-                               @"Go",
-                               @"Nodejs",
-                               @"C#",
-                               @"iOS"
+//        self.wordTextArray = @[@"测试",
+//                               @"haha",
+//                               @"额",
+//                               @"试一试seee",
+//                               @"什么龟ccc",
+//                               @"字体云ee",
+//                               @"效果bbb",
+//                               @"不知道ee",
+//                               @"PHPqqq",
+//                               @"JSxxx",
+//                               @"Objective-C",
+//                               @"Java",
+//                               @"C++",
+//                               @"Go",
+//                               @"Nodejs",
+//                               @"C#",
+//                               @"iOS"
+//                               ];
+        
+        self.wordTextArray = @[@"2017"
                                ];
         
         self.wordKeyTextArray = @[@"字体云",
-                               @"PHP",
-                               @"Objective-C",
-                               @"Java",
-                               @"C++",
-                               @"Nodejs",
-                               @"iOS"
+                               @"2017"
                                ];
         
-        //目前先支持水平和垂直方向，两个0是为了提高随机命中率
-        self.wordAngleArray = @[@(0), @(0), @(M_PI_2), @(-M_PI_2)];
+        //目前先支持水平和垂直方向
+        self.wordAngleArray = @[@(0), @(M_PI), @(M_PI_2), @(-M_PI_2)];
     }
     
     return self;
@@ -194,7 +192,7 @@
  
  @param bgImage bgImage description
  */
-- (void)identifyWhiteAndBlackPointsWithImage:(UIImage *)bgImage
+- (UIImage *)identifyWhiteAndBlackPointsWithImage:(UIImage *)bgImage
 {
     NSMutableArray *tempWhitePointsArray = [NSMutableArray array];
     NSMutableArray *tempBlackPointsArray = [NSMutableArray array];
@@ -204,8 +202,10 @@
     
     size_t width = CGImageGetWidth(cgimage);//图片宽度
     size_t height = CGImageGetHeight(cgimage);//图片高度
-    unsigned char *data = calloc(width * height * 4, sizeof(unsigned char));//取图片首地址
+    size_t dataLength = width * height * 4;
+    unsigned char *data = calloc(dataLength, sizeof(unsigned char));//取图片首地址
     size_t bitsPerComponent = 8;// r g b a 每个component bits数目
+    size_t bitsPerPixel = bitsPerComponent * 4;
     size_t bytesPerRow = width * 4;//一张图片每行字节数目 (每个像素点包含r g b a 四个字节)
     CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();//创建rgb颜色空间
     
@@ -232,8 +232,9 @@
             
             if (alpha < 128 || tone > 128 * 3) {
                 // Area not to draw
-                //                data[i] = data[i + 1] = data[i + 2] = 255;
-                //                data[i + 3] = 0;
+                //修改像素值
+//                data[i] = data[i + 1] = data[i + 2] = 255;
+//                data[i + 3] = 255;//不透明
                 
                 if (i % 2 == 0
                     && j % 2 == 0) {
@@ -244,8 +245,9 @@
                 }
             } else {
                 // Area to draw
-                //                data[i] = data[i + 1] = data[i + 2] = 0;
-                //                data[i + 3] = 255;
+                //修改像素值
+//                data[i] = data[i + 1] = data[i + 2] = 255;
+//                data[i + 3] = 255;
                 
                 if (i % 2 == 0
                     && j % 2 == 0) {
@@ -258,12 +260,17 @@
         }
     }
     
-    //    cgimage = CGBitmapContextCreateImage(context);
-    //    UIImage *newImage = [UIImage imageWithCGImage:cgimage];
-    
     self.whitePointsArray = [NSArray arrayWithArray:tempWhitePointsArray];
     self.blackPointsArray = [NSArray arrayWithArray:tempBlackPointsArray];
     self.pointsDic = tempPointsDic;
+    
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, data, dataLength, NULL);
+
+    cgimage = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, space, kCGImageAlphaLast | kCGBitmapByteOrder32Little, provider, NULL, true, kCGRenderingIntentDefault);
+
+    UIImage *newImage = [UIImage imageWithCGImage:cgimage];
+    
+    return newImage;
 }
 
 - (UIFont *)getCurrentShowFontWithFontSize:(CGFloat)fontSize
@@ -318,8 +325,7 @@
                 container.currentRadius = sqrtf(powf(currentSize.width, 2) + powf(currentSize.height, 2)) / 2.0;//包围矩形边框的外接圆半径
                 container.currentAngle = angle;//偏转角度
                 
-                if (angle == M_PI_2
-                    || angle == -M_PI_2) {
+                if ([self isVerticalAngle:angle]) {
                     container.currentRect = CGRectMake(0, 0, currentSize.height, currentSize.width);
                 } else {
                     container.currentRect = container.originalRect;
@@ -363,7 +369,7 @@
                 
                 x = CGRectGetMaxX(showContainer.currentRect) + 1;
                 
-                if (showContainer.currentAngle == 0) {
+                if (![self isVerticalAngle:showContainer.currentAngle]) {
                     x += _wordMinInset;
                 }
             }
@@ -434,8 +440,7 @@
         //计算未旋转时候的rect
         CGRect originRect = tempContainer.originalRect;
         
-        if (randomContainer.currentAngle == M_PI_2
-            || randomContainer.currentAngle == -M_PI_2) {
+        if ([self isVerticalAngle:tempContainer.currentAngle]) {
             originRect.origin = CGPointMake(tempContainer.currentCenter.x - tempContainer.currentRect.size.height / 2.0, tempContainer.currentCenter.y - tempContainer.currentRect.size.width / 2.0);
         }else{
             originRect.origin = origin;
@@ -469,8 +474,7 @@
         randomIndex = arc4random() % _wordAngleArray.count;
         CGSize showSize = originalSize;
         double angle = [_wordAngleArray[randomIndex] doubleValue];
-        if (angle == M_PI_2
-            || angle == -M_PI_2) {
+        if ([self isVerticalAngle:angle]) {
             showSize = CGSizeMake(originalSize.height, originalSize.width);
         }
         
@@ -500,8 +504,7 @@
             //计算未旋转时候的rect
             CGRect originRect = CGRectMake(0, 0, originalSize.width, originalSize.height);
             
-            if (angle == M_PI_2
-                || angle == -M_PI_2) {
+            if ([self isVerticalAngle:angle]) {
                 originRect.origin = CGPointMake(tempContainer.currentCenter.x - tempContainer.currentRect.size.height / 2.0, tempContainer.currentCenter.y - tempContainer.currentRect.size.width / 2.0);
             }else{
                 originRect.origin = origin;
@@ -623,6 +626,16 @@
 - (void)randomShowWordCloudContainerWithMaxY:(CGFloat)maxY
 {
     
+}
+
+- (BOOL)isVerticalAngle:(double)angle
+{
+    if (angle == M_PI_2
+        || angle == -M_PI_2) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 /**
