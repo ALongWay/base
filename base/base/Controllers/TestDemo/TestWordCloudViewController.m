@@ -26,20 +26,10 @@
 {
     [SVProgressHUD show];
     
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 400)];
-    [bgView setBackgroundColor:COLOR(0, 0, 0)];
-    
-    UIView *centerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    centerView.center = CGPointMake(bgView.width / 2.0, bgView.height / 2.0);
-    [centerView setBackgroundColor:COLOR(255, 255, 255)];
-    [bgView addSubview:centerView];
-    
-    UIImage *image = [ImageHelper getSnapshotWithView:bgView];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:LOADIMAGE(@"wordcloudTestBg.jpg")];
     
     ALWWordCloudCreator *wcCreator = [[ALWWordCloudCreator alloc] init];
     UIView *wordCloudView = [wcCreator createWordCloudViewWithImageView:imageView completionBlock:^{
-        LOG(@"计算完成");
         [SVProgressHUD showSuccessWithStatus:@"计算完成"];
     }];
    
