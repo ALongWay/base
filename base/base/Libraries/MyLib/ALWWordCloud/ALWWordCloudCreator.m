@@ -469,8 +469,8 @@
  如果倾斜角度非水平或者垂直，需要使用二维旋转矩阵，如下：
  (x, y)表示旋转前的点坐标，(x', y')表示旋转后的点坐标，(Cx, Cy)表示围绕旋转的中心点，θ表示旋转角，逆时针为正
  
- x' = x*cosθ - y*sinθ - [Cx*(1 + cosθ) + Cy*(1 - sinθ)];
- y' = x*sinθ + y*cosθ - [Cx*(1 + sinθ) + Cy*(1 + cosθ)];
+ x' = x*cosθ - y*sinθ + Cx*(1 - cosθ) + Cy*sinθ];
+ y' = x*sinθ + y*cosθ + Cy*(1 - cosθ) - Cx*sinθ];
 
  @param point point description
  @param center center description
@@ -483,8 +483,8 @@
     
     CGPoint newPoint = point;
     
-    newPoint.x = point.x * cos(angle) - point.y * sin(angle) - center.x * (1 + cos(angle)) - center.y * (1 - cos(angle));
-    newPoint.y = point.x * sin(angle) + point.y * cos(angle) - center.x * (1 + sin(angle)) - center.y * (1 + cos(angle));
+    newPoint.x = point.x * cos(angle) - point.y * sin(angle) + center.x * (1 - cos(angle)) + center.y * sin(angle);
+    newPoint.y = point.x * sin(angle) + point.y * cos(angle) + center.x * (1 - cos(angle)) - center.y * sin(angle);
     
     return newPoint;
 }
