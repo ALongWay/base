@@ -58,6 +58,7 @@
 #pragma mark - ALWWordCloudCreator
 @interface ALWWordCloudCreator ()
 
+@property (nonatomic, strong) UIImageView   *keyWordView;
 @property (nonatomic, strong) UIView        *bgView;
 
 //字体可配置相关属性
@@ -94,6 +95,11 @@
 @property (nonatomic, strong) NSArray<NSValue*>     *whitePointsArray;//不可绘制点
 @property (nonatomic, strong) NSArray<NSValue*>     *blackPointsArray;//可绘制点
 
+/**
+ 记录可以绘制到画布上的标签对象
+ */
+@property (nonatomic, strong) NSMutableArray<ALWWordCloudLabelContainer*>   *drawLabelContainerArray;
+
 @end
 
 @implementation ALWWordCloudCreator
@@ -103,9 +109,9 @@
     self = [super init];
     if (self) {
         //初始化变量
-        self.wordMaxFontSize = 20;
-        self.wordMinFontSize = 4;
-        self.wordFontStepValue = 2;
+        self.wordMaxFontSize = 50;
+        self.wordMinFontSize = 5;
+        self.wordFontStepValue = 5;
         
         NSMutableArray *fontSizeArray = [NSMutableArray array];
         for (int i = _wordMinFontSize; i <= _wordMaxFontSize; ) {
@@ -139,9 +145,9 @@
                                   @"YOU"
                                   ];
         
-        self.wordMaxFontSize = 30;
-        self.wordMinFontSize = 20;
-        self.wordFontStepValue = 2;
+        self.wordMaxFontSize = 100;
+        self.wordMinFontSize = 50;
+        self.wordFontStepValue = 10;
         
         fontSizeArray = [NSMutableArray array];
         for (int i = _wordMinFontSize; i <= _wordMaxFontSize; ) {
@@ -157,21 +163,31 @@
         
         //目前先支持水平和垂直方向
         //正弧度值表示逆时针旋转，负弧度值表示顺时针旋转
-        //        self.wordAngleArray = @[@(0), @(0), @(M_PI_2), @(-M_PI_2)];
-        self.wordAngleArray = @[@(0), @(M_PI / 2.2), @(-M_PI / 2.2), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 3.0), @(-M_PI / 3.0), @(M_PI / 4.0), @(-M_PI / 4.0), @(M_PI / 4.5), @(-M_PI / 4.5), @(M_PI / 6.0), @(-M_PI / 6.0), @(M_PI / 9.0), @(-M_PI / 9.0), @(M_PI / 18.0), @(-M_PI / 18.0)];
+        self.wordAngleArray = @[@(0), @(0), @(M_PI_2), @(-M_PI_2)];
+//        self.wordAngleArray = @[@(0), @(M_PI / 2.2), @(-M_PI / 2.2), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 3.0), @(-M_PI / 3.0), @(M_PI / 4.0), @(-M_PI / 4.0), @(M_PI / 4.5), @(-M_PI / 4.5), @(M_PI / 6.0), @(-M_PI / 6.0), @(M_PI / 9.0), @(-M_PI / 9.0), @(M_PI / 18.0), @(-M_PI / 18.0)];
     }
     
     return self;
 }
 
 #pragma mark -- Getter/Setter
-
+- (NSMutableArray<ALWWordCloudLabelContainer *> *)drawLabelContainerArray
+{
+    if (!_drawLabelContainerArray) {
+        _drawLabelContainerArray = [NSMutableArray array];
+    }
+    
+    return _drawLabelContainerArray;
+}
 
 #pragma mark -- Public methods
 - (UIView *)createWordCloudViewWithImageView:(UIImageView *)imageView completionBlock:(void (^)())completion
 {
     _bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, imageView.frame.size.width, imageView.frame.size.height)];
     [_bgView setBackgroundColor:[UIColor clearColor]];
+    
+    _keyWordView = [[UIImageView alloc] initWithFrame:imageView.frame];
+    [_keyWordView setImage:imageView.image];
     
     UIImage *currentImage = imageView.image;
     
@@ -189,6 +205,9 @@
         
         //先随机显示重要的关键词
         [self randomShowKeyTextContainers];
+        
+        //重新扫描新的背景图
+        [self identifyWhiteAndBlackPointsWithImage:[ImageHelper getSnapshotWithView:_keyWordView]];
         
         //扫描坐标点
         [self scanVerticalPointsOneByOne];
@@ -220,6 +239,43 @@
     } else {
         [self markPointsAsOccupiedWithPointsArray:showContainer.drawPointsArray];
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UILabel *wordLabel = [[UILabel alloc] initWithFrame:showContainer.originalRect];
+        
+        if (![self isHorizontalAngle:showContainer.currentAngle]) {
+            wordLabel.transform = CGAffineTransformMakeRotation(showContainer.currentAngle);
+        }
+        
+        [wordLabel setText:showContainer.wordText];
+        [wordLabel setTextColor:showContainer.wordColor];
+        [wordLabel setFont:showContainer.wordFont];
+        [_bgView addSubview:wordLabel];
+    });
+}
+
+- (void)drawKeyLabelContainerWithContainer:(ALWWordCloudLabelContainer *)showContainer
+{
+    //标记占用的点
+    if ([self isHorizontalAngle:showContainer.currentAngle]
+        || [self isVerticalAngle:showContainer.currentAngle]) {
+        [self markRectAsOccupiedRect:showContainer.currentRect];
+    } else {
+        [self markPointsAsOccupiedWithPointsArray:showContainer.drawPointsArray];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UILabel *wordLabel = [[UILabel alloc] initWithFrame:showContainer.originalRect];
+        
+        if (![self isHorizontalAngle:showContainer.currentAngle]) {
+            wordLabel.transform = CGAffineTransformMakeRotation(showContainer.currentAngle);
+        }
+        
+        [wordLabel setText:showContainer.wordText];
+        [wordLabel setTextColor:[UIColor whiteColor]];
+        [wordLabel setFont:showContainer.wordFont];
+        [_keyWordView addSubview:wordLabel];
+    });
     
     dispatch_async(dispatch_get_main_queue(), ^{
         UILabel *wordLabel = [[UILabel alloc] initWithFrame:showContainer.originalRect];
@@ -321,6 +377,8 @@
 //    
 //    return newImage;
     
+    NSLog(@"complete: %@", NSStringFromSelector(_cmd));
+    
     return nil;
 }
 
@@ -407,6 +465,8 @@
     
     self.labelContainerArray = tempLabelContainerArray;
     self.showContainerArray = tempShowContainerArray;
+    
+    NSLog(@"complete: %@", NSStringFromSelector(_cmd));
 }
 
 - (void)generatePossibleKeyLabelContainerArray
@@ -480,6 +540,8 @@
     
     self.keyLabelContainerArray = keyLabelContainerArray;
     self.keyShowContainerArray = keyShowContainerArray;
+    
+    NSLog(@"complete: %@", NSStringFromSelector(_cmd));
 }
 
 /**
@@ -549,6 +611,8 @@
         
         x += _wordMinInset;
     }
+    
+    NSLog(@"complete: %@", NSStringFromSelector(_cmd));
 }
 
 //- (void)scanVerticalPointsOneByOne
@@ -604,7 +668,7 @@
             ALWWordCloudLabelContainer *showContainer = [self randomKeyWordCloudContainerWithOriginPoint:originPoint];
             if (showContainer) {
                 //绘制标签
-                [self drawLabelContainerWithContainer:showContainer];
+                [self drawKeyLabelContainerWithContainer:showContainer];
                 
                 for (int j = MAX(y - _wordMinInset, 0); j < MIN(CGRectGetMaxY(showContainer.currentRect), _bgView.frame.size.height); j++) {
                     [mutYArray removeObject:@(j)];
@@ -619,6 +683,8 @@
         x += _wordMinInset;
     }
     
+    NSLog(@"complete: %@", NSStringFromSelector(_cmd));
+
     return;
     
     for (NSNumber *fontValue in _wordKeyFontSizeArray) {
