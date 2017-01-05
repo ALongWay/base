@@ -17,6 +17,7 @@
 		6736955E1E139E9B004165B6 /* ALWWordCloudCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6736955D1E139E9B004165B6 /* ALWWordCloudCreator.m */; };
 		673695611E14CDB8004165B6 /* TestWordCloudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673695601E14CDB8004165B6 /* TestWordCloudViewController.m */; };
 		673695631E1639F8004165B6 /* wordcloudTestBg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 673695621E1639F8004165B6 /* wordcloudTestBg.jpg */; };
+		673695651E1DFA88004165B6 /* heart.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 673695641E1DFA88004165B6 /* heart.jpg */; };
 		6764A4B51DDC49D900C2ADC6 /* FLAnimatedImageView+HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4B01DDC49D900C2ADC6 /* FLAnimatedImageView+HttpHelper.m */; };
 		6764A4B61DDC49D900C2ADC6 /* SDImageCache+CacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4B21DDC49D900C2ADC6 /* SDImageCache+CacheHelper.m */; };
 		6764A4B71DDC49D900C2ADC6 /* SVProgressHUD+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6764A4B41DDC49D900C2ADC6 /* SVProgressHUD+Extension.m */; };
@@ -168,6 +169,7 @@
 		6736955F1E14CDB8004165B6 /* TestWordCloudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestWordCloudViewController.h; sourceTree = "<group>"; };
 		673695601E14CDB8004165B6 /* TestWordCloudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWordCloudViewController.m; sourceTree = "<group>"; };
 		673695621E1639F8004165B6 /* wordcloudTestBg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wordcloudTestBg.jpg; sourceTree = "<group>"; };
+		673695641E1DFA88004165B6 /* heart.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = heart.jpg; sourceTree = "<group>"; };
 		6764A4AF1DDC49D900C2ADC6 /* FLAnimatedImageView+HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FLAnimatedImageView+HttpHelper.h"; sourceTree = "<group>"; };
 		6764A4B01DDC49D900C2ADC6 /* FLAnimatedImageView+HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FLAnimatedImageView+HttpHelper.m"; sourceTree = "<group>"; };
 		6764A4B11DDC49D900C2ADC6 /* SDImageCache+CacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SDImageCache+CacheHelper.h"; sourceTree = "<group>"; };
@@ -874,6 +876,7 @@
 		67BF707F1D7D7C07009E253A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				673695641E1DFA88004165B6 /* heart.jpg */,
 				673695621E1639F8004165B6 /* wordcloudTestBg.jpg */,
 				676C08E31D910ADF003EB057 /* noNaviBarBackBtn.png */,
 				676C08E41D910ADF003EB057 /* noNaviBarBackBtn@2x.png */,
@@ -1226,6 +1229,7 @@
 				67EFC9D01DADD995004F198A /* SVProgressHUD.bundle in Resources */,
 				67BF70811D7D7C55009E253A /* Icon@3x.png in Resources */,
 				67BF705E1D781E35009E253A /* InfoPlist.strings in Resources */,
+				673695651E1DFA88004165B6 /* heart.jpg in Resources */,
 				676C08EA1D910ADF003EB057 /* noNaviBarBackBtn@2x.png in Resources */,
 				676C08EC1D910ADF003EB057 /* naviBarBackBtn.png in Resources */,
 			);

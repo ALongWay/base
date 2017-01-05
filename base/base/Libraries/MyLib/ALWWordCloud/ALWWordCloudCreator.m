@@ -58,7 +58,6 @@
 #pragma mark - ALWWordCloudCreator
 @interface ALWWordCloudCreator ()
 
-@property (nonatomic, strong) UIImageView   *keyWordView;
 @property (nonatomic, strong) UIView        *bgView;
 
 //字体可配置相关属性
@@ -72,9 +71,16 @@
 @property (nonatomic, strong) NSArray<NSString*>    *wordTextArray;
 @property (nonatomic, strong) NSArray<NSNumber*>    *wordAngleArray;
 
-@property (nonatomic, strong) NSArray<NSString*>    *wordKeyTextArray;
-@property (nonatomic, strong) NSArray<NSNumber*>    *wordKeyFontSizeArray;
+@property (nonatomic, assign) CGFloat       minSizeWidth;
+@property (nonatomic, assign) CGFloat       minSizeHeight;
 
+//------------
+@property (nonatomic, strong) UIImageView           *keyWordView;
+@property (nonatomic, strong) NSArray<NSNumber*>    *wordKeyFontSizeArray;
+@property (nonatomic, strong) NSArray<NSString*>    *wordKeyTextArray;
+
+@property (nonatomic, assign) CGFloat       minKeySizeWidth;
+@property (nonatomic, assign) CGFloat       minKeySizeHeight;
 
 /**
  保留全部可能的labelcontainer对象
@@ -109,7 +115,7 @@
     self = [super init];
     if (self) {
         //初始化变量
-        self.wordMaxFontSize = 50;
+        self.wordMaxFontSize = 30;
         self.wordMinFontSize = 5;
         self.wordFontStepValue = 5;
         
@@ -127,11 +133,11 @@
 
         self.wordMinInset = 5;
 
-        self.wordColorArray = @[[UIColor redColor],
-                                [UIColor greenColor],
-                                [UIColor grayColor],
-                                [UIColor brownColor],
-                                [UIColor blackColor]
+        self.wordColorArray = @[COLOR(255, 120, 100),
+//                                [UIColor greenColor],
+//                                [UIColor grayColor],
+//                                [UIColor brownColor],
+//                                [UIColor blackColor]
                                 ];
         
         self.wordTextArray = @[@"FOR",
@@ -145,9 +151,9 @@
                                   @"YOU"
                                   ];
         
-        self.wordMaxFontSize = 100;
+        self.wordMaxFontSize = 60;
         self.wordMinFontSize = 50;
-        self.wordFontStepValue = 10;
+        self.wordFontStepValue = 5;
         
         fontSizeArray = [NSMutableArray array];
         for (int i = _wordMinFontSize; i <= _wordMaxFontSize; ) {
@@ -207,10 +213,10 @@
         [self randomShowKeyTextContainers];
         
         //重新扫描新的背景图
-        [self identifyWhiteAndBlackPointsWithImage:[ImageHelper getSnapshotWithView:_keyWordView]];
+//        [self identifyWhiteAndBlackPointsWithImage:[ImageHelper getSnapshotWithView:_keyWordView]];
         
         //扫描坐标点
-        [self scanVerticalPointsOneByOne];
+//        [self scanVerticalPointsOneByOne];
 //        [self scanHorizontalPointsOneByOne];
         
         NSLog(@"计时结束！");
@@ -404,6 +410,19 @@
             UIFont *currentFont = [self getCurrentShowFontWithFontSize:fontSize];
             CGSize currentSize = [text sizeWithAttributes:@{NSFontAttributeName : currentFont}];
             
+            //记录最小尺寸宽度和高度
+            if (_minSizeWidth == 0) {
+                _minSizeWidth = currentSize.width;
+            }else{
+                _minSizeWidth = MIN(_minSizeWidth, currentSize.width);
+            }
+            
+            if (_minSizeHeight == 0) {
+                _minSizeHeight = currentSize.height;
+            } else {
+                _minSizeHeight = MIN(_minSizeHeight, currentSize.height);
+            }
+            
             for (NSNumber *value in _wordAngleArray) {
                 double angle = [value doubleValue];
                 
@@ -479,6 +498,19 @@
             NSInteger fontSize = [fontValue integerValue];
             UIFont *currentFont = [self getCurrentShowFontWithFontSize:fontSize];
             CGSize currentSize = [text sizeWithAttributes:@{NSFontAttributeName : currentFont}];
+            
+            //记录最小尺寸宽度和高度
+            if (_minKeySizeWidth == 0) {
+                _minKeySizeWidth = currentSize.width;
+            }else{
+                _minKeySizeWidth = MIN(_minKeySizeWidth, currentSize.width);
+            }
+            
+            if (_minKeySizeHeight == 0) {
+                _minKeySizeHeight = currentSize.height;
+            } else {
+                _minKeySizeHeight = MIN(_minKeySizeHeight, currentSize.height);
+            }
             
             for (NSNumber *value in _wordAngleArray) {
                 double angle = [value doubleValue];
@@ -663,6 +695,15 @@
                 [mutYArray removeObjectAtIndex:randomIndex];
                 continue;
             }
+            
+            //根据当前的左上角点，计算可能的最大区域
+//            for (int maxX = originPoint.x; maxX < _bgView.frame.size.width; maxX++) {
+//                for (int maxY = originPoint.y; maxY < _bgView.frame.size.height; maxY++) {
+//                    CGPoint tempPoint = CGPointMake(maxX, maxY);
+//                    
+//                    
+//                }
+//            }
             
             //根据点得到能填充的标签
             ALWWordCloudLabelContainer *showContainer = [self randomKeyWordCloudContainerWithOriginPoint:originPoint];
