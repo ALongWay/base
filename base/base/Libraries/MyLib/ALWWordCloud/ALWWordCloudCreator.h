@@ -10,6 +10,14 @@
 
 @interface ALWWordCloudCreator : NSObject
 
+
+/**
+ 需要注意，使用2倍图
+
+ @param imageView imageView description
+ @param completion completion description
+ @return return value description
+ */
 - (UIView *)createWordCloudViewWithImageView:(UIImageView *)imageView completionBlock:(void (^)())completion;
 
 @end

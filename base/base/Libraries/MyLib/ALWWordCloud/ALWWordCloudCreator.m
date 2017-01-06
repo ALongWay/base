@@ -71,16 +71,15 @@
 @property (nonatomic, strong) NSArray<NSString*>    *wordTextArray;
 @property (nonatomic, strong) NSArray<NSNumber*>    *wordAngleArray;
 
-@property (nonatomic, assign) CGFloat       minSizeWidth;
-@property (nonatomic, assign) CGFloat       minSizeHeight;
+@property (nonatomic, assign) CGSize        minSize;
+@property (nonatomic, assign) CGSize        maxSize;
 
 //------------
 @property (nonatomic, strong) UIImageView           *keyWordView;
-@property (nonatomic, strong) NSArray<NSNumber*>    *wordKeyFontSizeArray;
 @property (nonatomic, strong) NSArray<NSString*>    *wordKeyTextArray;
 
-@property (nonatomic, assign) CGFloat       minKeySizeWidth;
-@property (nonatomic, assign) CGFloat       minKeySizeHeight;
+@property (nonatomic, assign) CGSize        minKeySize;
+@property (nonatomic, assign) CGSize        maxKeySize;
 
 /**
  保留全部可能的labelcontainer对象
@@ -115,7 +114,7 @@
     self = [super init];
     if (self) {
         //初始化变量
-        self.wordMaxFontSize = 30;
+        self.wordMaxFontSize = 40;
         self.wordMinFontSize = 5;
         self.wordFontStepValue = 5;
         
@@ -131,7 +130,7 @@
         }
         self.wordFontSizeArray = fontSizeArray;
 
-        self.wordMinInset = 5;
+        self.wordMinInset = 2;
 
         self.wordColorArray = @[COLOR(255, 120, 100),
 //                                [UIColor greenColor],
@@ -140,40 +139,46 @@
 //                                [UIColor blackColor]
                                 ];
         
-        self.wordTextArray = @[@"FOR",
-                               @"LOVE",
-                               @"YOU",
+        self.wordTextArray = @[@"Happy",
+                               @"New",
+                               @"Year",
+                               @"To",
+                               @"You",
                                @"2017"
                                ];
         
-        self.wordKeyTextArray = @[@"FOR",
-                                  @"LOVE",
-                                  @"YOU"
+        self.wordKeyTextArray = @[@"Happy",
+                                  @"New",
+                                  @"Year",
+                                  @"2017"
                                   ];
-        
-        self.wordMaxFontSize = 60;
-        self.wordMinFontSize = 50;
-        self.wordFontStepValue = 5;
-        
-        fontSizeArray = [NSMutableArray array];
-        for (int i = _wordMinFontSize; i <= _wordMaxFontSize; ) {
-            [fontSizeArray addObject:@(i)];
-            
-            i += _wordFontStepValue;
-            
-            if (i > _wordMaxFontSize && i - _wordMaxFontSize < _wordFontStepValue) {
-                i = _wordMaxFontSize;
-            }
-        }
-        self.wordKeyFontSizeArray = fontSizeArray;
         
         //目前先支持水平和垂直方向
         //正弧度值表示逆时针旋转，负弧度值表示顺时针旋转
-        self.wordAngleArray = @[@(0), @(0), @(M_PI_2), @(-M_PI_2)];
-//        self.wordAngleArray = @[@(0), @(M_PI / 2.2), @(-M_PI / 2.2), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 3.0), @(-M_PI / 3.0), @(M_PI / 4.0), @(-M_PI / 4.0), @(M_PI / 4.5), @(-M_PI / 4.5), @(M_PI / 6.0), @(-M_PI / 6.0), @(M_PI / 9.0), @(-M_PI / 9.0), @(M_PI / 18.0), @(-M_PI / 18.0)];
+//        self.wordAngleArray = @[@(0), @(0), @(M_PI_2), @(-M_PI_2)];
+        self.wordAngleArray = @[@(0), @(M_PI / 2.2), @(-M_PI / 2.2), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 3.0), @(-M_PI / 3.0), @(M_PI / 4.0), @(-M_PI / 4.0), @(M_PI / 4.5), @(-M_PI / 4.5), @(M_PI / 6.0), @(-M_PI / 6.0), @(M_PI / 9.0), @(-M_PI / 9.0), @(M_PI / 18.0), @(-M_PI / 18.0)];
     }
     
     return self;
+}
+
+- (void)resetParameterWithMinFontSize:(NSInteger)minSize maxFontSize:(NSInteger)maxSize step:(NSInteger)step
+{
+    self.wordMaxFontSize = maxSize;
+    self.wordMinFontSize = minSize;
+    self.wordFontStepValue = step;
+    
+    NSMutableArray *fontSizeArray = [NSMutableArray array];
+    for (int i = _wordMinFontSize; i <= _wordMaxFontSize; ) {
+        [fontSizeArray addObject:@(i)];
+        
+        i += _wordFontStepValue;
+        
+        if (i > _wordMaxFontSize && i - _wordMaxFontSize < _wordFontStepValue) {
+            i = _wordMaxFontSize;
+        }
+    }
+    self.wordFontSizeArray = fontSizeArray;
 }
 
 #pragma mark -- Getter/Setter
@@ -206,18 +211,33 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [self identifyWhiteAndBlackPointsWithImage:currentImage];
-        [self generatePossibleLabelContainerArray];
-        [self generatePossibleKeyLabelContainerArray];
+//        [self generatePossibleLabelContainerArray];
         
-        //先随机显示重要的关键词
-        [self randomShowKeyTextContainers];
+        //---------
+        [self resetParameterWithMinFontSize:70 maxFontSize:80 step:5];
+        [self generatePossibleKeyLabelContainerArray];
+        [self verticalRandomShowKeyTextContainers];
+
+        //---------
+        [self resetParameterWithMinFontSize:15 maxFontSize:20 step:1];
+        [self generatePossibleKeyLabelContainerArray];
+        [self verticalRandomShowKeyTextContainers];
         
         //重新扫描新的背景图
-//        [self identifyWhiteAndBlackPointsWithImage:[ImageHelper getSnapshotWithView:_keyWordView]];
-        
-        //扫描坐标点
+        [self identifyWhiteAndBlackPointsWithImage:[ImageHelper getSnapshotWithView:_keyWordView]];
+
+        //---------
+        [self resetParameterWithMinFontSize:10 maxFontSize:15 step:1];
+        [self generatePossibleLabelContainerArray];
 //        [self scanVerticalPointsOneByOne];
-//        [self scanHorizontalPointsOneByOne];
+        [self verticalRandomShowKeyTextContainers];
+
+        [self identifyWhiteAndBlackPointsWithImage:[ImageHelper getSnapshotWithView:_keyWordView]];
+
+        //---------
+        [self resetParameterWithMinFontSize:6 maxFontSize:10 step:1];
+        [self generatePossibleLabelContainerArray];
+        [self scanHorizontalPointsOneByOne];
         
         NSLog(@"计时结束！");
 
@@ -255,6 +275,7 @@
         
         [wordLabel setText:showContainer.wordText];
         [wordLabel setTextColor:showContainer.wordColor];
+        [wordLabel setTextAlignment:NSTextAlignmentCenter];
         [wordLabel setFont:showContainer.wordFont];
         [_bgView addSubview:wordLabel];
     });
@@ -279,6 +300,7 @@
         
         [wordLabel setText:showContainer.wordText];
         [wordLabel setTextColor:[UIColor whiteColor]];
+        [wordLabel setTextAlignment:NSTextAlignmentCenter];
         [wordLabel setFont:showContainer.wordFont];
         [_keyWordView addSubview:wordLabel];
     });
@@ -292,6 +314,7 @@
         
         [wordLabel setText:showContainer.wordText];
         [wordLabel setTextColor:showContainer.wordColor];
+        [wordLabel setTextAlignment:NSTextAlignmentCenter];
         [wordLabel setFont:showContainer.wordFont];
         [_bgView addSubview:wordLabel];
     });
@@ -390,7 +413,8 @@
 
 - (UIFont *)getCurrentShowFontWithFontSize:(CGFloat)fontSize
 {
-    UIFont *showFont = [UIFont systemFontOfSize:fontSize];
+//    UIFont *showFont = [UIFont systemFontOfSize:fontSize];
+    UIFont *showFont = [UIFont boldSystemFontOfSize:fontSize];
     
     return showFont;
 }
@@ -409,18 +433,22 @@
             NSInteger fontSize = [fontValue integerValue];
             UIFont *currentFont = [self getCurrentShowFontWithFontSize:fontSize];
             CGSize currentSize = [text sizeWithAttributes:@{NSFontAttributeName : currentFont}];
+            currentSize.width += _wordMinInset;
+            currentSize.height += _wordMinInset;
             
             //记录最小尺寸宽度和高度
-            if (_minSizeWidth == 0) {
-                _minSizeWidth = currentSize.width;
+            if (CGSizeEqualToSize(_minSize, currentSize)) {
+                _minSize = currentSize;
             }else{
-                _minSizeWidth = MIN(_minSizeWidth, currentSize.width);
+                _minSize.width = MIN(_minSize.width, currentSize.width);
+                _minSize.height = MIN(_minSize.height, currentSize.height);
             }
             
-            if (_minSizeHeight == 0) {
-                _minSizeHeight = currentSize.height;
+            if (CGSizeEqualToSize(_maxSize, currentSize)) {
+                _maxSize = currentSize;
             } else {
-                _minSizeHeight = MIN(_minSizeHeight, currentSize.height);
+                _maxSize.width = MAX(_maxSize.width, currentSize.width);
+                _maxSize.height = MAX(_maxSize.height, currentSize.height);
             }
             
             for (NSNumber *value in _wordAngleArray) {
@@ -493,23 +521,27 @@
     NSMutableArray *keyLabelContainerArray = [NSMutableArray array];
     NSMutableArray *keyShowContainerArray = [NSMutableArray array];
     
-    for (NSNumber *fontValue in _wordKeyFontSizeArray) {
-        for (NSString *text in _wordKeyTextArray) {
+    for (NSString *text in _wordKeyTextArray) {
+        for (NSNumber *fontValue in _wordFontSizeArray) {
             NSInteger fontSize = [fontValue integerValue];
             UIFont *currentFont = [self getCurrentShowFontWithFontSize:fontSize];
             CGSize currentSize = [text sizeWithAttributes:@{NSFontAttributeName : currentFont}];
+            currentSize.width += _wordMinInset * 2;
+            currentSize.height += _wordMinInset;
             
             //记录最小尺寸宽度和高度
-            if (_minKeySizeWidth == 0) {
-                _minKeySizeWidth = currentSize.width;
+            if (CGSizeEqualToSize(_minKeySize, currentSize)) {
+                _minKeySize = currentSize;
             }else{
-                _minKeySizeWidth = MIN(_minKeySizeWidth, currentSize.width);
+                _minKeySize.width = MIN(_minKeySize.width, currentSize.width);
+                _minKeySize.height = MIN(_minKeySize.height, currentSize.height);
             }
             
-            if (_minKeySizeHeight == 0) {
-                _minKeySizeHeight = currentSize.height;
+            if (CGSizeEqualToSize(_maxKeySize, currentSize)) {
+                _maxKeySize = currentSize;
             } else {
-                _minKeySizeHeight = MIN(_minKeySizeHeight, currentSize.height);
+                _maxKeySize.width = MAX(_maxKeySize.width, currentSize.width);
+                _maxKeySize.height = MAX(_maxKeySize.height, currentSize.height);
             }
             
             for (NSNumber *value in _wordAngleArray) {
@@ -579,34 +611,6 @@
 /**
  逐点扫描的算法
  */
-- (void)scanHorizontalPointsOneByOne
-{
-    for (int y = 0; y < _bgView.frame.size.height; y++) {
-        for (int x = 0; x < _bgView.frame.size.width; x++) {
-            CGPoint originPoint = CGPointMake(x, y);
-            
-            if (![self canUsePoint:originPoint]) {
-                continue;
-            }
-            
-            //根据点得到能填充的标签
-            ALWWordCloudLabelContainer *showContainer = [self randomCurrentWordCloudContainerWithOriginPoint:originPoint];
-            if (showContainer) {
-                //绘制标签
-                [self drawLabelContainerWithContainer:showContainer];
-                
-                x = CGRectGetMaxX(showContainer.currentRect) + 1;
-                
-                if (![self isVerticalAngle:showContainer.currentAngle]) {
-                    x += _wordMinInset;
-                }
-            }
-        }
-        
-        y += _wordMinInset;
-    }
-}
-
 - (void)scanVerticalPointsOneByOne
 {
     for (int x = 0; x < _bgView.frame.size.width; x++) {
@@ -620,22 +624,24 @@
             NSInteger y = [mutYArray[randomIndex] integerValue];
             CGPoint originPoint = CGPointMake(x, y);
             
-            if (![self canUsePoint:originPoint]) {
+            CGRect canUseRect = [self isExistCanUseRegionWithOriginPoint:originPoint minSize:_minKeySize];
+            
+            if (CGRectEqualToRect(canUseRect, CGRectZero)) {
                 [mutYArray removeObjectAtIndex:randomIndex];
                 continue;
             }
             
             //根据点得到能填充的标签
-            ALWWordCloudLabelContainer *showContainer = [self randomCurrentWordCloudContainerWithOriginPoint:originPoint];
+            ALWWordCloudLabelContainer *showContainer = [self randomCurrentWordCloudContainerWithCanUseRegion:canUseRect];
             if (showContainer) {
                 //绘制标签
                 [self drawLabelContainerWithContainer:showContainer];
                 
-                for (int j = MAX(y - _wordMinInset, 0); j < MIN(CGRectGetMaxY(showContainer.currentRect), _bgView.frame.size.height); j++) {
+                for (NSInteger j = y; j < MIN(CGRectGetMaxY(showContainer.currentRect), _bgView.frame.size.height); j++) {
                     [mutYArray removeObject:@(j)];
                 }
             }else{
-                for (int j = MAX(y - _wordMinInset, 0); j < MIN(y + _wordMinInset, _bgView.frame.size.height); j++) {
+                for (NSInteger j = y; j < MIN(y + _wordMinInset, _bgView.frame.size.height); j++) {
                     [mutYArray removeObject:@(j)];
                 }
             }
@@ -647,38 +653,52 @@
     NSLog(@"complete: %@", NSStringFromSelector(_cmd));
 }
 
-//- (void)scanVerticalPointsOneByOne
-//{
-//    for (int x = 0; x < _bgView.frame.size.width; x++) {
-//        for (int y = 0; y < _bgView.frame.size.height; y++) {
-//            CGPoint originPoint = CGPointMake(x, y);
-//            
-//            if (![self canUsePoint:originPoint]) {
-//                continue;
-//            }
-//            
-//            //根据点得到能填充的标签
-//            ALWWordCloudLabelContainer *showContainer = [self randomCurrentWordCloudContainerWithOriginPoint:originPoint];
-//            if (showContainer) {
-//                //绘制标签
-//                [self drawLabelContainerWithContainer:showContainer];
-//                
-//                y = CGRectGetMaxY(showContainer.currentRect) + 1;
-//                
-//                if ([self isVerticalAngle:showContainer.currentAngle]) {
-//                    y += _wordMinInset;
-//                }
-//            }
-//        }
-//        
-//        x += _wordMinInset;
-//    }
-//}
+- (void)scanHorizontalPointsOneByOne
+{
+    for (int y = 0; y < _bgView.frame.size.height; y++) {
+        NSMutableArray *mutXArray = [NSMutableArray array];
+        for (int i = 0; i < _bgView.frame.size.width; i++) {
+            [mutXArray addObject:@(i)];
+        }
+        
+        while (mutXArray.count > 0) {
+            NSInteger randomIndex = arc4random() % mutXArray.count;
+            NSInteger x = [mutXArray[randomIndex] integerValue];
+            CGPoint originPoint = CGPointMake(x, y);
+            
+            CGRect canUseRect = [self isExistCanUseRegionWithOriginPoint:originPoint minSize:_minKeySize];
+            
+            if (CGRectEqualToRect(canUseRect, CGRectZero)) {
+                [mutXArray removeObjectAtIndex:randomIndex];
+                continue;
+            }
+            
+            //根据点得到能填充的标签
+            ALWWordCloudLabelContainer *showContainer = [self randomCurrentWordCloudContainerWithCanUseRegion:canUseRect];
+            if (showContainer) {
+                //绘制标签
+                [self drawLabelContainerWithContainer:showContainer];
+                
+                for (NSInteger j = x; j < MIN(CGRectGetMaxX(showContainer.currentRect), _bgView.frame.size.width); j++) {
+                    [mutXArray removeObject:@(j)];
+                }
+            }else{
+                for (NSInteger j = x; j < MIN(x + _wordMinInset, _bgView.frame.size.width); j++) {
+                    [mutXArray removeObject:@(j)];
+                }
+            }
+        }
+        
+        y += _wordMinInset;
+    }
+    
+    NSLog(@"complete: %@", NSStringFromSelector(_cmd));
+}
 
 /**
  随机显示醒目的关键字
  */
-- (void)randomShowKeyTextContainers
+- (void)verticalRandomShowKeyTextContainers
 {
     for (int x = 0; x < _bgView.frame.size.width; x++) {
         NSMutableArray *mutYArray = [NSMutableArray array];
@@ -687,35 +707,32 @@
         }
         
         while (mutYArray.count > 0) {
+            if (_keyLabelContainerArray.count == 0) {
+                return;
+            }
+            
             NSInteger randomIndex = arc4random() % mutYArray.count;
             NSInteger y = [mutYArray[randomIndex] integerValue];
             CGPoint originPoint = CGPointMake(x, y);
             
-            if (![self canUsePoint:originPoint]) {
+            CGRect canUseRect = [self isExistCanUseRegionWithOriginPoint:originPoint minSize:_minKeySize];
+            
+            if (CGRectEqualToRect(canUseRect, CGRectZero)) {
                 [mutYArray removeObjectAtIndex:randomIndex];
                 continue;
             }
             
-            //根据当前的左上角点，计算可能的最大区域
-//            for (int maxX = originPoint.x; maxX < _bgView.frame.size.width; maxX++) {
-//                for (int maxY = originPoint.y; maxY < _bgView.frame.size.height; maxY++) {
-//                    CGPoint tempPoint = CGPointMake(maxX, maxY);
-//                    
-//                    
-//                }
-//            }
-            
             //根据点得到能填充的标签
-            ALWWordCloudLabelContainer *showContainer = [self randomKeyWordCloudContainerWithOriginPoint:originPoint];
+            ALWWordCloudLabelContainer *showContainer = [self randomKeyWordCloudContainerWithCanUseRegion:canUseRect];
             if (showContainer) {
                 //绘制标签
                 [self drawKeyLabelContainerWithContainer:showContainer];
                 
-                for (int j = MAX(y - _wordMinInset, 0); j < MIN(CGRectGetMaxY(showContainer.currentRect), _bgView.frame.size.height); j++) {
+                for (NSInteger j = y; j < MIN(CGRectGetMaxY(showContainer.currentRect), _bgView.frame.size.height); j++) {
                     [mutYArray removeObject:@(j)];
                 }
             }else{
-                for (int j = MAX(y - _wordMinInset, 0); j < MIN(y + _wordMinInset, _bgView.frame.size.height); j++) {
+                for (NSInteger j = y; j < MIN(y + _wordMinInset, _bgView.frame.size.height); j++) {
                     [mutYArray removeObject:@(j)];
                 }
             }
@@ -725,115 +742,52 @@
     }
     
     NSLog(@"complete: %@", NSStringFromSelector(_cmd));
+}
 
-    return;
-    
-    for (NSNumber *fontValue in _wordKeyFontSizeArray) {
-        for (NSString *text in _wordKeyTextArray) {
-            NSInteger fontSize = [fontValue integerValue];
-            UIFont *currentFont = [self getCurrentShowFontWithFontSize:fontSize];
-            CGSize currentSize = [text sizeWithAttributes:@{NSFontAttributeName : currentFont}];
-            
-            NSInteger randomIndex = arc4random() % _wordAngleArray.count;
-            double angle = [_wordAngleArray[randomIndex] doubleValue];
-            
-            ALWWordCloudLabelContainer *container = [[ALWWordCloudLabelContainer alloc] init];
-            container.wordText = text;
-            container.wordFont = currentFont;
-            container.wordSize = currentSize;
-            
-            container.originalRect = CGRectMake(0, 0, currentSize.width, currentSize.height);
-            
-            container.currentRadius = sqrtf(powf(currentSize.width, 2) + powf(currentSize.height, 2)) / 2.0;//包围矩形边框的外接圆半径
-            container.currentAngle = angle;//偏转角度
-            
-            if ([self isVerticalAngle:angle]) {
-                container.currentRect = CGRectMake(0, 0, currentSize.height, currentSize.width);
-            } else if ([self isHorizontalAngle:angle]) {
-                container.currentRect = container.originalRect;
-            } else {
-                container.originalRect = [self getRealOriginalRectForRotationRectWhenCurrentOriginIsZeroWithSize:currentSize rotationAngle:angle];
-                container.currentRect = container.originalRect;
+- (void)hortizontalRandomShowKeyTextContainers
+{
+    for (int y = 0; y < _bgView.frame.size.height; y++) {
+        NSMutableArray *mutXArray = [NSMutableArray array];
+        for (int i = 0; i < _bgView.frame.size.width; i++) {
+            [mutXArray addObject:@(i)];
+        }
+        
+        while (mutXArray.count > 0) {
+            if (_keyLabelContainerArray.count == 0) {
+                return;
             }
             
-            NSMutableArray *mutBlackPointsArray = [NSMutableArray arrayWithArray:_blackPointsArray];
+            NSInteger randomIndex = arc4random() % mutXArray.count;
+            NSInteger x = [mutXArray[randomIndex] integerValue];
+            CGPoint originPoint = CGPointMake(x, y);
             
-            while (mutBlackPointsArray.count > 0) {
-                randomIndex = arc4random() % mutBlackPointsArray.count;
-                CGPoint origin = [mutBlackPointsArray[randomIndex] CGPointValue];
+            CGRect canUseRect = [self isExistCanUseRegionWithOriginPoint:originPoint minSize:_minKeySize];
+            
+            if (CGRectEqualToRect(canUseRect, CGRectZero)) {
+                [mutXArray removeObjectAtIndex:randomIndex];
+                continue;
+            }
+            
+            //根据点得到能填充的标签
+            ALWWordCloudLabelContainer *showContainer = [self randomKeyWordCloudContainerWithCanUseRegion:canUseRect];
+            if (showContainer) {
+                //绘制标签
+                [self drawKeyLabelContainerWithContainer:showContainer];
                 
-                if (![self canUsePoint:origin]) {
-                    [mutBlackPointsArray removeObjectAtIndex:randomIndex];
-                    continue;
+                for (NSInteger j = x; j < MIN(CGRectGetMaxX(showContainer.currentRect), _bgView.frame.size.height); j++) {
+                    [mutXArray removeObject:@(j)];
                 }
-                
-                CGSize wordSize = container.wordSize;
-                CGRect originalRect = CGRectMake(origin.x, origin.y, wordSize.width, wordSize.height);
-                CGRect showRect = originalRect;
-                
-                //使用二维旋转矩阵判断点数组
-                NSArray *tempDrawPointsArray;
-                
-                if ([self isHorizontalAngle:container.currentAngle]
-                    || [self isVerticalAngle:container.currentAngle]) {
-                    if ([self isVerticalAngle:container.currentAngle]) {
-                        showRect = CGRectMake(origin.x, origin.y, wordSize.height, wordSize.width);
-                    }
-                    
-                    //判断临时的标签是否可以用于显示
-                    //showRect区域内是否有不可用点，包括白点和已占用点
-                    if (![self canUseRectAsShowRect:showRect]) {
-                        [mutBlackPointsArray removeObjectAtIndex:randomIndex];
-                        continue;
-                    }
-                } else{
-                    //使用二维旋转矩阵判断点数组
-                    originalRect = CGRectMake(origin.x + container.originalRect.origin.x, origin.y + container.originalRect.origin.y, wordSize.width, wordSize.height);
-                    showRect = originalRect;
-                    
-                    tempDrawPointsArray = [self getDrawPointsArrayWithOriginalRect:originalRect rotationAngle:container.currentAngle rotationCenterPoint:origin];
-                    
-                    if (!tempDrawPointsArray) {
-                        [mutBlackPointsArray removeObjectAtIndex:randomIndex];
-                        continue;
-                    }
+            }else{
+                for (NSInteger j = x; j < MIN(x + _wordMinInset, _bgView.frame.size.width); j++) {
+                    [mutXArray removeObject:@(j)];
                 }
-                
-                //可以使用该size显示
-                //生成显示用标签属性配置对象
-                ALWWordCloudLabelContainer *tempContainer = [[ALWWordCloudLabelContainer alloc] init];
-                tempContainer.wordText = container.wordText;
-                tempContainer.wordFont = container.wordFont;
-                tempContainer.wordSize = container.wordSize;
-                
-                tempContainer.currentRadius = container.currentRadius;
-                tempContainer.currentAngle = container.currentAngle;
-                
-                //反向推算圆心和原始rect
-                tempContainer.currentRect = showRect;
-                
-                tempContainer.currentCenter = CGPointMake(origin.x + showRect.size.width / 2.0, origin.y + showRect.size.height / 2.0);
-                
-                //计算未旋转时候的rect
-                if ([self isVerticalAngle:tempContainer.currentAngle]) {
-                    originalRect.origin = CGPointMake(tempContainer.currentCenter.x - tempContainer.currentRect.size.height / 2.0, tempContainer.currentCenter.y - tempContainer.currentRect.size.width / 2.0);
-                }
-                
-                tempContainer.originalRect = originalRect;
-                
-                //随机颜色
-                NSInteger randomColorIndex = arc4random() % self.wordColorArray.count;
-                tempContainer.wordColor = [self.wordColorArray objectAtIndex:randomColorIndex];
-                
-                //倾斜容器的点数组
-                tempContainer.drawPointsArray = tempDrawPointsArray;
-                
-                [self drawLabelContainerWithContainer:tempContainer];
-                
-                break;
             }
         }
+        
+        y += _wordMinInset;
     }
+    
+    NSLog(@"complete: %@", NSStringFromSelector(_cmd));
 }
 
 /**
@@ -842,13 +796,21 @@
  @param origin origin description
  @return return value description
  */
-- (ALWWordCloudLabelContainer *)randomCurrentWordCloudContainerWithOriginPoint:(CGPoint)origin
+- (ALWWordCloudLabelContainer *)randomCurrentWordCloudContainerWithCanUseRegion:(CGRect)region
 {
-    NSMutableArray<ALWWordCloudShowContainer*> *mutShowContainerArray = [NSMutableArray arrayWithArray:_showContainerArray];
+    NSMutableArray<ALWWordCloudShowContainer*> *mutShowContainerArray = [NSMutableArray array];
+    
+    for (ALWWordCloudShowContainer *temp in _showContainerArray) {
+        if (temp.wordSize.width <= region.size.width
+            && temp.wordSize.height <= region.size.height) {
+            [mutShowContainerArray addObject:temp];
+        }
+    }
     
     while (mutShowContainerArray.count > 0) {
         NSInteger randomIndex = arc4random() % mutShowContainerArray.count;
         ALWWordCloudShowContainer *showContainer = mutShowContainerArray[randomIndex];
+        CGPoint origin = region.origin;
         CGSize wordSize = showContainer.wordSize;
         CGRect originalRect = CGRectMake(origin.x, origin.y, wordSize.width, wordSize.height);
         CGRect showRect = originalRect;
@@ -873,7 +835,9 @@
             originalRect = CGRectMake(origin.x + showContainer.rotationRectOffsetVector.x, origin.y + showContainer.rotationRectOffsetVector.y, wordSize.width, wordSize.height);
             showRect = originalRect;
             
-            tempDrawPointsArray = [self getDrawPointsArrayWithOriginalRect:originalRect rotationAngle:showContainer.currentAngle rotationCenterPoint:origin];
+            CGPoint center = CGPointMake(originalRect.origin.x + originalRect.size.width / 2.0, originalRect.origin.y + originalRect.size.height / 2.0);
+
+            tempDrawPointsArray = [self getDrawPointsArrayWithOriginalRect:originalRect rotationAngle:showContainer.currentAngle rotationCenterPoint:center];
             
             if (!tempDrawPointsArray) {
                 [mutShowContainerArray removeObjectAtIndex:randomIndex];
@@ -920,13 +884,21 @@
     return nil;
 }
 
-- (ALWWordCloudLabelContainer *)randomKeyWordCloudContainerWithOriginPoint:(CGPoint)origin
+- (ALWWordCloudLabelContainer *)randomKeyWordCloudContainerWithCanUseRegion:(CGRect)region
 {
-    NSMutableArray<ALWWordCloudShowContainer*> *mutShowContainerArray = [NSMutableArray arrayWithArray:_keyShowContainerArray];
+    NSMutableArray<ALWWordCloudShowContainer*> *mutShowContainerArray = [NSMutableArray array];
     
-    while (mutShowContainerArray.count > 0) {
+    for (ALWWordCloudShowContainer *temp in _keyShowContainerArray) {
+        if (temp.wordSize.width <= region.size.width
+            && temp.wordSize.height <= region.size.height) {
+            [mutShowContainerArray addObject:temp];
+        }
+    }
+    
+    while (mutShowContainerArray.count > 0 && _keyLabelContainerArray.count > 0) {
         NSInteger randomIndex = arc4random() % mutShowContainerArray.count;
         ALWWordCloudShowContainer *showContainer = mutShowContainerArray[randomIndex];
+        CGPoint origin = region.origin;
         CGSize wordSize = showContainer.wordSize;
         CGRect originalRect = CGRectMake(origin.x, origin.y, wordSize.width, wordSize.height);
         CGRect showRect = originalRect;
@@ -951,7 +923,9 @@
             originalRect = CGRectMake(origin.x + showContainer.rotationRectOffsetVector.x, origin.y + showContainer.rotationRectOffsetVector.y, wordSize.width, wordSize.height);
             showRect = originalRect;
             
-            tempDrawPointsArray = [self getDrawPointsArrayWithOriginalRect:originalRect rotationAngle:showContainer.currentAngle rotationCenterPoint:origin];
+            CGPoint center = CGPointMake(originalRect.origin.x + originalRect.size.width / 2.0, originalRect.origin.y + originalRect.size.height / 2.0);
+            
+            tempDrawPointsArray = [self getDrawPointsArrayWithOriginalRect:originalRect rotationAngle:showContainer.currentAngle rotationCenterPoint:center];
             
             if (!tempDrawPointsArray) {
                 [mutShowContainerArray removeObjectAtIndex:randomIndex];
@@ -1171,6 +1145,66 @@
 - (BOOL)canUsePoint:(CGPoint)point
 {
     return [[_pointsStatusDic objectForKey:NSStringFromCGPoint(point)] boolValue];
+}
+
+
+/**
+ 根据origin和最小size，判断是否存在可用区域，如果有，返回非zero的rect
+
+ @param originPoint originPoint description
+ @param minSize minSize description
+ @return return value description
+ */
+- (CGRect)isExistCanUseRegionWithOriginPoint:(CGPoint)originPoint minSize:(CGSize)minSize
+{
+    if (![self canUsePoint:originPoint]) {
+        return CGRectZero;
+    }
+    
+    NSInteger maxWidth = 0;
+    NSInteger maxHeight = 0;
+    
+    //根据当前的左上角点，计算可能的最大区域
+    NSInteger maxX = originPoint.x + 1;
+    
+    while (maxX < _bgView.frame.size.width) {
+        CGPoint tempPoint = CGPointMake(maxX, originPoint.y);
+        
+        if ([self canUsePoint:tempPoint]) {
+            maxX++;
+        }else{
+            maxX--;
+            break;
+        }
+    }
+    
+    maxWidth = maxX - originPoint.x;
+    
+    if (maxWidth < minSize.width) {
+        return CGRectZero;
+    }
+    
+    NSInteger maxY = originPoint.y + 1;
+
+    while (maxY < _bgView.frame.size.height) {
+        CGPoint tempPoint = CGPointMake(originPoint.x, maxY);
+        
+        if ([self canUsePoint:tempPoint]) {
+            maxY++;
+        }else{
+            maxY--;
+            break;
+        }
+    }
+    
+    maxHeight = maxY - originPoint.y;
+    
+    if (maxHeight < minSize.height) {
+        return CGRectZero;
+    }
+    
+    
+    return CGRectMake(originPoint.x, originPoint.y, maxWidth, maxHeight);
 }
 
 /**
