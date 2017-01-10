@@ -154,9 +154,11 @@
                                   ];
         
         //目前先支持水平和垂直方向
-        //正弧度值表示逆时针旋转，负弧度值表示顺时针旋转
+        //目前，正弧度值表示顺时针旋转，负弧度值表示逆时针旋转
 //        self.wordAngleArray = @[@(0), @(0), @(M_PI_2), @(-M_PI_2)];
         self.wordAngleArray = @[@(0), @(M_PI / 2.2), @(-M_PI / 2.2), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 2.6), @(-M_PI / 2.6), @(M_PI / 3.0), @(-M_PI / 3.0), @(M_PI / 4.0), @(-M_PI / 4.0), @(M_PI / 4.5), @(-M_PI / 4.5), @(M_PI / 6.0), @(-M_PI / 6.0), @(M_PI / 9.0), @(-M_PI / 9.0), @(M_PI / 18.0), @(-M_PI / 18.0)];
+        
+//        self.wordAngleArray = @[@(-M_PI / 3.0)];
     }
     
     return self;
@@ -202,16 +204,15 @@
     
     UIImage *currentImage = imageView.image;
     
-//    UIImageView *newImageView = [[UIImageView alloc] initWithFrame:_bgView.frame];
-//    [newImageView setBackgroundColor:[UIColor clearColor]];
-//    [newImageView setImage:currentImage];
-//    [_bgView addSubview:newImageView];
+    UIImageView *newImageView = [[UIImageView alloc] initWithFrame:_bgView.frame];
+    [newImageView setBackgroundColor:[UIColor clearColor]];
+    [newImageView setImage:currentImage];
+    [_bgView addSubview:newImageView];
 
     NSLog(@"计时开始！");
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         [self identifyWhiteAndBlackPointsWithImage:currentImage];
-//        [self generatePossibleLabelContainerArray];
         
         //---------
         [self resetParameterWithMinFontSize:40 maxFontSize:40 step:5];
@@ -529,7 +530,7 @@
             UIFont *currentFont = [self getCurrentShowFontWithFontSize:fontSize];
             CGSize currentSize = [text sizeWithAttributes:@{NSFontAttributeName : currentFont}];
             currentSize.width += _wordMinInset * 2;
-            currentSize.height += _wordMinInset;
+//            currentSize.height += _wordMinInset;
             
             //记录最小尺寸宽度和高度
             if (CGSizeEqualToSize(_minKeySize, currentSize)) {
@@ -790,6 +791,26 @@
     }
     
     NSLog(@"complete: %@", NSStringFromSelector(_cmd));
+}
+
+//找出当前可用的最大区域（此方法耗时太长了，不可取）
+- (CGRect)findMaxRect
+{
+    CGRect maxRect = CGRectZero;
+    
+    for (NSValue *value in _blackPointsArray) {
+        //根据当前点，向右和向下延伸，找到最大可用区域
+        CGPoint origin = [value CGPointValue];
+        CGRect rect = [self isExistCanUseRegionWithOriginPoint:origin minSize:_minKeySize];
+        
+        if (rect.size.width * rect.size.height > maxRect.size.width * maxRect.size.height) {
+            maxRect = rect;
+        }
+    }
+    
+    NSLog(@"complete: %@", NSStringFromSelector(_cmd));
+    
+    return maxRect;
 }
 
 /**
