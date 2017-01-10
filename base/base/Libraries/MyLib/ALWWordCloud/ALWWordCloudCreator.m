@@ -214,7 +214,7 @@
 //        [self generatePossibleLabelContainerArray];
         
         //---------
-        [self resetParameterWithMinFontSize:70 maxFontSize:80 step:5];
+        [self resetParameterWithMinFontSize:40 maxFontSize:40 step:5];
         [self generatePossibleKeyLabelContainerArray];
         [self verticalRandomShowKeyTextContainers];
 
@@ -335,6 +335,8 @@
     
     size_t width = CGImageGetWidth(cgimage);//图片宽度
     size_t height = CGImageGetHeight(cgimage);//图片高度
+    NSInteger scale = width / _bgView.frame.size.width;
+    
     size_t dataLength = width * height * 4;
     unsigned char *data = calloc(dataLength, sizeof(unsigned char));//取图片首地址
     size_t bitsPerComponent = 8;// r g b a 每个component bits数目
@@ -368,9 +370,9 @@
 //                data[i] = data[i + 1] = data[i + 2] = 255;
 //                data[i + 3] = 255;//不透明
                 
-                if (i % 2 == 0
-                    && j % 2 == 0) {
-                    CGPoint point = CGPointMake(j / 2, i / 2);
+                if (i % scale == 0
+                    && j % scale == 0) {
+                    CGPoint point = CGPointMake(j / scale, i / scale);
                     
                     [tempWhitePointsArray addObject:[NSValue valueWithCGPoint:point]];
                     [tempPointsDic setObject:@(NO) forKey:NSStringFromCGPoint(point)];
@@ -381,9 +383,9 @@
 //                data[i] = data[i + 1] = data[i + 2] = 255;
 //                data[i + 3] = 255;
                 
-                if (i % 2 == 0
-                    && j % 2 == 0) {
-                    CGPoint point = CGPointMake(j / 2, i / 2);
+                if (i % scale == 0
+                    && j % scale == 0) {
+                    CGPoint point = CGPointMake(j / scale, i / scale);
                     
                     [tempBlackPointsArray addObject:[NSValue valueWithCGPoint:point]];
                     [tempPointsDic setObject:@(YES) forKey:NSStringFromCGPoint(point)];
@@ -434,7 +436,7 @@
             UIFont *currentFont = [self getCurrentShowFontWithFontSize:fontSize];
             CGSize currentSize = [text sizeWithAttributes:@{NSFontAttributeName : currentFont}];
             currentSize.width += _wordMinInset;
-            currentSize.height += _wordMinInset;
+//            currentSize.height += _wordMinInset;
             
             //记录最小尺寸宽度和高度
             if (CGSizeEqualToSize(_minSize, currentSize)) {
