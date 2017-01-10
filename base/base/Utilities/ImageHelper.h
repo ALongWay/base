@@ -169,4 +169,22 @@ typedef NS_ENUM(NSInteger, ImageHelperBlurEffectStyle) {
  */
 + (UIImage *)getFullScreenSnapshotWithStatusBar;
 
+/**
+ 根据原图得到二值化（黑白）图像，系数为0.5
+ 
+ @param originalImage originalImage description
+ @param completion completion description
+ */
++ (void)getBinaryzationImageWithOriginalImage:(UIImage *)originalImage completionBlock:(void (^)(UIImage *))completion;
+
+/**
+ 根据原图得到二值化（黑白）图像
+ 
+ @param originalImage originalImage description
+ @param factor 二值化系数，在（0， 1）区间取值，值越大，黑色区域更多
+ @param completion completion description
+ */
++ (void)getBinaryzationImageWithOriginalImage:(UIImage *)originalImage factor:(CGFloat)factor completionBlock:(void (^)(UIImage *))completion;
+
+
 @end
