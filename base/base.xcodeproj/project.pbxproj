@@ -73,6 +73,7 @@
 		6791164E1D76CEEF00432E46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6791164C1D76CEEF00432E46 /* main.m */; };
 		67B44F001E30C58C00B00251 /* BaseViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 67B44EFF1E30C58C00B00251 /* BaseViewController.bundle */; };
 		67B44F031E30C60800B00251 /* Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B44F021E30C60800B00251 /* Icon@3x.png */; };
+		67B44F071E30CAB500B00251 /* ALWPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B44F061E30CAB500B00251 /* ALWPageControl.m */; };
 		67BF705E1D781E35009E253A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70601D781E35009E253A /* InfoPlist.strings */; };
 		67BF70721D783001009E253A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70741D783001009E253A /* Localizable.strings */; };
 		67BF70831D7D8047009E253A /* fzzy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70821D7D8047009E253A /* fzzy.ttf */; };
@@ -302,6 +303,8 @@
 		67B44EFE1E30C4CA00B00251 /* HeaderFiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderFiles.h; sourceTree = "<group>"; };
 		67B44EFF1E30C58C00B00251 /* BaseViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BaseViewController.bundle; sourceTree = "<group>"; };
 		67B44F021E30C60800B00251 /* Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@3x.png"; sourceTree = "<group>"; };
+		67B44F051E30CAB500B00251 /* ALWPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWPageControl.h; sourceTree = "<group>"; };
+		67B44F061E30CAB500B00251 /* ALWPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWPageControl.m; sourceTree = "<group>"; };
 		67BF705F1D781E35009E253A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		67BF70611D781F5F009E253A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		67BF70731D783001009E253A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -548,6 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				6764A4B91DDD602A00C2ADC6 /* MyLib.h */,
+				67B44F041E30CAB500B00251 /* ALWPageControl */,
 				673695581E138C8F004165B6 /* ALWWordCloud */,
 				6764A4E01DDEAF4600C2ADC6 /* ALWCoverBrowser */,
 				67FE91E71DD07A5700CE6071 /* ALWScratchCard */,
@@ -865,6 +869,15 @@
 				67B44F021E30C60800B00251 /* Icon@3x.png */,
 			);
 			path = AppIcons;
+			sourceTree = "<group>";
+		};
+		67B44F041E30CAB500B00251 /* ALWPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				67B44F051E30CAB500B00251 /* ALWPageControl.h */,
+				67B44F061E30CAB500B00251 /* ALWPageControl.m */,
+			);
+			path = ALWPageControl;
 			sourceTree = "<group>";
 		};
 		67BF707D1D7D7C07009E253A /* Resources */ = {
@@ -1362,6 +1375,7 @@
 				67EFC9C31DADD995004F198A /* MJRefreshBackNormalFooter.m in Sources */,
 				676C09521D9D0BAC003EB057 /* AFURLResponseSerialization.m in Sources */,
 				676C07A01D8E8B2C003EB057 /* LevelDB.mm in Sources */,
+				67B44F071E30CAB500B00251 /* ALWPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
