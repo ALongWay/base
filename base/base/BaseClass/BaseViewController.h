@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const kImageNoNaviBarBackBtn = @"BaseViewController.bundle/noNaviBarBackBtn.png";
+static NSString * const kImageNaviBarBackBtn = @"BaseViewController.bundle/naviBarBackBtn.png";
+
 //使用基于视图控制器的状态栏控制系统，UIApplication的setStatusBarHidden类似方法将无效
 //开启此宏定义，请将Info.plist中View controller-based status bar appearance设置为YES，否则置为NO
 //#define UseDefaultUIViewControllerBasedStatusBarSystem

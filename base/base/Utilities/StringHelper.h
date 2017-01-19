@@ -6,6 +6,7 @@
 //  Copyright © 2016年 alongway. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
 @interface StringHelper : NSObject
@@ -35,6 +36,8 @@
 
 #pragma mark -- 【生成属性字符串
 + (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color lineHeight:(CGFloat)lineHeight;
+
++ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color lineHeight:(CGFloat)lineHeight lineBreakMode:(NSLineBreakMode)lineBreakMode;
 
 + (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color paragraphStyle:(NSParagraphStyle *)paragraphStyle;
 #pragma mark -- 】生成属性字符串
