@@ -1,9 +1,9 @@
 //
 //  ALWPageControl.m
-//  deyilife
+//  base
 //
 //  Created by 李松 on 2017/1/16.
-//  Copyright © 2017年 deyi. All rights reserved.
+//  Copyright © 2017年 alongway. All rights reserved.
 //
 
 #import "ALWPageControl.h"
@@ -11,12 +11,10 @@
 static const CGFloat kPointMidInset = 6;
 static const CGFloat kPointBorderWidth = 1;
 
-#define COLOR(R, G, B)          [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:1.0]
-
 #define kPointSize              CGSizeMake(9, 9)
-#define kPointBorderColor       COLOR(255, 255, 255)
+#define kPointBorderColor       [UIColor whiteColor]
 #define kPointNormalColor       [UIColor clearColor]
-#define kPointSelectedColor     COLOR(255, 255, 255)
+#define kPointSelectedColor     [UIColor whiteColor]
 
 @interface ALWPageControl (){
     NSMutableArray<UIView*>     *_pointsArray;

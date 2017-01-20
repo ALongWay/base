@@ -1,9 +1,9 @@
 //
 //  ALWPageControl.h
-//  deyilife
+//  base
 //
 //  Created by 李松 on 2017/1/16.
-//  Copyright © 2017年 deyi. All rights reserved.
+//  Copyright © 2017年 alongway. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
