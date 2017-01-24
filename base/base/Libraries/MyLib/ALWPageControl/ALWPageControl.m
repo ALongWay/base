@@ -39,9 +39,9 @@ static const CGFloat kPointBorderWidth = 1;
 }
 
 #pragma mark -- Getter/Setter
-- (UIEdgeInsets)marginInsets
+- (UIEdgeInsets)paddingInsets
 {
-    return _marginInsets;
+    return _paddingInsets;
 }
 
 - (CGFloat)pointMidInset
@@ -158,9 +158,9 @@ static const CGFloat kPointBorderWidth = 1;
     
     offsetX -= self.pointMidInset;
     
-    bgView.frame = CGRectMake(self.marginInsets.left, self.marginInsets.top, offsetX, self.pointSize.height);
+    bgView.frame = CGRectMake(self.paddingInsets.left, self.paddingInsets.top, offsetX, self.pointSize.height);
     
-    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, CGRectGetMaxX(bgView.frame) + self.marginInsets.right, CGRectGetMaxY(bgView.frame) + self.marginInsets.bottom);
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, CGRectGetMaxX(bgView.frame) + self.paddingInsets.right, CGRectGetMaxY(bgView.frame) + self.paddingInsets.bottom);
     
     self.currentPageIndex = 0;
 }

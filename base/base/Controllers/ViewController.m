@@ -172,7 +172,9 @@
     
 //    [UIRouter pushToClass:@"TestCoverBrowserViewController" FromController:self animated:YES];
     
-    [UIRouter pushToClass:@"TestWordCloudViewController" FromController:self animated:YES];
+//    [UIRouter pushToClass:@"TestWordCloudViewController" FromController:self animated:YES];
+    
+    [UIRouter pushToClass:@"TestTitleTabBarViewController" FromController:self animated:YES];
 }
 
 - (void)testSnapshot

@@ -74,6 +74,9 @@
 		67B44F001E30C58C00B00251 /* BaseViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 67B44EFF1E30C58C00B00251 /* BaseViewController.bundle */; };
 		67B44F031E30C60800B00251 /* Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B44F021E30C60800B00251 /* Icon@3x.png */; };
 		67B44F071E30CAB500B00251 /* ALWPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B44F061E30CAB500B00251 /* ALWPageControl.m */; };
+		67B44F4E1E35A00E00B00251 /* ALWTitleTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B44F4D1E35A00E00B00251 /* ALWTitleTabBar.m */; };
+		67B44F511E35A11F00B00251 /* ALWTitleTabBarConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B44F501E35A11F00B00251 /* ALWTitleTabBarConfiguration.m */; };
+		67B44F541E3603FF00B00251 /* TestTitleTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B44F531E3603FF00B00251 /* TestTitleTabBarViewController.m */; };
 		67BF705E1D781E35009E253A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70601D781E35009E253A /* InfoPlist.strings */; };
 		67BF70721D783001009E253A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70741D783001009E253A /* Localizable.strings */; };
 		67BF70831D7D8047009E253A /* fzzy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BF70821D7D8047009E253A /* fzzy.ttf */; };
@@ -305,6 +308,12 @@
 		67B44F021E30C60800B00251 /* Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@3x.png"; sourceTree = "<group>"; };
 		67B44F051E30CAB500B00251 /* ALWPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWPageControl.h; sourceTree = "<group>"; };
 		67B44F061E30CAB500B00251 /* ALWPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWPageControl.m; sourceTree = "<group>"; };
+		67B44F4C1E35A00E00B00251 /* ALWTitleTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWTitleTabBar.h; sourceTree = "<group>"; };
+		67B44F4D1E35A00E00B00251 /* ALWTitleTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWTitleTabBar.m; sourceTree = "<group>"; };
+		67B44F4F1E35A11F00B00251 /* ALWTitleTabBarConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALWTitleTabBarConfiguration.h; sourceTree = "<group>"; };
+		67B44F501E35A11F00B00251 /* ALWTitleTabBarConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALWTitleTabBarConfiguration.m; sourceTree = "<group>"; };
+		67B44F521E3603FF00B00251 /* TestTitleTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTitleTabBarViewController.h; sourceTree = "<group>"; };
+		67B44F531E3603FF00B00251 /* TestTitleTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTitleTabBarViewController.m; sourceTree = "<group>"; };
 		67BF705F1D781E35009E253A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		67BF70611D781F5F009E253A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		67BF70731D783001009E253A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -551,6 +560,7 @@
 			isa = PBXGroup;
 			children = (
 				6764A4B91DDD602A00C2ADC6 /* MyLib.h */,
+				67B44F4B1E359FA600B00251 /* ALWTitleTabBar */,
 				67B44F041E30CAB500B00251 /* ALWPageControl */,
 				673695581E138C8F004165B6 /* ALWWordCloud */,
 				6764A4E01DDEAF4600C2ADC6 /* ALWCoverBrowser */,
@@ -880,6 +890,17 @@
 			path = ALWPageControl;
 			sourceTree = "<group>";
 		};
+		67B44F4B1E359FA600B00251 /* ALWTitleTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				67B44F4C1E35A00E00B00251 /* ALWTitleTabBar.h */,
+				67B44F4D1E35A00E00B00251 /* ALWTitleTabBar.m */,
+				67B44F4F1E35A11F00B00251 /* ALWTitleTabBarConfiguration.h */,
+				67B44F501E35A11F00B00251 /* ALWTitleTabBarConfiguration.m */,
+			);
+			path = ALWTitleTabBar;
+			sourceTree = "<group>";
+		};
 		67BF707D1D7D7C07009E253A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1170,6 +1191,8 @@
 				6764A4E51DDEEB4300C2ADC6 /* TestCoverBrowserViewController.m */,
 				6736955F1E14CDB8004165B6 /* TestWordCloudViewController.h */,
 				673695601E14CDB8004165B6 /* TestWordCloudViewController.m */,
+				67B44F521E3603FF00B00251 /* TestTitleTabBarViewController.h */,
+				67B44F531E3603FF00B00251 /* TestTitleTabBarViewController.m */,
 			);
 			path = TestDemo;
 			sourceTree = "<group>";
@@ -1271,6 +1294,7 @@
 				676C09531D9D0BAC003EB057 /* AFURLSessionManager.m in Sources */,
 				67EFC96B1DACDB36004F198A /* NSData+ImageContentType.m in Sources */,
 				67EFC9C61DADD995004F198A /* MJRefreshNormalHeader.m in Sources */,
+				67B44F541E3603FF00B00251 /* TestTitleTabBarViewController.m in Sources */,
 				6734619A1D7FCCD300066BEF /* NSData+CommonCrypto.m in Sources */,
 				676C09551D9D0BAC003EB057 /* AFImageDownloader.m in Sources */,
 				67FE91F71DD1640700CE6071 /* TestStarViewController.m in Sources */,
@@ -1308,6 +1332,7 @@
 				67EFC96F1DACDB36004F198A /* SDWebImageCompat.m in Sources */,
 				67C00BE01D87D876009BA769 /* UIImage+ImageEffects.m in Sources */,
 				676EFC271DC342E000FB542A /* UICollectionViewLayout+DragGesture.m in Sources */,
+				67B44F511E35A11F00B00251 /* ALWTitleTabBarConfiguration.m in Sources */,
 				67EFC9C21DADD995004F198A /* MJRefreshBackGifFooter.m in Sources */,
 				676C094E1D9D0BAC003EB057 /* AFHTTPSessionManager.m in Sources */,
 				6764A4DC1DDD8FF300C2ADC6 /* NSArray+MASAdditions.m in Sources */,
@@ -1328,6 +1353,7 @@
 				676C04731D8E3F34003EB057 /* CacheHelper.m in Sources */,
 				6736955E1E139E9B004165B6 /* ALWWordCloudCreator.m in Sources */,
 				67EFC9781DACDB36004F198A /* UIImage+WebP.m in Sources */,
+				67B44F4E1E35A00E00B00251 /* ALWTitleTabBar.m in Sources */,
 				676C08E21D8FC75D003EB057 /* BaseView.m in Sources */,
 				6764A4DB1DDD8FF300C2ADC6 /* MASViewConstraint.m in Sources */,
 				6764A4D91DDD8FF300C2ADC6 /* MASLayoutConstraint.m in Sources */,

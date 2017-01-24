@@ -10,7 +10,7 @@
 
 @interface ALWPageControl : UIView
 
-@property (nonatomic, assign) UIEdgeInsets  marginInsets;
+@property (nonatomic, assign) UIEdgeInsets  paddingInsets;//内边距
 @property (nonatomic, assign) CGFloat       pointMidInset;
 @property (nonatomic, assign) CGSize        pointSize;
 @property (nonatomic, assign) CGFloat       pointCorner;
