@@ -15,5 +15,7 @@
 #import "ALWScratchCardView.h"
 #import "ALWCoverBrowser.h"
 #import "ALWWordCloudCreator.h"
+#import "ALWPageControl.h"
+#import "ALWTitleTabBar.h"
 
 #endif /* MyLib_h */

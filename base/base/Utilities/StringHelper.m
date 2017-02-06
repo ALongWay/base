@@ -100,6 +100,11 @@ static NSString *commonDateFormat = @"yyyy-MM-dd HH:mm:ss";
 #pragma mark -- 【生成属性字符串
 + (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color lineHeight:(CGFloat)lineHeight
 {
+    return [self getAttributedStringWithString:string font:font color:color lineHeight:lineHeight lineBreakMode:commonLineBreakMode];
+}
+
++ (NSAttributedString *)getAttributedStringWithString:(NSString *)string font:(UIFont *)font color:(UIColor *)color lineHeight:(CGFloat)lineHeight lineBreakMode:(NSLineBreakMode)lineBreakMode
+{
     CGFloat perLineHeight = [StringHelper getStringSizeWith:@"内容" font:font].height;
     CGFloat lineSpacing = (lineHeight - perLineHeight)/2.5;//2.5是在实际应用中，调校的值
     perLineHeight = lineHeight - lineSpacing;
@@ -109,11 +114,11 @@ static NSString *commonDateFormat = @"yyyy-MM-dd HH:mm:ss";
     paragraphStyle.lineHeightMultiple = perLineHeight;
     paragraphStyle.maximumLineHeight = perLineHeight;
     paragraphStyle.minimumLineHeight = perLineHeight;
-    paragraphStyle.lineBreakMode = commonLineBreakMode;
+    paragraphStyle.lineBreakMode = lineBreakMode;
     paragraphStyle.lineSpacing = lineSpacing;//行间距
     paragraphStyle.paragraphSpacing = 0;//段间距
     paragraphStyle.alignment = commonTextAlignment;
-
+    
     return [self getAttributedStringWithString:string font:font color:color paragraphStyle:paragraphStyle];
 }
 

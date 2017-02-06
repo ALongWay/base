@@ -7,6 +7,7 @@
 //
 
 #import "ImageHelper.h"
+#import "UIImage+ImageEffects.h"
 
 #pragma mark - ImageHelperMergeImage
 @implementation ImageHelperMergeImage
@@ -64,7 +65,7 @@
 
 + (UIView *)getBlurEffectViewWithOriginalView:(UIView *)originalView style:(ImageHelperBlurEffectStyle)style
 {
-    if (DeviceIOSVersionAbove(8)) {
+    if ([[UIDevice currentDevice].systemVersion floatValue] > 8.0) {
         UIBlurEffectStyle blurStyle;
         
         switch (style) {

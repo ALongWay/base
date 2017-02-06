@@ -23,11 +23,7 @@
 #import "Categories.h"
 #import "Utilities.h"
 
-#import "AppHeader.h"
-#import "CommonHeader.h"
-#import "StringsHeader.h"
-#import "ImagesHeader.h"
-#import "URLsHeader.h"
+#import "HeaderFiles.h"
 
 #endif
 
